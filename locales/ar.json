@@ -1,0 +1,46 @@
+{
+  "app": {
+    "name": "Alcorti",
+    "description": "Alcorti is a comprehensive platform for managing your business."
+  },
+  "navigation": {
+    "dashboard": "لوحة القيادة",
+    "users": "المستخدمين"
+  },
+  "auth": {
+    "titles": {
+      "login": "تسجيل الدخول",
+      "register": "تسجيل حساب جديد",
+      "forgot-password": "نسيت كلمة المرور",
+      "reset-password": "إعادة تعيين كلمة المرور"
+    },
+    "descriptions": {
+      "login": "تسجيل الدخول إلى حسابك",
+      "register": "تسجيل حساب جديد",
+      "forgot-password": "نسيت كلمة المرور؟",
+      "reset-password": "إعادة تعيين كلمة المرور"
+    },
+    "buttons": {
+      "login": "تسجيل الدخول",
+      "register": "تسجيل حساب جديد",
+      "forgot-password": "نسيت كلمة المرور",
+      "reset-password": "إعادة تعيين كلمة المرور"
+    },
+    "fields": {
+      "email": {
+        "label": "البريد الإلكتروني",
+        "errors": {
+          "required": "البريد الإلكتروني مطلوب",
+          "invalid": "البريد الإلكتروني غير صالح"
+        }
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "errors": {
+          "required": "كلمة المرور مطلوبة",
+          "invalid": "كلمة المرور غير صالحة"
+        }
+      }
+    }
+  }
+}

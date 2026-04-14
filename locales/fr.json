@@ -1,0 +1,47 @@
+{
+  "app": {
+    "name": "Alcorti",
+    "description": "Alcorti est une plateforme complète pour la gestion de votre entreprise."
+  },
+  "navigation": {
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs"
+  },
+  "auth": {
+    "titles": {
+      "login": "Se connecter",
+      "register": "S'inscrire",
+      "forgot-password": "Mot de passe oublié",
+      "reset-password": "Réinitialiser le mot de passe"
+    },
+    "descriptions": {
+      "login": "Connectez-vous à votre compte",
+      "register": "Inscrivez-vous à votre compte",
+      "forgot-password": "Mot de passe oublié?",
+      "reset-password": "Réinitialiser votre mot de passe"
+    },
+    "buttons": {
+      "login": "Se connecter",
+      "register": "S'inscrire",
+      "forgot-password": "Mot de passe oublié",
+      "reset-password": "Réinitialiser le mot de passe"
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "errors": {
+          "required": "Email est requis",
+          "invalid": "Email est invalide"
+        }
+      },
+      "password": {
+        "label": "Mot de passe",
+        "errors": {
+          "required": "Mot de passe est requis",
+          "invalid": "Mot de passe est invalide",
+          "min": "Mot de passe doit contenir au moins 8 caractères"
+        }
+      }
+    }
+  }
+}

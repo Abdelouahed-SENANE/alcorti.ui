@@ -1,0 +1,46 @@
+{
+  "app": {
+    "name": "Alcorti",
+    "description": "Alcorti is a comprehensive platform for managing your business."
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "users": "Users"
+  },
+  "auth": {
+    "titles": {
+      "login": "Sign In",
+      "register": "Sign Up",
+      "forgot-password": "Forgot Password",
+      "reset-password": "Reset Password"
+    },
+    "descriptions": {
+      "login": "Sign in to your account",
+      "register": "Sign up to your account",
+      "forgot-password": "Forgot your password?",
+      "reset-password": "Reset your password"
+    },
+    "buttons": {
+      "login": "Sign In",
+      "register": "Sign Up",
+      "forgot-password": "Forgot Password",
+      "reset-password": "Reset Password"
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "errors": {
+          "required": "Email is required",
+          "invalid": "Email is invalid"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "errors": {
+          "required": "Password is required",
+          "invalid": "Password is invalid"
+        }
+      }
+    }
+  }
+}
