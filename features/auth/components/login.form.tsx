@@ -13,12 +13,7 @@ export const LoginForm = () => {
   const router = useRouter();
   const login = useLogin({
     onSuccess: () => {
-      toast({
-        title: "Login successful",
-        description: "You are now logged in",
-        type: "success",
-      });
-      router.push(paths.admin.dashboard.route());
+      router.replace(paths.admin.dashboard.route());
     },
     onError: () => {
       toast({

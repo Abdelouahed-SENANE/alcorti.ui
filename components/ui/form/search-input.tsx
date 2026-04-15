@@ -51,7 +51,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, InputSearchProps>(
         dir={dir}
         className={cn("relative h-9  duration-300 w-full ", className)}
       >
-        <Search className="absolute inset-y-1/2 -translate-y-1/2 start-2 size-4 pointer-events-none text-card-foreground/50" />
+        <Search className="absolute inset-y-1/2 -translate-y-1/2 insert-s-2 size-4 pointer-events-none text-card-foreground/50" />
         <input
           ref={ref}
           type="text"

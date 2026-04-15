@@ -1,12 +1,35 @@
 {
   "app": {
     "name": "Alcorti",
-    "description": "Alcorti is a comprehensive platform for managing your business."
+    "description": "Alcorti is a comprehensive platform for managing your business.",
+    "lang": {
+      "en": "English",
+      "fr": "French",
+      "ar": "Arabic"
+    }
   },
+
   "navigation": {
     "dashboard": "Dashboard",
-    "users": "Users"
+    "users": "Users",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
   },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "desc": "Welcome to the dashboard",
+    "export": "Export"
+  },
+
+  "users": {
+    "title": "Users",
+    "desc": "Welcome to the users page",
+    "export": "Export",
+    "add": "Add User"
+  },
+
   "auth": {
     "titles": {
       "login": "Sign In",

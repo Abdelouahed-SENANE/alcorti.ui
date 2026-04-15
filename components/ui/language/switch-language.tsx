@@ -20,14 +20,14 @@ type Language = {
 };
 
 const languages: Language[] = [
-  { code: "fr", label: "Français", flag: frFlag },
-  { code: "ar", label: "العربية", flag: arFlag },
-  { code: "en", label: "English", flag: enFlag },
+  { code: "en", label: "app.lang.en", flag: enFlag },
+  { code: "fr", label: "app.lang.fr", flag: frFlag },
+  { code: "ar", label: "app.lang.ar", flag: arFlag },
 ];
 
 export function SwitchLanguage() {
   const [selected, setSelected] = useState<Language>(languages[0]);
-  const { i18n } = useTranslation(); // Add this hook
+  const { i18n, t } = useTranslation(); // Add this hook
 
   useEffect(() => {
     const savedLang = localStorage.getItem("lang") || "fr";
@@ -56,7 +56,7 @@ export function SwitchLanguage() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="plain"
-          className="size-9 rounded-full bg-card cursor-pointer overflow-hidden flex items-center justify-center"
+          className="size-9 rounded-full bg-card cursor-pointer overflow-hidden flex ltr:flex-row rtl:flex-row-reverse items-center justify-center"
         >
           <Avatar className="size-9 flex items-center justify-center">
             <AvatarImage src={selected.flag.src} className="size-5" />
@@ -71,12 +71,12 @@ export function SwitchLanguage() {
           <DropdownMenuItem
             key={lang.code}
             onClick={() => handleChange(lang)}
-            className={`flex items-center gap-2 cursor-pointer ${
-              lang.code === selected.code ? "font-semibold" : ""
+            className={`flex ltr:flex-row rtl:flex-row-reverse items-center hover:bg-primary/10! hover:text-primary! gap-2 cursor-pointer ${
+              lang.code === selected.code ? "font-semibold text-primary" : ""
             }`}
           >
             <img src={lang.flag.src} alt={lang.label} className="h-4 w-4" />
-            <span>{lang.label}</span>
+            <span>{t(lang.label)}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

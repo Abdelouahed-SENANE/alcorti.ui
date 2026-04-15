@@ -1,2 +1,2 @@
-export * from "./provider"
-export * from "./toggle"
+export * from "./theme-provider";
+export * from "./theme-toggle";

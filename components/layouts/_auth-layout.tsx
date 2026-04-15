@@ -5,39 +5,39 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { Spinner } from "../ui/spinner";
 export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
-  const { data: user, isLoading, isFetched } = useUser();
+  const { data: user, isLoading } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("from");
 
-  if (isLoading) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center">
-        <Spinner size="lg" />
-      </div>
-    );
-  }
-  console.log(user);
   useEffect(() => {
-    if (!isFetched || !user) return;
+    if (!user || isLoading) return;
+
     const destination =
       user.role === "admin"
         ? paths.admin.dashboard.route()
         : paths.home.route();
-
     router.push(redirectTo || destination);
-  }, [user]);
+  }, [user, isLoading, router, redirectTo]);
 
-  if (!isFetched || !user || isLoading) {
+  if (isLoading) {
     return (
-      <div className="h-screen w-screen flex items-center justify-center">
-        <Spinner size="sm" />
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Spinner size="base" />
+      </div>
+    );
+  }
+
+  if (user) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Spinner size="base" />
       </div>
     );
   }
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div className="flex h-screen w-screen items-center justify-center">
       {children}
     </div>
   );

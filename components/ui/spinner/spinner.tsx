@@ -12,7 +12,7 @@ const sizes = {
 
 const variants = {
   light: "text-white fill-white",
-  primary: "text-gray-200 fill-primary dark:text-gray-600",
+  primary: "text-primary/30 fill-primary dark:text-primary/30",
 };
 
 export type SpinnerProps = {

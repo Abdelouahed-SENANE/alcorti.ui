@@ -1,18 +1,10 @@
 "use client";
-import logoSm from "@/assets/logo-sm.png";
+import logoSm from "@/assets/fallback-logo.svg";
 import { paths } from "@/config/paths";
 import { cn } from "@/lib/utils";
-import { Layout } from "lucide-react";
+import { Layout, Users } from "lucide-react";
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "../ui/breadcrumb";
-import { RouterLink } from "../ui/link";
 import { Sidebar, useSidebar } from "../ui/sidebar";
 import { Topbar } from "../ui/topbar/topbar";
 
@@ -64,6 +56,11 @@ const ADMIN_MENU = (t: any) =>
           url: paths.admin.dashboard.route(),
           icon: <Layout className="size-4" />,
         },
+        {
+          label: t("navigation.users"),
+          url: paths.admin.users.route(),
+          icon: <Users className="size-4" />,
+        },
       ],
     },
   ] satisfies GroupMenu[];
@@ -111,7 +108,6 @@ export const DashLayout = ({
             {groups.map((group, index) => (
               <Fragment key={index}>
                 <Sidebar.Menu className="mb-1">
-                  <Sidebar.Label title={t(group.group)} />
                   <Sidebar.Item>
                     {group.items.map((item, index) => (
                       <Sidebar.Link
@@ -130,7 +126,7 @@ export const DashLayout = ({
           </Sidebar.Body>
         </Sidebar.Root>
         <main className={cn("flex-1 relative")}>
-          <Topbar />
+          <Topbar breadcrumbs={breadcrumbs} />
           <div
             className={cn(
               "ms-auto transition-[width] h-[calc(100%-var(--topbar-height))] duration-300 flex flex-col w-full mt-(--topbar-height) px-4 py-2",
@@ -140,37 +136,13 @@ export const DashLayout = ({
             )}
           >
             <div className="my-4 space-y-1">
-              <Breadcrumb>
-                <BreadcrumbList className="flex items-center">
-                  {breadcrumbs.map((item, index) => (
-                    <React.Fragment key={index}>
-                      <BreadcrumbItem>
-                        <BreadcrumbLink asChild>
-                          <RouterLink
-                            className={cn(
-                              "hover:no-underline text-card-foreground/80 hover:text-primary text-sm font-bold",
-                              item.active && "text-primary",
-                            )}
-                            to={item.active ? "#" : item.url}
-                          >
-                            {item.label}
-                          </RouterLink>
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                      {index < breadcrumbs.length - 1 && (
-                        <BreadcrumbSeparator className="text-card-foreground/50" />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </BreadcrumbList>
-              </Breadcrumb>
               {title && (
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-3xl text-card-foreground font-semibold">
+                    <h1 className="text-3xl text-card-foreground font-medium tracking-normal leading-none">
                       {title}
                     </h1>
-                    <p className="text-card-foreground/60">{desc}</p>
+                    <p className="text-card-foreground/70">{desc}</p>
                   </div>
                   {actions}
                 </div>

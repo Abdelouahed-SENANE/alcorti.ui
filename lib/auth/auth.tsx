@@ -5,7 +5,7 @@ import * as React from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { api$ } from "@/config/axios";
 import { paths } from "@/config/paths";
-import { ApiResponse, AuthUser, Jwt } from "@/types/api";
+import { ApiResponse, AuthUser } from "@/types/api";
 import { AxiosError } from "axios";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -113,10 +113,18 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     }
   }, [user, isLoading, router, pathname]);
 
-  if (isLoading || !user) {
+  if (isLoading) {
     return (
       <div className="h-screen w-screen flex items-center justify-center">
-        <Spinner size="sm" />
+        <Spinner size="base" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <Spinner size="base" />
       </div>
     );
   }

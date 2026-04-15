@@ -7,11 +7,11 @@ import { cn } from "@/lib/utils";
 import { Spinner } from "../spinner";
 
 const buttonVariants = cva(
-  "inline-flex items-center shrink-0 px-4 py-2 text-sm font-semibold flex items-center justify-center whitespace-nowrap rounded-xs space-x-1  text-sm  transition-all disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none cursor-pointer [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-primary focus-visible:ring-primary/50 focus-visible:ring-[3px] aria-invalid:ring-danger/20 dark:aria-invalid:ring-danger/40 aria-invalid:border-danger",
+  "inline-flex items-center shrink-0 px-2 py-1.5 text-sm font-semibold  flex items-center justify-center whitespace-nowrap rounded-sm space-x-1  text-xs h-8  transition-all disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none cursor-pointer [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-primary focus-visible:ring-primary/50 focus-visible:ring-[3px] aria-invalid:ring-danger/20 dark:aria-invalid:ring-danger/40 aria-invalid:border-danger",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: " text-primary-foreground hover:bg-primary-hover bg-linear-to-b from-primary/90 to-primary-hover",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:

@@ -39,10 +39,9 @@ export const UserNavgation = () => {
 
   const navigation = [
     {
-      title: t("user_navigation.label_account"),
       items: [
         {
-          name: t("user_navigation.profile"),
+          name: t("navigation.profile"),
           to: paths.profile.route(),
           icon: User,
         },
@@ -59,7 +58,7 @@ export const UserNavgation = () => {
         >
           <span className="sr-only">Open user menu</span>
           <Avatar className="size-9">
-            {/* <AvatarImage src={fallbackAvatar.src} alt="Logo" /> */}
+            <AvatarImage src={fallbackAvatar.src} alt="Logo" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </Button>
@@ -87,9 +86,6 @@ export const UserNavgation = () => {
             key={index}
             className="rounded-none focus:bg-transparent flex flex-col p-0 "
           >
-            <small className="pb-1 px-2 text-left text-sm w-full">
-              {nav.title}
-            </small>
             {nav.items &&
               nav.items.map((item, index) => (
                 <RouterLink
@@ -116,7 +112,7 @@ export const UserNavgation = () => {
             className="p-0 rounded-none px-6 py-2  h-full cursor-pointer text-error space-x-2  w-full text-left  items-start  transition-colors"
           >
             <Power className="text-error" />
-            <span>{t("user_navigation.logout")}</span>
+            <span>{t("navigation.logout")}</span>
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>

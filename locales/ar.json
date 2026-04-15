@@ -1,11 +1,29 @@
 {
   "app": {
-    "name": "Alcorti",
-    "description": "Alcorti is a comprehensive platform for managing your business."
+    "name": "الكورتي",
+    "description": "الكورتي منصة شاملة لإدارة أعمالك.",
+    "lang": {
+      "en": "الأنكليزية",
+      "fr": "الفرنسية",
+      "ar": "العربية"
+    }
   },
   "navigation": {
     "dashboard": "لوحة القيادة",
     "users": "المستخدمين"
+  },
+
+  "users": {
+    "title": "المستخدمين",
+    "desc": "مرحبا بك في صفحة المستخدمين",
+    "export": "تصدير",
+    "add": "إضافة مستخدم"
+  },
+
+  "dashboard": {
+    "title": "لوحة القيادة",
+    "desc": "مرحبا بك في لوحة القيادة",
+    "export": "تصدير"
   },
   "auth": {
     "titles": {

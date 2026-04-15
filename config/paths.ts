@@ -30,5 +30,9 @@ export const paths = {
       root: "dashboard",
       route: () => "/admin/dashboard",
     },
+    users: {
+      root: "users",
+      route: () => "/admin/users",
+    },
   },
 };

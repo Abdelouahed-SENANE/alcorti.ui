@@ -33,7 +33,7 @@ const Root = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
         ref={ref}
         data-collapsed={isCollapsed}
         className={cn(
-          "fixed h-screen flex flex-col z-20 group/sidebar top-0 ltr:border-r rtl:border-l  bg-card ease-in-out transition-[width] duration-300 inset-inline-start-0",
+          "fixed h-screen flex flex-col z-20 group/sidebar top-0 ltr:border-r rtl:border-l bg-card backdrop-blur-sm ease-in-out transition-[width] duration-300 inset-inline-start-0",
           className,
           isCollapsed
             ? "w-(--sidebar-collapsed) hover:w-(--sidebar-expended)"
@@ -104,7 +104,7 @@ const Brand = React.forwardRef<
       ref={ref}
       {...props}
       className={cn(
-        "flex items-center px-2 h-14 relative",
+        "flex items-center px-2 h-15 mb-2 relative ",
         className,
         isCollapsed ? "justify-center" : "justify-start",
       )}
@@ -115,15 +115,15 @@ const Brand = React.forwardRef<
           "flex items-center cursor-pointer group-hover/sidebar:w-full "
         }
       >
-        <img className="px-2 py-2 size-9 " src={pathSmall} alt="small-logo" />
+        <img className="px-2 py-2 size-10 " src={pathSmall} alt="small-logo" />
         <div
           className={cn(
             "items-center w-full flex",
             isCollapsed && "hidden group-hover/sidebar:block",
           )}
         >
-          <h3 className="text-xl font-semibold text-card-foreground">
-            {t("app.brand")}
+          <h3 className="text-2xl font-semibold text-primary">
+            {t("app.name")}
           </h3>
         </div>
       </RouterLink>
@@ -141,7 +141,7 @@ const Body = React.forwardRef<
     <div
       ref={ref}
       {...props}
-      className={cn("flex-1 px-4 overflow-y-auto custom-scrollbar", className)}
+      className={cn("flex-1 px-2 overflow-y-auto custom-scrollbar", className)}
       role="sidebar-body"
     >
       {children}
@@ -274,12 +274,12 @@ export const Link = React.forwardRef<HTMLDivElement, LinkProps>(
             isCollapsed
               ? "justify-center gap-0 group-hover/sidebar:gap-2"
               : "justify-start gap-2",
-            "before:content-[''] rtl:before:-right-4 ltr:before:-left-4 before:absolute before:top-0 before:bottom-0 before:w-1 before:rounded-[5px] before:border-2 before:border-transparent before:bg-transparent",
+            "before:content-[''] rtl:before:-right-2.5 ltr:before:-left-2.5 before:absolute before:top-0 before:bottom-0 before:w-1.5 before:rounded-[5px] before:border-2 before:border-transparent before:bg-transparent",
             className,
             isActive &&
-              "before:border-primary before:bg-primary hover:text-primar text-primary",
+              "before:border-primary before:bg-primary hover:text-primary text-primary bg-primary/10",
             isOpen &&
-              "bg-primary/5 text-primary before:border-primary before:bg-primary hover:text-primary",
+              "bg-primary/5 text-primary before:border-primary before:bg-primary ",
           )}
           {...props}
         >

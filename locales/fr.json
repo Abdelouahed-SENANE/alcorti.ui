@@ -7,6 +7,20 @@
     "dashboard": "Tableau de bord",
     "users": "Utilisateurs"
   },
+
+  "dashboard": {
+    "title": "Tableau de bord",
+    "desc": "Bienvenue sur le tableau de bord",
+    "export": "Exporter"
+  },
+
+  "users": {
+    "title": "Utilisateurs",
+    "desc": "Bienvenue sur la page des utilisateurs",
+    "export": "Exporter",
+    "add": "Ajouter un utilisateur"
+  },
+
   "auth": {
     "titles": {
       "login": "Se connecter",

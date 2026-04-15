@@ -22,7 +22,7 @@ export function ErrorLayout({
   if (isLoading) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <Spinner size="sm" />
+        <Spinner size="base" />
       </div>
     );
   }
