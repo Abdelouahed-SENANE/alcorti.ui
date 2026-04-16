@@ -8,7 +8,7 @@ export type Entity<T> = {
   [K in keyof T]: T[K];
 } & BaseEntity;
 
-export type Lang = "ar" | "fr";
+export type Lang = "ar" | "fr" | "en";
 export type Translation = Record<Lang, string>;
 
 export type Jwt = {
@@ -53,12 +53,14 @@ export type BaseOption = {
   [key: string]: any;
 };
 
-export type ROLES = "admin" | "client" | "transporter";
+export type ROLES = "admin" | "client" | "shipper";
 
-export type AuthUser = Entity<{
+export type AuthUser = {
+  id: string;
   first_name: string;
   last_name: string;
   email: string;
   role?: ROLES;
   avatar?: string;
-}>;
+  is_completed?: boolean;
+};

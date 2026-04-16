@@ -5,17 +5,18 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Spinner } from "../spinner";
+import i18n from "@/config/i18n";
 
 const buttonVariants = cva(
-  "inline-flex items-center shrink-0 px-2 py-1.5 text-sm font-semibold  flex items-center justify-center whitespace-nowrap rounded-sm space-x-1  text-xs h-8  transition-all disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none cursor-pointer [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-primary focus-visible:ring-primary/50 focus-visible:ring-[3px] aria-invalid:ring-danger/20 dark:aria-invalid:ring-danger/40 aria-invalid:border-danger",
+  "inline-flex items-center shrink-0 px-2 py-1.5 text-sm font-semibold  flex items-center justify-center whitespace-nowrap rounded-md space-x-1  text-xs h-8  transition-all disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none cursor-pointer [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-primary focus-visible:ring-primary/50 focus-visible:ring-[3px] aria-invalid:ring-danger/20 dark:aria-invalid:ring-danger/40 aria-invalid:border-danger",
   {
     variants: {
       variant: {
-        default: " text-primary-foreground hover:bg-primary-hover bg-linear-to-b from-primary/90 to-primary-hover",
+        default: " text-primary-foreground hover:bg-primary bg-primary",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "border bg-card  hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-border dark:hover:bg-border/50",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:
@@ -53,7 +54,7 @@ function Button({
     isLoading?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
-  const isRTL = document.documentElement.dir === "rtl";
+  const isRTL = i18n.language === "ar";
   return (
     <Comp
       data-slot="button"

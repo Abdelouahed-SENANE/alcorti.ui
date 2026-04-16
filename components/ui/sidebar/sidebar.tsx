@@ -286,7 +286,8 @@ export const Link = React.forwardRef<HTMLDivElement, LinkProps>(
           {icon && <span className="size-4 shrink-0">{icon}</span>}
           <span
             className={cn(
-              "font-semibold flex-1 whitespace-nowrap transition-all duration-200",
+              "font-medium flex-1 whitespace-nowrap transition-all duration-200",
+              isActive && "font-semibold",
               isCollapsed
                 ? "hidden group-hover/sidebar:inline-block"
                 : "inline-block",

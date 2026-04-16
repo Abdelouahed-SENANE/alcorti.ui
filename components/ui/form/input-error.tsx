@@ -10,7 +10,7 @@ export type ErrorProps = {
       <div
         role="alert"
         aria-label={errorMessage}
-        className="text-sm  my-0.5 text-red-500"
+        className="text-sm ltr:text-right rtl:text-left w-full  my-0.5 text-destructive"
       >
         {errorMessage}
       </div>

@@ -20,7 +20,7 @@ export const useQueryTable = <
   // PAGINATION
   // ===========================
   const page = Number(searchParams.get("page") || 1);
-  const query = searchParams.get("query") ?? "";
+  const term = searchParams.get("term") ?? "";
   const limit = Number(searchParams.get("limit") || 10);
 
   // ===========================
@@ -38,7 +38,7 @@ export const useQueryTable = <
     const result = {} as F;
 
     searchParams.forEach((value, key) => {
-      if (!["page", "query", "limit", "sort", "order"].includes(key)) {
+      if (!["page", "term", "limit", "sort", "order"].includes(key)) {
         (result as any)[key] = value;
       }
     });
@@ -83,14 +83,14 @@ export const useQueryTable = <
   }, []);
 
   // ===========================
-  // QUERY / SEARCH
+  // term / SEARCH
   // ===========================
-  const setQuery = useCallback(
+  const setTerm = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString());
 
-      if (value) params.set("query", value);
-      else params.delete("query");
+      if (value) params.set("term", value);
+      else params.delete("term");
 
       params.set("page", "1");
       setSearchParams(params);
@@ -123,7 +123,7 @@ export const useQueryTable = <
 
   return {
     page,
-    query,
+    term,
     limit,
     sort,
     order,
@@ -135,7 +135,7 @@ export const useQueryTable = <
     toggleRow,
     toggleAll,
 
-    setQuery,
+    setTerm,
     setSorting,
     setPage,
   };

@@ -137,12 +137,12 @@ export const DashLayout = ({
           >
             <div className="my-4 space-y-1">
               {title && (
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between">
                   <div>
-                    <h1 className="text-3xl text-card-foreground font-medium tracking-normal leading-none">
+                    <h1 className="text-2xl text-card-foreground font-medium tracking-normal leading-none">
                       {title}
                     </h1>
-                    <p className="text-card-foreground/70">{desc}</p>
+                    <p className="text-sm text-foreground/70">{desc}</p>
                   </div>
                   {actions}
                 </div>

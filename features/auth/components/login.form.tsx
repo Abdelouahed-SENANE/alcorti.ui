@@ -12,15 +12,25 @@ export const LoginForm = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const login = useLogin({
-    onSuccess: () => {
-      router.replace(paths.admin.dashboard.route());
-    },
-    onError: () => {
-      toast({
-        title: "Login failed",
-        description: "Invalid credentials",
-        type: "error",
-      });
+    mutationConfig: {
+      onSuccess: (res) => {
+        const user = res.data;
+        const role = user?.role?.toLowerCase();
+        if (role === "client" && !user?.is_completed) {
+          router.replace("/complete/client");
+        } else if (role === "admin") {
+          router.replace(paths.admin.dashboard.route());
+        } else {
+          router.replace(paths.home.root);
+        }
+      },
+      onError: () => {
+        toast({
+          title: "Login failed",
+          description: "Invalid credentials",
+          type: "error",
+        });
+      },
     },
   });
 
@@ -30,19 +40,19 @@ export const LoginForm = () => {
       onSubmit={(values) => {
         login.mutate(values);
       }}
-      className="space-y-2"
+      className="space-y-2 "
     >
       {(form) => (
         <>
           <Input
-            type="email"
-            label={t("user.email.label", "Email")}
-            registration={form.register("email")}
-            error={t(form.formState.errors.email?.message || "")}
+            type="text"
+            label={t("auth.fields.login.label", "Email/CNI")}
+            registration={form.register("login")}
+            error={t(form.formState.errors.login?.message || "")}
           />
           <Input
             type="password"
-            label={t("user.password.label", "Password")}
+            label={t("auth.fields.password.label", "Password")}
             registration={form.register("password")}
             error={t(form.formState.errors.password?.message || "")}
           />

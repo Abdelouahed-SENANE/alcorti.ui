@@ -1,4 +1,4 @@
-import { Authorization, ProtectedRoute } from "@/lib/auth";
+import { EnsureRole, ProtectedRoute } from "@/lib/auth";
 
 export default function AdminLayout({
   children,
@@ -7,7 +7,7 @@ export default function AdminLayout({
 }) {
   return (
     <ProtectedRoute>
-      <Authorization role="admin">{children}</Authorization>
+      <EnsureRole role="admin">{children}</EnsureRole>
     </ProtectedRoute>
   );
 }

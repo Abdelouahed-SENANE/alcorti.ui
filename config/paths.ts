@@ -11,6 +11,16 @@ export const paths = {
     root: "/settings",
     route: () => "/settings",
   },
+  complete: {
+    client: {
+      root: "/complete/client",
+      route: () => "/complete/client",
+    },
+    shipper: {
+      root: "/complete/shipper",
+      route: () => "/complete/shipper",
+    },
+  },
   auth: {
     root: "/auth",
     login: {

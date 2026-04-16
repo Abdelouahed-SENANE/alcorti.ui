@@ -6,18 +6,17 @@ import Axios, {
 } from "axios";
 // import { useTokenStore } from "../store/token-store";
 import { toast } from "@/components/ui/toast/use-toast";
-import i18n from "./i18n";
 import { paths } from "./paths";
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
-  const lang = i18n.language;
+  const lang =
+    typeof window !== "undefined" ? localStorage.getItem("lang") || "fr" : "fr";
   if (config.headers) {
     config.headers.Accept = "application/json";
     config.headers["Accept-Language"] = lang;
 
     config.withCredentials = true;
   }
-  console.log("api url", process.env.NEXT_PUBLIC_API_URL);
   return config;
 }
 
@@ -55,9 +54,6 @@ api$.interceptors.response.use(
     }
 
     if (is401(err)) {
-      // 1. Always remove access_token from cookie when 401 occurs
-      document.cookie = "access_token=; Max-Age=0; path=/;";
-
       // 2. Define public routes where we should NOT redirect to login
       const publicRoutes = [
         paths.home.root,

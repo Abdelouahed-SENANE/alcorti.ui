@@ -5,7 +5,23 @@
   },
   "navigation": {
     "dashboard": "Tableau de bord",
-    "users": "Utilisateurs"
+    "users": "Utilisateurs",
+    "logout": "Déconnexion"
+  },
+
+  "global": {
+    "pagination": {
+      "info": "Affichage {{from}} - {{to}} de {{total}}",
+      "per_page": "Par page",
+      "page": "Page"
+    },
+    "loading": "Chargement...",
+    "status": {
+      "all": "Tous",
+      "active": "Actif",
+      "inactive": "Inactif"
+    },
+    "search": "Rechercher..."
   },
 
   "dashboard": {
@@ -15,32 +31,43 @@
   },
 
   "users": {
-    "title": "Utilisateurs",
-    "desc": "Bienvenue sur la page des utilisateurs",
-    "export": "Exporter",
-    "add": "Ajouter un utilisateur"
-  },
-
-  "auth": {
-    "titles": {
-      "login": "Se connecter",
-      "register": "S'inscrire",
-      "forgot-password": "Mot de passe oublié",
-      "reset-password": "Réinitialiser le mot de passe"
+    "page": {
+      "title": "Utilisateurs",
+      "desc": "Bienvenue sur la page des utilisateurs"
     },
-    "descriptions": {
-      "login": "Connectez-vous à votre compte",
-      "register": "Inscrivez-vous à votre compte",
-      "forgot-password": "Mot de passe oublié?",
-      "reset-password": "Réinitialiser votre mot de passe"
-    },
-    "buttons": {
-      "login": "Se connecter",
-      "register": "S'inscrire",
-      "forgot-password": "Mot de passe oublié",
-      "reset-password": "Réinitialiser le mot de passe"
+    "columns": {
+      "name": "Nom",
+      "email": "Email",
+      "role": "Rôle",
+      "is_active": "Actif",
+      "cin": "CNI",
+      "phone": "Telephone",
+      "created_at": "Date de création",
+      "updated_at": "Date de mise à jour"
     },
     "fields": {
+      "first_name": {
+        "label": "Prénom",
+        "errors": {
+          "min": "Le prénom doit contenir au moins 2 caractères",
+          "max": "Le prénom doit contenir moins de 255 caractères"
+        }
+      },
+      "last_name": {
+        "label": "Nom",
+        "errors": {
+          "min": "Le nom doit contenir au moins 2 caractères",
+          "max": "Le nom doit contenir moins de 255 caractères"
+        }
+      },
+      "cin": {
+        "label": "CNI",
+        "errors": {
+          "min": "Le CNI doit contenir au moins 5 caractères",
+          "max": "Le CNI doit contenir moins de 50 caractères",
+          "invalid": "Format de CNI invalide"
+        }
+      },
       "email": {
         "label": "Email",
         "errors": {
@@ -55,7 +82,79 @@
           "invalid": "Mot de passe est invalide",
           "min": "Mot de passe doit contenir au moins 8 caractères"
         }
+      },
+      "phone": {
+        "label": "Téléphone",
+        "errors": {
+          "required": "Le téléphone est requis",
+          "max": "Le téléphone doit contenir moins de 20 caractères"
+        }
+      },
+      "type": {
+        "label": "Type",
+        "shipper": "Expéditeur",
+        "client": "Client",
+        "errors": {
+          "required": "Le type d'utilisateur est requis"
+        }
+      }
+    },
+    "actions": {
+      "add": "Ajouter un utilisateur",
+      "export": "Exporter",
+      "view": "Voir l'utilisateur",
+      "edit": "Modifier l'utilisateur",
+      "delete": "Supprimer l'utilisateur"
+    },
+    "messages": {
+      "empty": "Aucun utilisateur trouvé"
+    }
+  },
+
+  "auth": {
+    "register": {
+      "already_have_account": "Vous avez déjà un compte?",
+      "title": "Créer un nouveau compte",
+      "description": "Rejoignez Alcorti et gérez vos affaires efficacement."
+    },
+    "login": {
+      "title": "Connexion",
+      "description": "Connectez-vous à votre compte",
+      "submit": "Se connecter",
+      "forgot_password": "Mot de passe oublié?"
+    },
+    "titles": {
+      "forgot-password": "Mot de passe oublié",
+      "reset-password": "Réinitialiser le mot de passe"
+    },
+    "descriptions": {
+      "forgot-password": "Mot de passe oublié?",
+      "reset-password": "Réinitialiser votre mot de passe"
+    },
+    "buttons": {
+      "login": "Se connecter",
+      "register": "S'inscrire",
+      "forgot-password": "Mot de passe oublié",
+      "reset-password": "Réinitialiser le mot de passe"
+    },
+    "fields": {
+      "login": {
+        "label": "Email ou numéro national",
+        "errors": {
+          "required": "Email ou numéro national est requis",
+          "invalid": "Email ou numéro national est invalide"
+        }
+      },
+      "password": {
+        "label": "Mot de passe",
+        "errors": {
+          "required": "Mot de passe est requis",
+          "invalid": "Mot de passe est invalide",
+          "min": "Mot de passe doit contenir au moins 8 caractères"
+        }
       }
     }
   }
+
+  
 }

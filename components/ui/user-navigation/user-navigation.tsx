@@ -31,9 +31,11 @@ export const UserNavgation = () => {
   const { t } = useTranslation();
   const lang = i18n.language;
   const logout = useLogout({
-    onSuccess: () => {
-      qc.clear();
-      router.replace(paths.auth.login.route(pathname));
+    mutationConfig: {
+      onSuccess: () => {
+        qc.clear();
+        router.replace(paths.auth.login.route(pathname));
+      },
     },
   });
 
@@ -106,12 +108,12 @@ export const UserNavgation = () => {
         <DropdownMenuItem className="rounded-none p-0 flex items-start">
           <Button
             onClick={() => {
-              logout.mutate({});
+              logout.mutate(undefined);
             }}
             variant={"plain"}
-            className="p-0 rounded-none px-6 py-2  h-full cursor-pointer text-error space-x-2  w-full text-left  items-start  transition-colors"
+            className="p-0 rounded-none px-6 py-2  h-full cursor-pointer text-destructive space-x-2  w-full text-left  items-start  transition-colors"
           >
-            <Power className="text-error" />
+            <Power className="text-destructive" />
             <span>{t("navigation.logout")}</span>
           </Button>
         </DropdownMenuItem>

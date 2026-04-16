@@ -24,7 +24,6 @@ export type QuickAction<T = any> = {
   label: string;
   value: QuickActionValue | string;
   icon?: React.ReactNode;
-  role?: string;
   check?: (entity: T) => boolean;
   disabled?: boolean;
   render?: (id: string, entity: T) => React.ReactNode;
@@ -44,11 +43,8 @@ export const QuickActions = ({
   onAction,
 }: EntityActionsProps) => {
   const { hasRole } = useAuthorization();
-  const filteredActions = actions.filter((action) =>
-    action.role ? hasRole({ role: action.role }) : true,
-  );
 
-  if (!filteredActions || filteredActions.length === 0) return null;
+  if (!actions || actions.length === 0) return null;
   const { t } = useTranslation();
   return (
     <DropdownMenu>
@@ -67,7 +63,7 @@ export const QuickActions = ({
         sideOffset={4}
         className="max-w-lg rounded-sm shadow-md p-1 bg-background"
       >
-        {filteredActions.map(
+        {actions.map(
           ({ label, value, icon, disabled = false, render }) => {
             if (render) {
               return (

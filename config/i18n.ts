@@ -1,8 +1,15 @@
+"use client";
+
 import ar from "@/locales/ar.json";
 import en from "@/locales/en.json";
 import fr from "@/locales/fr.json";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+
+// Since providers.tsx renders null until mounted, no SSR HTML contains translated text.
+// So we can safely read localStorage here without any hydration errors.
+const savedLang =
+  typeof window !== "undefined" ? (localStorage.getItem("lang") ?? "fr") : "fr";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -10,11 +17,9 @@ i18n.use(initReactI18next).init({
     ar: { translation: ar },
     en: { translation: en },
   },
-  lng: "en",
-  fallbackLng: "en",
-  interpolation: {
-    escapeValue: false,
-  },
+  lng: savedLang,
+  fallbackLng: "fr",
+  interpolation: { escapeValue: false },
 });
 
 export default i18n;

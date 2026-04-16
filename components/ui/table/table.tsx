@@ -21,7 +21,7 @@ const TableElement = React.forwardRef<
   >
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm  bg-card/30 ", className)}
+      className={cn("w-full caption-bottom text-sm  bg-background ", className)}
       {...props}
     />
   </div>
@@ -34,7 +34,7 @@ const TableHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn("[&_tr]:border-b h-12  bg-background", className)}
+    className={cn("[&_tr]:border-b h-12  border-border bg-background", className)}
     {...props}
   />
 ));
@@ -73,10 +73,7 @@ const TableRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tr
     ref={ref}
-    className={cn(
-      "border-b data-[state=selected]:bg-background",
-      className,
-    )}
+    className={cn("border-b data-[state=selected]:bg-background", className)}
     {...props}
   />
 ));
@@ -89,7 +86,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "ltr:text-left rtl:text-right align-middle px-2  py-2.5 text-base font-bold  text-card-foreground *:[[role=checkbox]]:translate-y-0.5",
+      "ltr:text-left rtl:text-right align-middle px-2  py-2.5 text-xs font-bold  text-card-foreground *:[[role=checkbox]]:translate-y-0.5",
       className,
     )}
     {...props}
@@ -207,7 +204,7 @@ export const Table = <Entry extends BaseEntity>({
     <div className="flex flex-col bg-card overflow-hidden rounded-md border border-border">
       <TableElement>
         {/* HEADER */}
-        <TableHeader className="bg-background">
+        <TableHeader className="bg-card">
           <TableRow>
             {renderSubComponent && <TableHead className="w-10" />}
             {selectedRows && onSelectAll && (
@@ -228,8 +225,8 @@ export const Table = <Entry extends BaseEntity>({
                   key={index}
                   className={cn(
                     column.sortable
-                      ? "cursor-pointer select-none uppercase text-[13px]"
-                      : "py-5 uppercase text-[13px] ",
+                      ? "cursor-pointer select-none uppercase text-xxs"
+                      : "py-2",
                   )}
                   onClick={() => column.sortable && handleSort(column.field)}
                 >
@@ -258,7 +255,7 @@ export const Table = <Entry extends BaseEntity>({
               >
                 <div className="flex items-center justify-center gap-2 text-card-foreground/60">
                   <Spinner size="sm" />
-                  <span>{t("loading")}</span>
+                  <span className="text-xs">{t("global.loading")}</span>
                 </div>
               </TableCell>
             </TableRow>
@@ -343,7 +340,7 @@ export const Table = <Entry extends BaseEntity>({
       </TableElement>
       {pagination && (
         <div className="border-t border-border">
-          <TablePagination {...pagination} />
+          <TablePagination {...pagination} isLoading={isLoading} />
         </div>
       )}
     </div>

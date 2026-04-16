@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "../form";
 import { RouterLink } from "../link";
+import { Skeleton } from "../skeleton";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -145,23 +146,59 @@ export {
 };
 
 export interface TablePaginationProps {
-  total: number;
+  total: number | undefined;
   page: number;
   limit: number;
   rootUrl: string;
+  isLoading?: boolean;
 }
+
+export const TablePaginationSkeleton = () => {
+  const dir = useDirection();
+  return (
+    <div
+      className={cn(
+        "w-full items-center py-2 px-2 flex flex-col gap-3 sm:flex-row sm:justify-between",
+      )}
+    >
+      <Skeleton className="h-5 w-48" />
+      <div
+        className={cn(
+          "flex items-center gap-1.5",
+          dir === "rtl" ? "flex-row-reverse" : "flex-row",
+        )}
+      >
+        <Skeleton className="h-8 w-8 rounded-sm" />
+        <div className="flex items-center gap-1.5 mx-2">
+          <Skeleton className="h-8 w-8 rounded-sm" />
+          <Skeleton className="h-8 w-8 rounded-sm" />
+          <Skeleton className="h-8 w-8 rounded-sm" />
+        </div>
+        <Skeleton className="h-8 w-8 rounded-sm" />
+      </div>
+
+      <div className="flex items-center gap-3">
+        <Skeleton className="h-5 w-16" />
+        <Skeleton className="h-7 w-24 rounded-md" />
+      </div>
+    </div>
+  );
+};
 
 export const TablePagination = ({
   total,
   page,
   limit,
   rootUrl,
+  isLoading,
 }: TablePaginationProps) => {
-  const totalPages = Math.ceil(total / limit);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const dir = useDirection();
+  const { t } = useTranslation();
+
+  const totalPages = Math.ceil((total ?? 0) / limit);
 
   const setSearchParams = (params: URLSearchParams) => {
     router.push(`${pathname}?${params.toString()}`);
@@ -260,9 +297,12 @@ export const TablePagination = ({
     }
 
     return items;
-  }, [page, totalPages, dir]);
+  }, [page, totalPages, dir, searchParams, limit, rootUrl]);
 
-  const { t } = useTranslation();
+  if (isLoading || total === undefined) {
+    return <TablePaginationSkeleton />;
+  }
+
   const from = total === 0 ? 0 : (page - 1) * limit + 1;
   const to = Math.min(page * limit, total);
 
@@ -272,8 +312,8 @@ export const TablePagination = ({
         "w-full items-center py-2 px-2 flex flex-col gap-3 sm:flex-row sm:justify-between",
       )}
     >
-      <div className="flex items-center gap-2 text-[15px] text-card-foreground/80 font-semibold">
-        {t("global.pagination_info", { from, to, total })}
+      <div className="flex items-center gap-2 text-sm text-card-foreground/80 ">
+        {t("global.pagination.info", { from, to, total })}
       </div>
       <PaginationContent dir={dir} className={cn("flex items-center gap-1.5")}>
         {/* Previous button */}
@@ -296,24 +336,25 @@ export const TablePagination = ({
         </PaginationItem>
       </PaginationContent>
 
-      <div
-        className={cn("flex items-center gap-3 text-[15px] whitespace-nowrap")}
-      >
-        <span className="text-[15px] text-card-foreground/80 font-semibold">
-          {t("global.per_page")}
+      <div className={cn("flex items-center gap-2  whitespace-nowrap")}>
+        <span className="text-sm text-card-foreground/80">
+          {t("global.pagination.per_page")}
         </span>
         <Select value={String(limit)} onValueChange={handlePerPageChange}>
-          <SelectTrigger className="h-7 text-card-foreground text-[14px] font-semibold px-2 rounded-md w-16 bg-background border-border">
+          <SelectTrigger className="h-7 text-card-foreground text-sm font-medium   px-2 rounded-md w-25 bg-background border-border">
             <SelectValue placeholder={String(limit)} />
           </SelectTrigger>
-          <SelectContent className="bg-background" align="end">
+          <SelectContent
+            className="bg-background"
+            align={dir === "rtl" ? "start" : "end"}
+          >
             {[5, 10, 15, 25, 50].map((val) => (
               <SelectItem
                 key={val}
                 value={String(val)}
                 className="text-[14px] font-semibold"
               >
-                {val}
+                {`${val}/${t("global.pagination.page")}`}
               </SelectItem>
             ))}
           </SelectContent>

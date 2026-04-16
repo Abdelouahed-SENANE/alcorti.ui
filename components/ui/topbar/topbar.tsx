@@ -59,7 +59,7 @@ export const Topbar = ({ className, breadcrumbs = [] }: TopbarProps) => {
                       <BreadcrumbLink asChild>
                         <RouterLink
                           className={cn(
-                            "hover:no-underline text-card-foreground/80 hover:text-primary text-xs flex items-center ",
+                            "hover:no-underline text-card-foreground/80 hover:text-primary text-sm flex items-center ",
                             item.active && "text-primary font-semibold",
                           )}
                           to={item.active ? "#" : item.url}

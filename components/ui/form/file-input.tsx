@@ -143,8 +143,9 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       <FieldWrapper label={label} error={error}>
         <div
           className={cn(
-            "relative border-2 mb-4 border-dashed rounded-sm bg-card p-3 flex flex-col gap-3 cursor-pointer hover:border-primary hover:ring-[3px] hover:ring-primary/50 transition-colors",
+            "relative border-2 border-dashed rounded-sm bg-card p-3 flex flex-col gap-2 cursor-pointer hover:border-primary hover:ring-[3px] hover:ring-primary/50 transition-colors",
             className,
+            error && "border-destructive",
           )}
         >
           <input
@@ -174,7 +175,7 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
         {files.map((item, index) => (
           <div
             key={index}
-            className="flex items-center  relative gap-2 border mb-1 rounded-md py-2 pl-2 pr-8 bg-background"
+            className="flex items-center  relative gap-2 border border-border my-1 rounded-md py-2 pl-2 pr-8 bg-card"
           >
             {item.preview ? (
               <img

@@ -1,4 +1,4 @@
-import { BaseOption } from "@/types/api";
+import { BaseOption, Lang } from "@/types/api";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -114,7 +114,7 @@ export function toDateTime(value?: Date | string) {
 
 export function formatDateOnly(
   date: string | Date | undefined | null,
-  locale: "fr" | "ar",
+  locale: Lang,
 ) {
   if (!date) return "";
   const d = new Date(date);
@@ -139,7 +139,7 @@ export function formatDateOnly(
 
 export function formatDateTime(
   date: string | Date | undefined | null,
-  locale: "fr" | "ar",
+  locale: Lang,
 ) {
   if (!date) return "";
   const d = new Date(date);
@@ -169,7 +169,7 @@ export function formatDateTime(
 export function formatDateRange(
   from?: Date | string,
   to?: Date | string,
-  locale: "fr" | "ar" = "fr",
+  locale: Lang = "en",
 ) {
   if (!from && !to) return "";
 
@@ -187,7 +187,7 @@ export function formatDateRange(
 export function formatDateTimeRange(
   from?: Date | string,
   to?: Date | string,
-  locale: "fr" | "ar" = "fr",
+  locale: Lang = "en",
 ) {
   if (!from && !to) return "";
 

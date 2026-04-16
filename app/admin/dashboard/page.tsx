@@ -13,11 +13,6 @@ export default function DashboardPage() {
       url: paths.admin.dashboard.route(),
       active: true,
     },
-    {
-      label: t("navigation.users"),
-      url: paths.admin.users.route(),
-      active: false,
-    },
   ];
   return (
     <DashLayout

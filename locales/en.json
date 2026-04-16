@@ -9,6 +9,21 @@
     }
   },
 
+  "global": {
+    "pagination": {
+      "info": "Showing {{from}} to {{to}} of {{total}}",
+      "per_page": "Per page",
+      "page": "Page"
+    },
+    "loading": "Loading...",
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "search": "Search..."
+  },
+
   "navigation": {
     "dashboard": "Dashboard",
     "users": "Users",
@@ -24,22 +39,104 @@
   },
 
   "users": {
-    "title": "Users",
-    "desc": "Welcome to the users page",
-    "export": "Export",
-    "add": "Add User"
+    "page": {
+      "title": "Users",
+      "desc": "Welcome to the users page"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "is_active": "Active",
+      "cin": "CNI",
+      "phone": "Phone",
+      "created_at": "Created At",
+      "updated_at": "Updated At"
+    },
+    "fields": {
+      "first_name": {
+        "label": "First Name",
+        "errors": {
+          "min": "First name must be at least 2 characters",
+          "max": "First name must be less than 255 characters"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "errors": {
+          "required": "Email is required",
+          "invalid": "Email is invalid",
+          "max": "Email must be less than 255 characters"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "errors": {
+          "required": "Password is required",
+          "invalid": "Password is invalid",
+          "min": "Password must be at least 8 characters"
+        }
+      },
+      "last_name": {
+        "label": "Last Name",
+        "errors": {
+          "min": "Last name must be at least 2 characters",
+          "max": "Last name must be less than 255 characters"
+        }
+      },
+      "cin": {
+        "label": "CIN",
+        "errors": {
+          "min": "CIN must be at least 5 characters",
+          "max": "CIN must be less than 50 characters",
+          "invalid": "Invalid CIN format"
+        }
+      },
+      "phone": {
+        "label": "Phone",
+        "errors": {
+          "required": "Phone is required",
+          "max": "Phone must be less than 20 characters"
+        }
+      },
+      "type": {
+        "label": "Type",
+        "shipper": "Shipper",
+        "client": "Client",
+        "errors": {
+          "required": "User type is required"
+        }
+      }
+    },
+    "actions": {
+      "add": "Add User",
+      "export": "Export",
+      "view": "View User",
+      "edit": "Edit User",
+      "delete": "Delete User"
+    },
+    "messages": {
+      "empty": "No users found"
+    }
   },
 
   "auth": {
+    "register": {
+      "already_have_account": "Already have an account?",
+      "title": "Sign Up",
+      "description": "Join Alcorti and manage your business efficiently."
+    },
+    "login": {
+      "title": "Sign In",
+      "description": "Sign in to your account",
+      "submit": "Sign In",
+      "forgot_password": "Forgot your password?"
+    },
     "titles": {
-      "login": "Sign In",
-      "register": "Sign Up",
       "forgot-password": "Forgot Password",
       "reset-password": "Reset Password"
     },
     "descriptions": {
-      "login": "Sign in to your account",
-      "register": "Sign up to your account",
       "forgot-password": "Forgot your password?",
       "reset-password": "Reset your password"
     },
@@ -50,18 +147,41 @@
       "reset-password": "Reset Password"
     },
     "fields": {
-      "email": {
-        "label": "Email",
+      "login": {
+        "label": "Email/CNI",
         "errors": {
-          "required": "Email is required",
-          "invalid": "Email is invalid"
+          "required": "Email or CNI is required",
+          "invalid": "Email or CNI is invalid"
         }
       },
       "password": {
         "label": "Password",
         "errors": {
           "required": "Password is required",
-          "invalid": "Password is invalid"
+          "invalid": "Password is invalid",
+          "min": "Password must be at least 8 characters"
+        }
+      }
+    }
+  },
+
+  "client": {
+    "complete": {
+      "title": "Complete your profile",
+      "desc": "Please provide your CIN scans to complete your profile.",
+      "submit": "Complete profile",
+      "fields": {
+        "cin_front": {
+          "label": "CIN Front",
+          "errors": {
+            "required": "CIN Front is required"
+          }
+        },
+        "cin_back": {
+          "label": "CIN Back",
+          "errors": {
+            "required": "CIN Back is required"
+          }
         }
       }
     }

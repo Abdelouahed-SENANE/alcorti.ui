@@ -49,9 +49,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, InputSearchProps>(
     return (
       <div
         dir={dir}
-        className={cn("relative h-9  duration-300 w-full ", className)}
+        className={cn("relative h-9  duration-300 w-xs ", className)}
       >
-        <Search className="absolute inset-y-1/2 -translate-y-1/2 insert-s-2 size-4 pointer-events-none text-card-foreground/50" />
+        <Search className="absolute inset-y-1/2 -translate-y-1/2 ltr:left-2 rtl:right-2 size-4 pointer-events-none text-card-foreground/50" />
         <input
           ref={ref}
           type="text"
@@ -61,7 +61,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, InputSearchProps>(
           onFocus={onFocus}
           onBlur={onBlur}
           className={cn(
-            "w-full h-full ltr:pl-8 rtl:pr-8 rtl:pl-2  ltr:text-left rtl:text-right ltr:pr-2 rounded-sm border border-border outline-none text-card-foreground text-sm font-medium placeholder:text-card-foreground/50",
+            "w-full h-full ltr:pl-8 rtl:pr-8 rtl:pl-2   ltr:text-left rtl:text-right ltr:pr-2 rounded-md border border-border outline-none text-foreground text-sm bg-card font-medium placeholder:text-foreground/50",
             "focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-primary ltr:pl-8 rtl:pr-8 rtl:pl-2 ltr:pr-2",
           )}
           {...props}
