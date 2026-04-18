@@ -15,8 +15,14 @@ const buttonVariants = cva(
         default: " text-primary-foreground hover:bg-primary bg-primary",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        success:
+          "bg-success text-white hover:bg-success/90 focus-visible:ring-success/20 dark:focus-visible:ring-success/40 dark:bg-success/10 dark:text-success",
+        warning:
+          "bg-warning text-white hover:bg-warning/90 focus-visible:ring-warning/20 dark:focus-visible:ring-warning/40 dark:bg-warning/10 dark:text-warning",
+        error:
+          "bg-error text-white hover:bg-error/90 focus-visible:ring-error/20 dark:focus-visible:ring-error/40 dark:bg-error/10 dark:text-error",
         outline:
-          "border bg-card  hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-border dark:hover:bg-border/50",
+          "border bg-muted  hover:bg-muted/90 hover:text-accent-foreground border-border",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:
@@ -60,6 +66,7 @@ function Button({
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       disabled={isLoading}
+      dir={isRTL ? "rtl" : "ltr"}
       aria-disabled={isLoading}
       {...props}
     >
@@ -70,8 +77,8 @@ function Button({
           {isLoading && (
             <Spinner
               size="xs"
-              className={isRTL ? "ml-1" : "mr-1"}
-              variant="light"
+              className={cn("rtl:ml-1 ltr:mr-1")}
+              variant={variant === "success" ? "success" : variant === "error" ? "error" : variant === "warning" ? "warning" : "primary"}
             />
           )}
           {children}

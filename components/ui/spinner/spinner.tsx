@@ -11,7 +11,11 @@ const sizes = {
 };
 
 const variants = {
-  light: "text-white fill-white",
+  light: "text-white/30 fill-white",
+  dark: "text-success/30 fill-success",
+  success: "text-white/30 fill-white dark:text-success/30 dark:fill-success",
+  error: "text-white/30 fill-white dark:text-error/30 dark:fill-error",
+  warning: "text-white/30 fill-white dark:text-warning/30 dark:fill-warning",
   primary: "text-primary/30 fill-primary dark:text-primary/30",
 };
 
@@ -36,7 +40,7 @@ export const Spinner = ({
           "animate-spin",
           sizes[size],
           variants[variant],
-          className
+          className,
         )}
       >
         <path

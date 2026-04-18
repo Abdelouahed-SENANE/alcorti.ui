@@ -62,7 +62,10 @@ export type AuthUser = {
   email: string;
   role?: ROLES;
   avatar?: string;
+  is_active?: boolean;
   is_completed?: boolean;
+  status?: string;
+  rejection_reason?: string | null;
 };
 
 export type ApiError<T = any> = {

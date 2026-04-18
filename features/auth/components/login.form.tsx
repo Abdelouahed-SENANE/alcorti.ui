@@ -26,10 +26,9 @@ export const LoginForm = () => {
           router.replace(paths.home.root);
         }
       },
-      onError: () => {
+      onError: (res: any) => {
         toast({
-          title: "Login failed",
-          description: "Invalid credentials",
+          title: res.response.data.message,
           type: "error",
         });
       },

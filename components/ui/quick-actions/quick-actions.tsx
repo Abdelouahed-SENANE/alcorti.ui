@@ -6,9 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown/dropdown-menu";
-import { useAuthorization } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { MoreHorizontal } from "lucide-react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../spinner";
 
@@ -36,15 +36,17 @@ type EntityActionsProps<T = any> = {
   onAction?: (action: QuickAction["value"], id: string) => void;
 };
 
-export const QuickActions = ({
+export const QuickActions = <T,>({
   id,
   entity,
   actions,
   onAction,
-}: EntityActionsProps) => {
-  const { hasRole } = useAuthorization();
+}: EntityActionsProps<T>) => {
+  const filteredActions = useMemo(() => {
+    return actions.filter((action) => !action.check || action.check(entity));
+  }, [actions, entity]);
 
-  if (!actions || actions.length === 0) return null;
+  if (!filteredActions || filteredActions.length === 0) return null;
   const { t } = useTranslation();
   return (
     <DropdownMenu>
@@ -63,46 +65,55 @@ export const QuickActions = ({
         sideOffset={4}
         className="max-w-lg rounded-sm shadow-md p-1 bg-background"
       >
-        {actions.map(({ label, value, icon, disabled = false, render }) => {
-          if (render) {
+        {filteredActions.map(
+          ({
+            label,
+            value,
+            icon,
+            disabled = false,
+            render,
+          }: QuickAction<T>) => {
+            if (render) {
+              return (
+                <div key={value} className="w-full">
+                  {render(id, entity)}
+                </div>
+              );
+            }
             return (
-              <div key={value} className="w-full">
-                {render(id, entity)}
-              </div>
+              <DropdownMenuItem
+                key={value}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  onAction?.(value, id);
+                }}
+                disabled={disabled}
+                className={cn(
+                  "group flex rtl:flex-row-reverse items-center gap-1 text-xs! font-medium cursor-pointer rounded-none transition-colors px-2 py-1.5",
+                  disabled &&
+                    "disabled:opacity-50! disabled:cursor-not-allowed!",
+                  "hover:bg-secondary! hover:text-secondary-foreground!  text-card-foreground/80",
+                )}
+              >
+                {disabled ? (
+                  <>
+                    {<Spinner size="sm" variant="primary" />}
+                    <span className="">{t("global.loading")}</span>
+                  </>
+                ) : (
+                  <>
+                    {icon && (
+                      <span className="transition-colors [&_svg]:text-card-foreground/80! [&_svg]:group-hover:text-secondary-foreground!">
+                        {icon}
+                      </span>
+                    )}
+                    <span>{label}</span>
+                  </>
+                )}
+              </DropdownMenuItem>
             );
-          }
-          return (
-            <DropdownMenuItem
-              key={value}
-              onSelect={(e) => {
-                e.preventDefault();
-                onAction?.(value, id);
-              }}
-              disabled={disabled}
-              className={cn(
-                "group flex rtl:flex-row-reverse items-center gap-1 text-xs! font-medium cursor-pointer rounded-none transition-colors px-2 py-1.5",
-                disabled && "disabled:opacity-50! disabled:cursor-not-allowed!",
-                "hover:bg-secondary! hover:text-secondary-foreground!  text-card-foreground/80",
-              )}
-            >
-              {disabled ? (
-                <>
-                  {<Spinner size="sm" variant="primary" />}
-                  <span className="">{t("global.loading")}</span>
-                </>
-              ) : (
-                <>
-                  {icon && (
-                    <span className="transition-colors [&_svg]:text-card-foreground/80! [&_svg]:group-hover:text-secondary-foreground!">
-                      {icon}
-                    </span>
-                  )}
-                  <span>{label}</span>
-                </>
-              )}
-            </DropdownMenuItem>
-          );
-        })}
+          },
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

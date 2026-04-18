@@ -23,7 +23,6 @@ export type CompleteClientInput = z.infer<typeof completeClientInputSchema>;
 
 const completeClientProfile = async (payload: CompleteClientInput) => {
   const formData = new FormData();
-
   formData.append("attachments[CIN_FRONT]", payload.attachments.CIN_FRONT);
   formData.append("attachments[CIN_BACK]", payload.attachments.CIN_BACK);
 

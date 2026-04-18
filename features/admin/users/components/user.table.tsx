@@ -7,11 +7,14 @@ import { paths } from "@/config/paths";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { cn, formatDateTime } from "@/lib/utils";
 import { Lang, Pagination } from "@/types/api";
-import { Edit, Eye, Trash } from "lucide-react";
+import { Eye, Lock, Unlock } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useToggleAccountState } from "../api/account-state";
 import { User } from "../user.type";
-// import { ClientTableSkeleton } from "./skeletons/client.table-skeleton";
+import { AccountStateDialog } from "./account-state.dialog";
+
 interface UserTableProps {
   users: User[];
   table: ReturnType<typeof useQueryTable<User>>;
@@ -25,36 +28,58 @@ export const UserTable = ({
   isFetching,
 }: UserTableProps) => {
   const { t } = useTranslation();
-  const [id, setId] = useState<string>("");
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const { open, close, isOpen } = useDisclosure();
   const lang = i18n.language as Lang;
+  const router = useRouter();
 
-  const handleAction = useCallback((action: string, id: string) => {
-    switch (action) {
-      case "delete":
-        setId(id);
-        open();
-        break;
-      default:
-        break;
-    }
-  }, []);
+  const toggleStatus = useToggleAccountState({
+    mutationConfig: {
+      onSuccess: () => {
+        close();
+        setSelectedUser(null);
+      },
+    },
+  });
+
+  const handleAction = useCallback(
+    (action: string, user: User) => {
+      switch (action) {
+        case "review":
+          router.push(paths.admin.users.review.route(user.id));
+          break;
+        case "block":
+        case "unblock":
+          setSelectedUser(user);
+          open();
+          break;
+        default:
+          break;
+      }
+    },
+    [router, open],
+  );
 
   const ACTIONS: QuickAction[] = [
     {
-      label: t("users.actions.view"),
-      value: "view",
+      label: t("users.actions.review"),
+      value: "review",
       icon: <Eye className="h-4 w-4 text-foreground" />,
-    },
-{
-      label: t("users.actions.edit"),
-      value: "edit",
-      icon: <Edit className="h-4 w-4 text-foreground" />,
+      check: (user: User) => user.status === "pending" && user.is_completed,
     },
     {
-      label: t("users.actions.delete"),
-      value: "delete",
-      icon: <Trash className="h-4 w-4 text-foreground" />,
+      label: t("users.actions.block"),
+      value: "block",
+      icon: <Lock className="h-4 w-4 text-foreground" />,
+      check: (user: User) =>
+        user.is_active && user.role !== "admin" && user.status === "approved",
+    },
+    {
+      label: t("users.actions.unblock"),
+      value: "unblock",
+      icon: <Unlock className="h-4 w-4 text-foreground" />,
+      check: (user: User) =>
+        !user.is_active && user.role !== "admin" && user.status === "approved",
     },
   ];
 
@@ -88,12 +113,12 @@ export const UserTable = ({
         Cell: ({ entry: { role } }) => (
           <Badge
             className={cn(
-              "capitalize",
-              role === "Admin"
-                ? "bg-primary/20 text-primary"
-                : role === "Client"
-                  ? "bg-orange-500/20 text-orange-500"
-                  : "bg-secondary/20 text-secondary",
+              "capitalize px-2 py-0.5",
+              role === "admin"
+                ? "bg-primary/20 text-primary border-none"
+                : role === "client"
+                  ? "bg-orange-500/20 text-orange-500 border-none"
+                  : "bg-secondary/20 text-secondary border-none",
             )}
           >
             {role}
@@ -101,12 +126,30 @@ export const UserTable = ({
         ),
       },
       {
-        title: t("users.columns.is_active"),
+        title: t("users.columns.status"),
+        field: "status",
+        Cell: ({ entry: { status } }) => (
+          <Badge
+            className={cn(
+              "capitalize px-2 py-0.5 border-none",
+              status === "approved"
+                ? "bg-success/10 text-success"
+                : status === "rejected"
+                  ? "bg-destructive/10 text-destructive"
+                  : "bg-warning/10 text-warning",
+            )}
+          >
+            {status}
+          </Badge>
+        ),
+      },
+      {
+        title: t("users.columns.account_state"),
         field: "is_active",
         Cell: ({ entry: { is_active } }) => (
           <Badge
             className={cn(
-              "capitalize",
+              "capitalize px-2 py-0.5 border-none",
               is_active
                 ? "bg-success/10 text-success"
                 : "bg-destructive/10 text-destructive",
@@ -122,27 +165,18 @@ export const UserTable = ({
         title: t("users.columns.created_at"),
         field: "created_at",
         Cell: ({ entry: { created_at } }) => (
-          <div>{formatDateTime(created_at, lang) || "-"}</div>
-        ),
-      },
-      {
-        title: t("users.columns.updated_at"),
-        field: "updated_at",
-        Cell: ({ entry: { updated_at } }) => (
-          <div>{formatDateTime(updated_at, lang) || "-"}</div>
+          <div>{formatDateTime(created_at!, lang) || "-"}</div>
         ),
       },
       {
         title: "",
         field: "id",
-
-        Cell: ({ entry: { id } }) => (
+        Cell: ({ entry }) => (
           <QuickActions
-            entity={"users"}
-            id={id}
+            entity={entry}
+            id={entry.id}
             actions={ACTIONS}
-            onAction={(action, id) => handleAction(action, id)}
-            
+            onAction={(action) => handleAction(action, entry)}
           />
         ),
       },
@@ -166,6 +200,13 @@ export const UserTable = ({
           total: pagination?.total!,
           rootUrl: paths.admin.users.route(),
         }}
+      />
+      <AccountStateDialog
+        isOpen={isOpen}
+        user={selectedUser}
+        onClose={close}
+        onConfirm={() => toggleStatus.mutate({ id: selectedUser?.id! })}
+        isLoading={toggleStatus.isPending}
       />
     </>
   );

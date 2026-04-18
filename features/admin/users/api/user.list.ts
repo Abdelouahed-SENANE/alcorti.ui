@@ -2,8 +2,7 @@ import { api$ } from "@/config/axios";
 import { QueryConfig } from "@/config/react-query";
 import { ApiResponse, Paginated } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
-import { User } from "../user.type";
-import { userKeys } from "./user-keys";
+import { User, userKeys } from "../user.type";
 
 export interface UserParams {
   term?: string;
@@ -45,7 +44,7 @@ const getUsers = async (
 export const getUsersQueryOptions = (params: UserParams) => {
   const normalized = normalizeUserParams(params);
   return {
-    queryKey: [...userKeys.list(normalized)],
+    queryKey: userKeys.collection(normalized),
     queryFn: () => getUsers(normalized),
   };
 };

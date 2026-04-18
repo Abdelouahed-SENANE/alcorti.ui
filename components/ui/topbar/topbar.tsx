@@ -16,6 +16,7 @@ import { RouterLink } from "../link";
 import { useSidebar } from "../sidebar";
 import { ThemeToggle } from "../theme";
 import { UserNavgation } from "../user-navigation";
+import { Skeleton } from "../skeleton";
 
 type TopbarProps = {
   className?: string;
@@ -57,15 +58,19 @@ export const Topbar = ({ className, breadcrumbs = [] }: TopbarProps) => {
                     {index === 0 && <BreadcrumbSeparator />}
                     <BreadcrumbItem>
                       <BreadcrumbLink asChild>
-                        <RouterLink
-                          className={cn(
-                            "hover:no-underline text-card-foreground/80 hover:text-primary text-sm flex items-center ",
-                            item.active && "text-primary font-semibold",
-                          )}
-                          to={item.active ? "#" : item.url}
-                        >
-                          {item.label}
-                        </RouterLink>
+                        {!item.label ? (
+                          <Skeleton className="w-20 h-5" />
+                        ) : (
+                          <RouterLink
+                            className={cn(
+                              "hover:no-underline text-card-foreground/80 hover:text-primary text-sm flex items-center ",
+                              item.active && "text-primary font-semibold",
+                            )}
+                            to={item.active ? "#" : item.url}
+                          >
+                            {item.label}
+                          </RouterLink>
+                        )}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     {index < breadcrumbs.length - 1 && (

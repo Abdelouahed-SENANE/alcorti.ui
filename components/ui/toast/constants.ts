@@ -4,34 +4,34 @@ import React from "react";
 export const alertStyles = {
   info: {
     icon: React.createElement(Info, {
-      className: "text-blue-500 size-5",
+      className: "text-white size-5",
       "aria-hidden": true,
     }),
-    text: "text-blue-500",
-    bg: "bg-blue-500",
+    text: "text-white",
+    bg: "bg-info",
   },
   success: {
     icon: React.createElement(CircleCheck, {
-      className: "text-green-500 size-5",
+      className: "text-white size-5",
       "aria-hidden": true,
     }),
-    text: "text-green-500",
-    bg: "bg-green-500",
+    text: "text-white",
+    bg: "bg-success",
   },
   error: {
-    icon: React.createElement(CircleX, {
-      className: "text-red-500 size-5",
+    icon: React.createElement(CircleAlert, {
+      className: "text-white size-5",
       "aria-hidden": true,
     }),
-    text: "text-red-500",
-    bg: "bg-red-500",
+    text: "text-white",
+    bg: "bg-destructive",
   },
   warning: {
     icon: React.createElement(CircleAlert, {
-      className: "text-yellow-500 size-5",
+      className: "text-white size-5",
       "aria-hidden": true,
     }),
-    text: "text-yellow-500",
-    bg: "bg-yellow-500",
+    text: "text-white",
+    bg: "bg-warning",
   },
 } as const;

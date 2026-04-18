@@ -4,6 +4,7 @@ export const env = {
     version: process.env.NEXT_PUBLIC_APP_VERSION,
     env: process.env.NEXT_PUBLIC_APP_ENV,
     url: process.env.NEXT_PUBLIC_APP_URL,
+    storageUrl: process.env.NEXT_PUBLIC_STORAGE_URL,
   },
   logging: {
     level: process.env.NEXT_PUBLIC_LOG_LEVEL,

@@ -112,6 +112,10 @@
   },
 
   "auth": {
+    "banned": {
+      "title": "Compte Désactivé",
+      "description": "Votre compte a été désactivé par un administrateur. Veuillez contacter le support si vous pensez qu'il s'agit d'une erreur."
+    },
     "register": {
       "already_have_account": "Vous avez déjà un compte?",
       "title": "Créer un nouveau compte",
@@ -161,6 +165,14 @@
       "title": "Complétez votre profil",
       "desc": "Veuillez fournir une copie de votre CNI pour compléter votre profil.",
       "submit": "Compléter le profil",
+      "pending": {
+        "title": "Compte en attente d'approbation",
+        "desc": "Votre profil a été complété et est actuellement en cours de révision par notre équipe. Vous serez informé dès que votre compte sera approuvé."
+      },
+      "rejected": {
+        "title": "Compte rejeté",
+        "desc": "Votre profil a été rejeté. Veuillez contacter le support pour plus d'informations."
+      },
       "fields": {
         "cin_front": {
           "label": "CNI Recto",
@@ -183,6 +195,14 @@
       "title": "Complétez votre profil",
       "desc": "Veuillez fournir une copie de votre CNI pour compléter votre profil.",
       "submit": "Compléter le profil",
+      "pending": {
+        "title": "Compte en attente d'approbation",
+        "desc": "Votre profil a été complété et est actuellement en cours de révision par notre équipe. Vous serez informé dès que votre compte sera approuvé."
+      },
+      "rejected": {
+        "title": "Compte rejeté",
+        "desc": "Votre profil a été rejeté. Veuillez contacter le support pour plus d'informations."
+      },
       "fields": {
         "cin_front": {
           "label": "CNI Recto",

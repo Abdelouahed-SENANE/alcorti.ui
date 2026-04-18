@@ -15,6 +15,8 @@
       "click_to_upload": "Click to upload",
       "click_to_change": "Click to change"
     },
+    "yes": "Yes",
+    "no": "No",
     "results": "results",
     "no_results": "No results found",
     "searching": "Searching...",
@@ -60,7 +62,11 @@
   "users": {
     "page": {
       "title": "Users",
-      "desc": "Welcome to the users page"
+      "desc": "Welcome to the users page",
+      "review": {
+        "title": "Review User",
+        "desc": "Review user information"
+      }
     },
     "columns": {
       "name": "Name",
@@ -69,7 +75,9 @@
       "is_active": "Active",
       "cin": "CNI",
       "phone": "Phone",
-      "created_at": "Created At",
+      "account_state": "Account State",
+      "is_completed": "Profile Completed",
+      "created_at": "Joined At",
       "updated_at": "Updated At"
     },
     "fields": {
@@ -118,21 +126,74 @@
           "max": "Phone must be less than 20 characters"
         }
       },
-      "type": {
-        "label": "Type",
+      "role": {
+        "label": "Role",
         "shipper": "Shipper",
         "client": "Client",
         "errors": {
-          "required": "User type is required"
+          "required": "User role is required"
+        }
+      },
+      "status": {
+        "label": "Status",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "errors": {
+          "required": "User status is required"
         }
       }
     },
     "actions": {
       "add": "Add User",
       "export": "Export",
-      "view": "View User",
+      "review": "Review User",
       "edit": "Edit User",
-      "delete": "Delete User"
+      "delete": "Delete User",
+      "block": "Block User",
+      "unblock": "Unblock User",
+      "approve": "Confirm",
+      "reject": "Refuse",
+      "activate": "Reactivate",
+      "deactivate": "Deactivate"
+    },
+    "dialogs": {
+      "activate": {
+        "title": "Reactivate this account?",
+        "description": "The user will be able to log in again and regain full access to their account."
+      },
+      "deactivate": {
+        "title": "Deactivate this account?",
+        "description": "The user will be signed out and won't be able to log in until you reactivate the account."
+      }
+    },
+    "review": {
+      "title": "User Information",
+      "subtitle": "Review user information",
+      "rejection_reason_label": "Rejection Reason",
+      "actions": {
+        "approve": "Approve User",
+        "reject": "Reject User"
+      },
+      "placeholders": {
+        "rejection_reason": "Reason for rejection..."
+      },
+      "documents": {
+        "cin_front": "CIN Front",
+        "cin_back": "CIN Back",
+        "driver_license": "Driver License",
+        "registration": "Registration Document"
+      },
+      "success": {
+        "approve_title": "User Approved",
+        "approve_desc": "The user has been successfully approved.",
+        "reject_title": "User Rejected",
+        "reject_desc": "The user has been rejected."
+      },
+      "errors": {
+        "reason_required": "Reason Required",
+        "reason_required_desc": "Please provide a reason for rejection."
+      }
     },
     "messages": {
       "empty": "No users found"
@@ -140,6 +201,10 @@
   },
 
   "auth": {
+    "banned": {
+      "title": "Account Deactivated",
+      "description": "Your account has been deactivated by an administrator. Please contact support if you believe this is a mistake."
+    },
     "register": {
       "already_have_account": "Already have an account?",
       "title": "Sign Up",
@@ -162,6 +227,8 @@
     "buttons": {
       "login": "Sign In",
       "register": "Sign Up",
+      "resubmit": "Resubmit Documents",
+      "complete": "Complete Profile",
       "forgot-password": "Forgot Password",
       "reset-password": "Reset Password"
     },
@@ -189,6 +256,14 @@
       "title": "Complete your profile",
       "desc": "Please provide your CIN scans to complete your profile.",
       "submit": "Complete profile",
+      "pending": {
+        "title": "Account Pending Approval",
+        "desc": "Your profile has been completed and is currently being reviewed by our team. You will be notified once your account is approved."
+      },
+      "rejected": {
+        "title": "Account Rejected",
+        "desc": "Your profile was rejected. Please contact support for more information."
+      },
       "fields": {
         "cin_front": {
           "label": "CIN Front",
@@ -211,6 +286,14 @@
       "title": "Complete your profile",
       "desc": "Please provide your CIN scans to complete your profile.",
       "submit": "Complete profile",
+      "pending": {
+        "title": "Account Pending Approval",
+        "desc": "Your profile has been completed and is currently being reviewed by our team. You will be notified once your account is approved."
+      },
+      "rejected": {
+        "title": "Account Rejected",
+        "desc": "Your profile was rejected. Please contact support for more information."
+      },
       "fields": {
         "plate_number": {
           "label": "Plate Number",
@@ -254,7 +337,7 @@
     }
   },
 
-   "vehicles": {
+  "vehicles": {
     "page": {
       "title": "Vehicles",
       "desc": "Welcome to the vehicles page"

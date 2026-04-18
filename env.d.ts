@@ -10,6 +10,7 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_WS_URL: string;
     readonly NEXT_PUBLIC_API_TIMEOUT: string;
     readonly NEXT_PUBLIC_API_RETRIES: string;
+    readonly NEXT_PUBLIC_STORAGE_URL: string;
 
     readonly NEXT_PUBLIC_AUTH_PROVIDER:
       | "local"

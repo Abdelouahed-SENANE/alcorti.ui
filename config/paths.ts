@@ -33,6 +33,10 @@ export const paths = {
     users: {
       root: "users",
       route: () => "/admin/users",
+      review: {
+        root: "[id]/review",
+        route: (id: string) => `/admin/users/${id}/review`,
+      },
     },
     vehicles: {
       root: "vehicles",

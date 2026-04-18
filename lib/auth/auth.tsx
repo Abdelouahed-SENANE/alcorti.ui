@@ -57,6 +57,10 @@ export const AuthGuard = ({
       };
     }
 
+    if (user.is_active === false) {
+      return { status: "banned" as const };
+    }
+
     if (role) {
       const allowedRoles = Array.isArray(role)
         ? role.map((r) => r.toLowerCase())
@@ -66,10 +70,20 @@ export const AuthGuard = ({
         return { status: "redirect" as const, to: paths.home.route() };
       }
     }
-    if (requireCompleted && !user.is_completed) {
+    if (requireCompleted) {
       const userRole = user.role?.toLowerCase();
-      if (userRole === "client" || userRole === "shipper") {
-        return { status: "gate" as const };
+      const isClientOrShipper = userRole === "client" || userRole === "shipper";
+
+      if (isClientOrShipper) {
+        if (!user.is_completed) {
+          return { status: "gate" as const };
+        }
+        if (user.status === "pending") {
+          return { status: "pending" as const };
+        }
+        if (user.status === "rejected") {
+          return { status: "rejected" as const };
+        }
       }
     }
 
@@ -86,13 +100,35 @@ export const AuthGuard = ({
   if (resolution.status === "redirect") return null;
 
   if (resolution.status === "gate") {
-    const { CompletionGate } = require("@/features/auth/components/onboarding/completion.gate");
+    const {
+      CompletionGate,
+    } = require("@/features/auth/components/onboarding/completion.gate");
     return <CompletionGate />;
+  }
+
+  if (resolution.status === "pending") {
+    const {
+      PendingApprovalGate,
+    } = require("@/features/auth/components/onboarding/pending.gate");
+    return <PendingApprovalGate />;
+  }
+
+  if (resolution.status === "rejected" && user) {
+    const {
+      RejectedProfileGate,
+    } = require("@/features/auth/components/onboarding/rejected.gate");
+    return <RejectedProfileGate reason={user.rejection_reason} />;
+  }
+
+  if (resolution.status === "banned") {
+    const {
+      BannedGate,
+    } = require("@/features/auth/components/onboarding/banned.gate");
+    return <BannedGate />;
   }
 
   return <>{children}</>;
 };
-
 
 /* ═══════════════════════════════════════════════════════════════
    BACKWARD COMPATIBILITY

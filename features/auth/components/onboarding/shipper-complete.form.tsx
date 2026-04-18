@@ -9,6 +9,7 @@ import {
   useCompleteShipperProfile,
 } from "@/features/auth/api/shipper.complete";
 import { ApiResponse, AuthUser } from "@/types/api";
+import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -214,10 +215,11 @@ export const CompleteProfileForm = () => {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full gap-1"
             isLoading={completeProfile.isPending}
           >
-            {t("shipper.complete.submit", "Complete Profile")}
+            <CheckCircle className="size-4" />
+            {t("auth.buttons.complete", "Complete Profile")}
           </Button>
         </>
       )}
