@@ -1,22 +1,16 @@
 "use client";
-import { cn, formatFileSize } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import imageCompression from "browser-image-compression";
-import { FileText, Trash2, UploadCloud } from "lucide-react";
+import { FileText, Plus, Trash2, UploadCloud } from "lucide-react";
 import * as React from "react";
 import { type UseFormRegisterReturn } from "react-hook-form";
 import { FieldWrapper, FieldWrapperPassThroughProps } from "./field-wrapper";
 
-/* ------------------------------------------------------------------ */
-/* Types                                                              */
-/* ------------------------------------------------------------------ */
 type PreviewFile = {
   file: File;
   preview?: string;
 };
 
-/* ------------------------------------------------------------------ */
-/* Props                                                              */
-/* ------------------------------------------------------------------ */
 export type FileInputProps = FieldWrapperPassThroughProps & {
   registration?: Partial<UseFormRegisterReturn>;
   onFilesSelect?: (files: File[]) => void;
@@ -28,9 +22,6 @@ export type FileInputProps = FieldWrapperPassThroughProps & {
   className?: string;
 };
 
-/* ------------------------------------------------------------------ */
-/* Component                                                          */
-/* ------------------------------------------------------------------ */
 export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
     {
@@ -51,18 +42,12 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const [files, setFiles] = React.useState<PreviewFile[]>([]);
     const [isCompressing, setIsCompressing] = React.useState(false);
 
-    /* -------------------------------------------------------------- */
-    /* Handle File Selection                                          */
-    /* -------------------------------------------------------------- */
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
       const selected = Array.from(e.target.files ?? []);
       if (!selected.length) return;
 
       setIsCompressing(true);
-
       const processed: PreviewFile[] = [];
-
-      // If single file mode, only take the first one
       const filesToProcess = multiple ? selected : [selected[0]];
 
       for (const originalFile of filesToProcess) {
@@ -74,7 +59,6 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             maxWidthOrHeight: 1920,
             useWebWorker: true,
           });
-
           finalFile =
             compressed instanceof File
               ? compressed
@@ -95,19 +79,17 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       }
 
       setFiles((prev) => {
-        // Revoke old previews if replacing
         if (!multiple) {
           prev.forEach((f) => {
             if (f.preview) URL.revokeObjectURL(f.preview);
           });
         }
-
         const next = multiple ? [...prev, ...processed] : processed;
         onFilesSelect?.(next.map((f) => f.file));
         return next;
       });
-      setIsCompressing(false);
 
+      setIsCompressing(false);
       e.target.value = "";
     };
 
@@ -119,91 +101,94 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       };
     }, []);
 
-    /* -------------------------------------------------------------- */
-    /* Remove File                                                    */
-    /* -------------------------------------------------------------- */
     const removeFile = (index: number) => {
       setFiles((prev) => {
         const next = [...prev];
         const removed = next.splice(index, 1);
-
         if (removed[0]?.preview) {
           URL.revokeObjectURL(removed[0].preview);
         }
-
         onFilesSelect?.(next.map((f) => f.file));
         return next;
       });
     };
 
-    /* -------------------------------------------------------------- */
-    /* Render                                                         */
-    /* -------------------------------------------------------------- */
+    const hasFiles = files.length > 0;
+
     return (
       <FieldWrapper label={label} error={error}>
         <div
           className={cn(
-            "relative border-2 border-dashed rounded-sm bg-card p-3 flex flex-col gap-2 cursor-pointer hover:border-primary hover:ring-[3px] hover:ring-primary/50 transition-colors",
-            className,
+            "relative border border-dashed rounded-md bg-muted/30 transition-colors",
+            "hover:border-primary hover:bg-muted/50",
             error && "border-destructive",
+            hasFiles ? "p-2" : "p-4",
+            className,
           )}
         >
           <input
             type="file"
             accept={accept}
             multiple={multiple}
-            className="absolute inset-0 opacity-0 cursor-pointer"
+            className="absolute inset-0 opacity-0 cursor-pointer z-10"
             ref={ref}
             {...registration}
             {...props}
             onChange={handleFileChange}
           />
 
-          {/* Placeholder */}
-          <div className="flex flex-col items-center justify-center py-3 text-foreground/70">
-            <UploadCloud className="size-6 mb-2 text-primary" />
-            <p className="text-sm">
-              {isCompressing
-                ? "Processing files..."
-                : "Click or drag files here"}
-            </p>
-            <p className="text-xs text-foreground/50">
-              {placeholder ? placeholder : "Images & PDF up to"} {maxSizeMB}MB
-            </p>
-          </div>
-        </div>
-        {files.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-center  relative gap-2 border border-border my-1 rounded-md py-2 pl-2 pr-8 bg-card"
-          >
-            {item.preview ? (
-              <img
-                src={item.preview}
-                className="size-8 rounded object-cover border"
-                alt=""
-              />
-            ) : (
-              <FileText className="size-8 text-primary" />
-            )}
-
-            <div className="flex-1 text-sm truncate">
-              {item.file.name}
-              <br />
-              <span className="text-foreground/90 text-sm font-bold">
-                {formatFileSize(item.file.size)}
+          {/* Empty State */}
+          {!hasFiles && (
+            <div className="flex items-center justify-center gap-2 text-muted-foreground">
+              <UploadCloud className="size-4" />
+              <span className="text-sm">
+                {isCompressing ? "Processing..." : placeholder ?? "Upload files"}
               </span>
             </div>
+          )}
 
-            <button
-              type="button"
-              onClick={() => removeFile(index)}
-              className="text-forground absolute cursor-pointer hover:text-error/70 top-2 right-2"
-            >
-              <Trash2 className="size-4" />
-            </button>
-          </div>
-        ))}
+          {/* Files Preview */}
+          {hasFiles && (
+            <div className="flex flex-wrap gap-2">
+              {files.map((item, index) => (
+                <div
+                  key={index}
+                  className="relative group flex items-center gap-2 bg-background border rounded-md px-2 py-1.5"
+                >
+                  {item.preview ? (
+                    <img
+                      src={item.preview}
+                      className="size-6 rounded object-cover"
+                      alt=""
+                    />
+                  ) : (
+                    <FileText className="size-5 text-muted-foreground" />
+                  )}
+                  <span className="text-xs max-w-[100px] truncate">
+                    {item.file.name}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeFile(index);
+                    }}
+                    className="text-muted-foreground hover:text-destructive z-20"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </button>
+                </div>
+              ))}
+
+              {/* Add More Button */}
+              {multiple && (
+                <div className="flex items-center justify-center px-3 py-1.5 border border-dashed rounded-md text-card-foreground">
+                  <Plus className="size-4" />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </FieldWrapper>
     );
   },

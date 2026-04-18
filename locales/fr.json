@@ -154,7 +154,49 @@
         }
       }
     }
-  }
+  },
 
-  
+  "client": {
+    "complete": {
+      "title": "Complétez votre profil",
+      "desc": "Veuillez fournir une copie de votre CNI pour compléter votre profil.",
+      "submit": "Compléter le profil",
+      "fields": {
+        "cin_front": {
+          "label": "CNI Recto",
+          "errors": {
+            "required": "CNI Recto est requis"
+          }
+        },
+        "cin_back": {
+          "label": "CNI Verso",
+          "errors": {
+            "required": "CNI Verso est requis"
+          }
+        }
+      }
+    }
+  },
+
+  "shipper": {
+    "complete": {
+      "title": "Complétez votre profil",
+      "desc": "Veuillez fournir une copie de votre CNI pour compléter votre profil.",
+      "submit": "Compléter le profil",
+      "fields": {
+        "cin_front": {
+          "label": "CNI Recto",
+          "errors": {
+            "required": "CNI Recto est requis"
+          }
+        },
+        "cin_back": {
+          "label": "CNI Verso",
+          "errors": {
+            "required": "CNI Verso est requis"
+          }
+        }
+      }
+    }
+  }
 }

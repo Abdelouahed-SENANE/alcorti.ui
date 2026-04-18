@@ -10,12 +10,30 @@
   },
 
   "global": {
+    "upload": {
+      "max_size": "Max size: {{size}} MB",
+      "click_to_upload": "Click to upload",
+      "click_to_change": "Click to change"
+    },
+    "results": "results",
+    "no_results": "No results found",
+    "searching": "Searching...",
     "pagination": {
       "info": "Showing {{from}} to {{to}} of {{total}}",
       "per_page": "Per page",
       "page": "Page"
     },
     "loading": "Loading...",
+    "actions": {
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View",
+      "create": "Create",
+      "export": "Export",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
     "status": {
       "all": "All",
       "active": "Active",
@@ -29,6 +47,7 @@
     "users": "Users",
     "profile": "Profile",
     "settings": "Settings",
+    "vehicles": "Vehicles",
     "logout": "Logout"
   },
 
@@ -184,6 +203,120 @@
           }
         }
       }
+    }
+  },
+
+  "shipper": {
+    "complete": {
+      "title": "Complete your profile",
+      "desc": "Please provide your CIN scans to complete your profile.",
+      "submit": "Complete profile",
+      "fields": {
+        "plate_number": {
+          "label": "Plate Number",
+          "errors": {
+            "required": "Plate Number is required"
+          }
+        },
+        "vehicle_id": {
+          "label": "Vehicle",
+          "errors": {
+            "required": "Vehicle is required"
+          }
+        },
+        "attachments": {
+          "cin_front": {
+            "label": "CIN Front",
+            "errors": {
+              "required": "CIN Front is required"
+            }
+          },
+          "cin_back": {
+            "label": "CIN Back",
+            "errors": {
+              "required": "CIN Back is required"
+            }
+          },
+          "driver_license": {
+            "label": "Driver License",
+            "errors": {
+              "required": "Driver License is required"
+            }
+          },
+          "registration_document": {
+            "label": "Registration Document",
+            "errors": {
+              "required": "Registration Document is required"
+            }
+          }
+        }
+      }
+    }
+  },
+
+   "vehicles": {
+    "page": {
+      "title": "Vehicles",
+      "desc": "Welcome to the vehicles page"
+    },
+    "columns": {
+      "brand": "Brand",
+      "model": "Model",
+      "year": "Year",
+      "price_km": "Price per km",
+      "created_at": "Created At",
+      "updated_at": "Updated At"
+    },
+    "autocomplete": {
+      "label": "Vehicle",
+      "placeholder": "Search for a vehicle..."
+    },
+    "form": {
+      "create": {
+        "title": "Add Vehicle",
+        "desc": "Add new vehicle information"
+      },
+      "update": {
+        "title": "Update Vehicle",
+        "desc": "Update vehicle information"
+      },
+      "fields": {
+        "brand": {
+          "label": "Brand",
+          "errors": {
+            "required": "Brand is required"
+          }
+        },
+        "model": {
+          "label": "Model",
+          "errors": {
+            "required": "Model is required"
+          }
+        },
+        "year": {
+          "label": "Year",
+          "errors": {
+            "required": "Year is required"
+          }
+        },
+        "price_km": {
+          "label": "Price per km",
+          "errors": {
+            "required": "Price per km is required"
+          }
+        }
+      }
+    },
+    "actions": {
+      "add": "Add Vehicle",
+      "export": "Export Vehicles",
+      "view": "View Vehicle",
+      "create": "Create Vehicle",
+      "edit": "Edit Vehicle",
+      "delete": "Delete Vehicle"
+    },
+    "messages": {
+      "empty": "No vehicles found"
     }
   }
 }

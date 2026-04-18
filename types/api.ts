@@ -64,3 +64,10 @@ export type AuthUser = {
   avatar?: string;
   is_completed?: boolean;
 };
+
+export type ApiError<T = any> = {
+  response?: {
+    data: ApiResponse<T>;
+  };
+  message: string;
+};

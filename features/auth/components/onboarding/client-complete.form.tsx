@@ -4,20 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FileInput } from "@/components/ui/form/file-input";
 import { toast } from "@/components/ui/toast/use-toast";
-import { paths } from "@/config/paths";
 import {
   completeClientInputSchema,
   useCompleteClientProfile,
-} from "@/features/client/api/complete-profile";
-import { useQueryClient } from "@tanstack/react-query";
-
-import { useRouter } from "next/navigation";
+} from "@/features/auth/api/client.complete";
+import { ApiResponse, AuthUser } from "@/types/api";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const CompleteProfileForm = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   const completeProfile = useCompleteClientProfile({
     mutationConfig: {
@@ -33,18 +30,17 @@ export const CompleteProfileForm = () => {
           ),
           type: "success",
         });
-
-        router.replace(paths.home.route());
       },
-      onError: () => {
-        toast({
-          title: t("client.profile.complete.error.title", "Error"),
-          description: t(
-            "client.profile.complete.error.desc",
-            "An error occurred while completing your profile.",
-          ),
-          type: "error",
-        });
+      onError: (error: ApiResponse<AuthUser>) => {
+        const serverErrors = error.errors;
+        if (serverErrors) {
+          setErrors(serverErrors);
+        } else {
+          toast({
+            title: error.message || t("global.errors.something_went_wrong"),
+            type: "error",
+          });
+        }
       },
     },
   });
@@ -75,7 +71,7 @@ export const CompleteProfileForm = () => {
               error={
                 (form.formState.errors.attachments?.CIN_FRONT?.message &&
                   t(form.formState.errors.attachments?.CIN_FRONT?.message)) ||
-                undefined
+                errors["attachments.CIN_FRONT"]?.[0]
               }
             />
 
@@ -91,9 +87,11 @@ export const CompleteProfileForm = () => {
                   shouldValidate: true,
                 });
               }}
-              error={t(
-                form.formState.errors.attachments?.CIN_BACK?.message || "",
-              )}
+              error={
+                (form.formState.errors.attachments?.CIN_BACK?.message &&
+                  t(form.formState.errors.attachments?.CIN_BACK?.message)) ||
+                errors["attachments.CIN_BACK"]?.[0]
+              }
             />
           </div>
 

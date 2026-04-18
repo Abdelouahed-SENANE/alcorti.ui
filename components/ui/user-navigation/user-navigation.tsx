@@ -33,7 +33,6 @@ export const UserNavgation = () => {
   const logout = useLogout({
     mutationConfig: {
       onSuccess: () => {
-        qc.clear();
         router.replace(paths.auth.login.route(pathname));
       },
     },

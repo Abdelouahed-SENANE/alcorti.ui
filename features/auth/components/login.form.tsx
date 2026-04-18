@@ -16,10 +16,12 @@ export const LoginForm = () => {
       onSuccess: (res) => {
         const user = res.data;
         const role = user?.role?.toLowerCase();
-        if (role === "client" && !user?.is_completed) {
-          router.replace("/complete/client");
+        if (role === "client") {
+          router.replace(paths.home.route());
         } else if (role === "admin") {
           router.replace(paths.admin.dashboard.route());
+        } else if (role === "shipper") {
+          router.replace(paths.home.route());
         } else {
           router.replace(paths.home.root);
         }

@@ -254,7 +254,7 @@ export const Table = <Entry extends BaseEntity>({
                 className="text-center py-5"
               >
                 <div className="flex items-center justify-center gap-2 text-card-foreground/60">
-                  <Spinner size="sm" />
+                <Spinner size="sm" />
                   <span className="text-xs">{t("global.loading")}</span>
                 </div>
               </TableCell>

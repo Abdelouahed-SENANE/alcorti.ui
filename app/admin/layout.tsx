@@ -8,6 +8,6 @@ export default function AdminLayout({
   return (
     <ProtectedRoute>
       <EnsureRole role="admin">{children}</EnsureRole>
-    </ProtectedRoute>
+    </ProtectedRoute> 
   );
 }

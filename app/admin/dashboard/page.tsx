@@ -2,6 +2,7 @@
 import { DashLayout } from "@/components/layouts/_dash-layout";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/config/paths";
+import { VehicleSelector } from "@/features/admin/vehicles/components/vehicle.selector";
 import { Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -26,7 +27,7 @@ export default function DashboardPage() {
         </Button>
       }
     >
-      hello
+      <VehicleSelector />
     </DashLayout>
   );
 }

@@ -84,7 +84,7 @@ export const FormModal = ({
             {icon}
             <div>
               <DialogTitle className="">{title}</DialogTitle>
-              <DialogDescription className="text-sm text-card-foreground/60">
+              <DialogDescription className="text-sm text-card-foreground/70">
                 {description}
               </DialogDescription>
             </div>
@@ -104,7 +104,7 @@ export const FormModal = ({
 
         <DialogFooter className="border-t flex flex-row items-center justify-end gap-2 px-4 py-3">
           <DialogClose asChild>
-            <Button variant="outline">{t("cancel")}</Button>
+            <Button variant="outline">{t("global.actions.cancel")}</Button>
           </DialogClose>
           {submitButton}
         </DialogFooter>

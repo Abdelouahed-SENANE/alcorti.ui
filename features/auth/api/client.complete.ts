@@ -27,27 +27,38 @@ const completeClientProfile = async (payload: CompleteClientInput) => {
   formData.append("attachments[CIN_FRONT]", payload.attachments.CIN_FRONT);
   formData.append("attachments[CIN_BACK]", payload.attachments.CIN_BACK);
 
-  const response = await api$.post<ApiResponse<AuthUser>>(
-    "/complete/client",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
+  try {
+    const response = await api$.post<ApiResponse<AuthUser>>(
+      "/complete/client",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       },
-    },
-  );
-
-  return response.data;
+    );
+    return response.data;
+  } catch (error: any) {
+    throw error.response?.data || error;
+  }
 };
+
 export const useCompleteClientProfile = ({
   mutationConfig,
 }: {
-  mutationConfig: MutationConfig<typeof completeClientProfile>;
+  mutationConfig: MutationConfig<
+    typeof completeClientProfile,
+    ApiResponse<AuthUser>
+  >;
 }) => {
   const qc = useQueryClient();
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
-  return useMutation({
+  return useMutation<
+    ApiResponse<AuthUser>,
+    ApiResponse<AuthUser>,
+    CompleteClientInput
+  >({
     mutationFn: completeClientProfile,
     onSuccess: (...args) => {
       qc.invalidateQueries({ queryKey: [AUTH_KEY], exact: true });

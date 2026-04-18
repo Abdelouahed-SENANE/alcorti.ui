@@ -2,7 +2,7 @@
 import logoSm from "@/assets/fallback-logo.svg";
 import { paths } from "@/config/paths";
 import { cn } from "@/lib/utils";
-import { Layout, Users } from "lucide-react";
+import { Car, Layout, Users } from "lucide-react";
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Sidebar, useSidebar } from "../ui/sidebar";
@@ -60,6 +60,11 @@ const ADMIN_MENU = (t: any) =>
           label: t("navigation.users"),
           url: paths.admin.users.route(),
           icon: <Users className="size-4" />,
+        },
+        {
+          label: t("navigation.vehicles"),
+          url: paths.admin.vehicles.route(),
+          icon: <Car className="size-4" />,
         },
       ],
     },

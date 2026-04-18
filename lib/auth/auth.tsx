@@ -1,5 +1,4 @@
 "use client";
-
 import { paths } from "@/config/paths";
 import { ROLES } from "@/types/api";
 import { usePathname, useRouter } from "next/navigation";
@@ -22,117 +21,132 @@ export const createTranslationSchema = (key?: string) => {
   });
 };
 
-export interface ProtectedRouteProps {
+/* ═══════════════════════════════════════════════════════════════
+   UNIFIED AUTH GUARD
+   Replaces ProtectedRoute + EnsureProfileCompleted + EnsureRole
+   
+   Examples:
+     <AuthGuard>                              → just needs auth
+     <AuthGuard requireCompleted>             → auth + profile complete
+     <AuthGuard role="admin">                 → auth + admin only
+     <AuthGuard role="client" requireCompleted>
+   ═══════════════════════════════════════════════════════════════ */
+
+export interface AuthGuardProps {
   children: React.ReactNode;
+  role?: (ROLES | string) | (ROLES | string)[];
+  requireCompleted?: boolean;
+  loadingFallback?: React.ReactNode;
 }
 
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { data: user, isLoading } = useUser();
+export const AuthGuard = ({
+  children,
+  role,
+  requireCompleted = false,
+}: AuthGuardProps) => {
+  const { data: user, isLoading, isError } = useUser();
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.replace(paths.auth.login.route(pathname));
+  const resolution = React.useMemo(() => {
+    if (isLoading) return { status: "loading" as const };
+    if (!user || isError) {
+      return {
+        status: "redirect" as const,
+        to: paths.auth.login.route(pathname),
+      };
     }
-  }, [user, isLoading, router, pathname]);
 
-  if (isLoading || !user) {
-    return null;
+    if (role) {
+      const allowedRoles = Array.isArray(role)
+        ? role.map((r) => r.toLowerCase())
+        : [role.toLowerCase()];
+
+      if (!allowedRoles.includes(user.role?.toLowerCase() || "")) {
+        return { status: "redirect" as const, to: paths.home.route() };
+      }
+    }
+    if (requireCompleted && !user.is_completed) {
+      const userRole = user.role?.toLowerCase();
+      if (userRole === "client" || userRole === "shipper") {
+        return { status: "gate" as const };
+      }
+    }
+
+    return { status: "allow" as const };
+  }, [user, isLoading, isError, role, requireCompleted]);
+
+  useEffect(() => {
+    if (resolution.status === "redirect") {
+      router.replace(resolution.to);
+    }
+  }, [resolution, router]);
+
+  if (resolution.status === "loading") return null;
+  if (resolution.status === "redirect") return null;
+
+  if (resolution.status === "gate") {
+    const { CompletionGate } = require("@/features/auth/components/onboarding/completion.gate");
+    return <CompletionGate />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
+
+/* ═══════════════════════════════════════════════════════════════
+   BACKWARD COMPATIBILITY
+   Keep these working while you migrate call sites.
+   Delete once all usages are replaced with <AuthGuard>.
+   ═══════════════════════════════════════════════════════════════ */
+
+/** @deprecated Use <AuthGuard> */
+export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => (
+  <AuthGuard>{children}</AuthGuard>
+);
+
+/** @deprecated Use <AuthGuard requireCompleted> */
 export const EnsureProfileCompleted = ({
   children,
 }: {
   children: React.ReactNode;
-}) => {
-  const { data: user, isLoading } = useUser();
-  const pathname = usePathname();
-  const router = useRouter();
+}) => <AuthGuard requireCompleted>{children}</AuthGuard>;
 
-  useEffect(() => {
-    if (isLoading) return;
-
-    if (!user) {
-      router.replace(paths.auth.login.route(undefined));
-      return;
-    }
-
-    if (user.is_completed) {
-      if (pathname.includes("/complete")) {
-        router.replace(paths.home.route());
-      }
-      return;
-    }
-
-    const role = user.role?.toLowerCase();
-
-    if (role === "client" && !pathname.includes("/complete/client")) {
-      router.replace(paths.complete.client.route());
-    } else if (role === "shipper" && !pathname.includes("/complete/shipper")) {
-      router.replace(paths.complete.shipper.route());
-    }
-  }, [user, isLoading, pathname, router]);
-
-  if (isLoading || !user) return null;
-  if (user.is_completed && pathname.includes("/complete")) return null;
-  if (
-    !user.is_completed &&
-    user.role &&
-    !pathname.includes(`/complete/${user.role.toLowerCase()}`)
-  )
-    return null;
-
-  return children;
-};
-
+/** @deprecated Use <AuthGuard role={role}> */
 export const EnsureRole = ({
   role,
   children,
 }: {
   role: string;
   children: React.ReactNode;
-}) => {
-  const { data: user, isLoading } = useUser();
-  const router = useRouter();
+}) => <AuthGuard role={role}>{children}</AuthGuard>;
 
-  useEffect(() => {
-    if (isLoading || !user) return;
-    if (user.role?.toLowerCase() !== role.toLowerCase()) {
-      router.replace(paths.home.route());
-    }
-  }, [user, isLoading, router, role]);
-
-  if (isLoading || !user || user.role?.toLowerCase() !== role.toLowerCase())
-    return null;
-
-  return <>{children}</>;
-};
+/* ═══════════════════════════════════════════════════════════════
+   UI-LEVEL AUTHORIZATION (different purpose from AuthGuard)
+   - AuthGuard blocks route rendering + redirects
+   - Authorization conditionally shows/hides UI elements
+   ═══════════════════════════════════════════════════════════════ */
 
 export const useAuthorization = () => {
-  const user = useUser();
+  const { data } = useUser();
 
   const hasRole = React.useCallback(
     ({ role }: { role: ROLES | string }) => {
-      if (role && user.data?.role) {
-        return user.data.role.toLowerCase() === role.toLowerCase();
+      if (role && data?.role) {
+        return data.role.toLowerCase() === role.toLowerCase();
       }
       return !role;
     },
-    [user.data],
+    [data],
   );
 
   return { hasRole };
 };
 
 type AuthorizationProps = {
+  role: string;
   forbiddenFallback?: React.ReactNode;
   children: React.ReactNode;
-} & {
-  role: string;
 };
 
 export const Authorization = ({
@@ -141,12 +155,6 @@ export const Authorization = ({
   children,
 }: AuthorizationProps) => {
   const { hasRole } = useAuthorization();
-
-  let canAccess = false;
-
-  if (role) {
-    canAccess = hasRole({ role });
-  }
-
+  const canAccess = role ? hasRole({ role }) : false;
   return <>{canAccess ? children : forbiddenFallback}</>;
 };

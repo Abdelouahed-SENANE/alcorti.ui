@@ -3,11 +3,10 @@ import { QueryConfig } from "@/config/react-query";
 import { ApiResponse, Paginated } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "../user.type";
-
-export const UserS_KEY = ["Users"];
+import { userKeys } from "./user-keys";
 
 export interface UserParams {
-term?: string;
+  term?: string;
   page?: number;
   limit?: number;
   sort?: keyof User;
@@ -46,7 +45,7 @@ const getUsers = async (
 export const getUsersQueryOptions = (params: UserParams) => {
   const normalized = normalizeUserParams(params);
   return {
-    queryKey: [...UserS_KEY, normalized],
+    queryKey: [...userKeys.list(normalized)],
     queryFn: () => getUsers(normalized),
   };
 };
