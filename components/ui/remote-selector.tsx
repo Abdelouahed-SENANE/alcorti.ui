@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 
 interface RemoteSelectorProps<T> {
   onSelect?: (item: T) => void;
-  useOptionsQuery: (params: { term: string; queryConfig: any }) => {
+  useOptionsQuery: (params: { search: string; queryConfig: any }) => {
     data?: ApiResponse<T[]>;
     isFetching: boolean;
     isError: boolean;
@@ -49,7 +49,7 @@ export function RemoteSelector<T>({
   const debounced = useDebouce(searchValue, debounceMs);
 
   const { data, isFetching, isError } = useOptionsQuery({
-    term: debounced,
+    search: debounced,
     queryConfig: {
       enabled: debounced.length > 0,
       staleTime: 5 * 60 * 1000,

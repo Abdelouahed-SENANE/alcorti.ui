@@ -1,4 +1,7 @@
 "use client";
+
+"use client";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SidebarClose, SidebarOpen } from "lucide-react";
 import React from "react";
@@ -9,20 +12,19 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "../breadcrumb";
-import { Button } from "../button";
-import { SwitchLanguage } from "../language/switch-language";
-import { RouterLink } from "../link";
-import { useSidebar } from "../sidebar";
-import { ThemeToggle } from "../theme";
-import { UserNavgation } from "../user-navigation";
-import { Skeleton } from "../skeleton";
+} from "@/components/ui/breadcrumb";
+import { SwitchLanguage } from "@/components/ui/language/switch-language";
+import { RouterLink } from "@/components/ui/link";
+import { useSidebar } from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ThemeToggle } from "@/components/ui/theme";
+import { UserNavgation } from "@/components/ui/user-navigation";
 
 type TopbarProps = {
   className?: string;
   breadcrumbs?: { label: React.ReactNode; url: string; active?: boolean }[];
 };
-export const Topbar = ({ className, breadcrumbs = [] }: TopbarProps) => {
+export const DashboardTopbar = ({ className, breadcrumbs = [] }: TopbarProps) => {
   const { setCollapsed, isCollapsed } = useSidebar();
   const { t } = useTranslation();
   return (

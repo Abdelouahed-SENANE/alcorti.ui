@@ -11,12 +11,11 @@ const sizes = {
 };
 
 const variants = {
-  light: "text-white/30 fill-white",
-  dark: "text-success/30 fill-success",
-  success: "text-white/30 fill-white dark:text-success/30 dark:fill-success",
-  error: "text-white/30 fill-white dark:text-error/30 dark:fill-error",
-  warning: "text-white/30 fill-white dark:text-warning/30 dark:fill-warning",
-  primary: "text-primary/30 fill-primary dark:text-primary/30",
+  success: "text-success/30 fill-success",
+  error: "text-destructive/30 fill-destructive",
+  warning: "text-warning/30 fill-warning",
+  default: "text-primary-foreground/30 fill-primary-foreground",
+  primary: "text-primary/30 fill-primary",
 };
 
 export type SpinnerProps = {

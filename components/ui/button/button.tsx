@@ -12,7 +12,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: " text-primary-foreground hover:bg-primary bg-primary",
+        default: "text-primary-foreground hover:bg-primary bg-primary",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         success:
@@ -78,7 +78,7 @@ function Button({
             <Spinner
               size="xs"
               className={cn("rtl:ml-1 ltr:mr-1")}
-              variant={variant === "success" ? "success" : variant === "error" ? "error" : variant === "warning" ? "warning" : "primary"}
+              variant={variant === "success" ? "success" : variant === "error" ? "error" : variant === "warning" ? "warning" : "default"}
             />
           )}
           {children}
