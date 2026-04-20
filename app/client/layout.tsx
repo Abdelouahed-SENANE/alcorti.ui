@@ -1,4 +1,5 @@
 "use client";
+import { ContentLayout } from "@/components/layouts/content/_content.layout";
 import { AuthGuard } from "@/lib/auth";
 
 export default function ClientLayout({
@@ -8,7 +9,7 @@ export default function ClientLayout({
 }) {
   return (
     <AuthGuard role="client" requireCompleted>
-      {children}
+      <ContentLayout>{children}</ContentLayout>
     </AuthGuard>
   );
 }

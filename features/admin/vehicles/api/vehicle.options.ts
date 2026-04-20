@@ -19,7 +19,7 @@ export const getVehicleOptions = async (
 
 export const getVehicleOptionsQueryOptions = (term?: string) => {
   return {
-    queryKey: VEHICLE_KEYS.options(term),
+    queryKey: VEHICLE_KEYS.list_option(term),
     queryFn: () => getVehicleOptions(term),
     placeholderData: keepPreviousData,
   };

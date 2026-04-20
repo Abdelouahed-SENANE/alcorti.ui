@@ -2,8 +2,10 @@ import { Entity } from "@/types/api";
 
 export const VEHICLE_KEYS = {
     all: ["vehicles"],
-    list: (params: any) => ["vehicles", "list", params],
-    options: (term?: string) => ["vehicles", "options", term],
+    lists: () => [...VEHICLE_KEYS.all, "list"],
+    list: (params: any) => [...VEHICLE_KEYS.lists(), params],
+    list_options: () => [...VEHICLE_KEYS.all, "options"],
+    list_option: (term?: string) => [...VEHICLE_KEYS.list_options(), term],
 }
 
 export type Vehicle = Entity<{

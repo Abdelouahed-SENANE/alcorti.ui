@@ -50,6 +50,9 @@
     "profile": "Profile",
     "settings": "Settings",
     "vehicles": "Vehicles",
+    "locations": "Locations",
+    "orders": "My Orders",
+    "orders_history": "Orders Histories",
     "logout": "Logout"
   },
 
@@ -76,6 +79,7 @@
       "cin": "CNI",
       "phone": "Phone",
       "account_state": "Account State",
+      "status": "Status",
       "is_completed": "Profile Completed",
       "created_at": "Joined At",
       "updated_at": "Updated At"
@@ -130,6 +134,7 @@
         "label": "Role",
         "shipper": "Shipper",
         "client": "Client",
+        "admin": "Admin",
         "errors": {
           "required": "User role is required"
         }
@@ -185,10 +190,14 @@
         "registration": "Registration Document"
       },
       "success": {
-        "approve_title": "User Approved",
-        "approve_desc": "The user has been successfully approved.",
-        "reject_title": "User Rejected",
-        "reject_desc": "The user has been rejected."
+        "approved": {
+          "title": "User Approved",
+          "desc": "The user has been successfully approved."
+        },
+        "rejected": {
+          "title": "User Rejected",
+          "desc": "The user has been rejected."
+        }
       },
       "errors": {
         "reason_required": "Reason Required",
@@ -400,6 +409,91 @@
     },
     "messages": {
       "empty": "No vehicles found"
+    }
+  },
+
+  "locations": {
+    "page": {
+      "title": "Locations",
+      "desc": "Welcome to the locations page"
+    },
+    "columns": {
+      "name_ar": "Name (Arabic)",
+      "name_en": "Name (English)",
+      "name_fr": "Name (French)",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "created_at": "Created At",
+      "updated_at": "Updated At"
+    },
+    "autocomplete": {
+      "label": "Location",
+      "placeholder": "Search for a location..."
+    },
+    "form": {
+      "create": {
+        "title": "Add Location",
+        "desc": "Add new location information"
+      },
+      "update": {
+        "title": "Update Location",
+        "desc": "Update location information"
+      },
+      "fields": {
+        "name_ar": {
+          "label": "Name (Arabic)",
+          "errors": {
+            "required": "Arabic name is required"
+          }
+        },
+        "name_en": {
+          "label": "Name (English)",
+          "errors": {
+            "required": "English name is required"
+          }
+        },
+        "name_fr": {
+          "label": "Name (French)",
+          "errors": {
+            "required": "French name is required"
+          }
+        },
+        "lat": {
+          "label": "Latitude",
+          "errors": {
+            "required": "Latitude is required"
+          }
+        },
+        "lng": {
+          "label": "Longitude",
+          "errors": {
+            "required": "Longitude is required"
+          }
+        }
+      }
+    },
+    "actions": {
+      "add": "Add Location",
+      "export": "Export Locations",
+      "create": "Create Location",
+      "edit": "Edit Location",
+      "delete": "Delete Location"
+    },
+    "modal": {
+      "delete": {
+        "title": "Delete Location",
+        "desc": "Are you sure you want to delete this location? This action cannot be undone.",
+        "submit": "Delete",
+        "cancel": "Cancel"
+      }
+    },
+    "messages": {
+      "empty": "No locations found",
+      "errors": {
+        "delete": {
+          "title": "Error Deleting Location"
+        }
+      }
     }
   }
 }

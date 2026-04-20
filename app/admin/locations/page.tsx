@@ -6,22 +6,22 @@ import { useQueryTable } from "@/components/ui/table";
 import { toast } from "@/components/ui/toast/use-toast";
 import { paths } from "@/config/paths";
 import {
-  CreateVehicleInputs,
-  useCreateVehicle,
-} from "@/features/admin/vehicles/api/create.vehicle";
-import { useVehicles } from "@/features/admin/vehicles/api/vehicle.list";
-import { VehicleForm } from "@/features/admin/vehicles/components/vehicle.form";
-import { VehicleTable } from "@/features/admin/vehicles/components/vehicle.table";
-import { Vehicle } from "@/features/admin/vehicles/vehicle.type";
+  CreateLocationInputs,
+  useCreateLocation,
+} from "@/features/admin/locations/api/create.location";
+import { useLocations } from "@/features/admin/locations/api/location.list";
+import { LocationForm } from "@/features/admin/locations/components/location.form";
+import { LocationTable } from "@/features/admin/locations/components/location.table";
+import { Location } from "@/features/admin/locations/location.type";
 import { ApiResponse } from "@/types/api";
 import { Download, Plus } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function VehiclesPage() {
+export default function LocationsPage() {
   const { t } = useTranslation();
-  const table = useQueryTable<Vehicle>();
-  const vehiclesQuery = useVehicles({
+  const table = useQueryTable<Location>();
+  const locationsQuery = useLocations({
     params: {
       page: table.page,
       limit: table.limit,
@@ -31,13 +31,13 @@ export default function VehiclesPage() {
     },
   });
 
-  const items = vehiclesQuery.data?.data?.items || [];
-  const pagination = vehiclesQuery.data?.data?.pagination;
+  const items = locationsQuery.data?.data?.items || [];
+  const pagination = locationsQuery.data?.data?.pagination;
 
   const [errors, setErrors] = useState<
-    Partial<Record<keyof CreateVehicleInputs, string[]>>
+    Partial<Record<keyof CreateLocationInputs, string[]>>
   >({});
-  const createMutation = useCreateVehicle({
+  const createMutation = useCreateLocation({
     mutationConfig: {
       onError: (res: ApiResponse<void>) => {
         const serverErrors = res.errors;
@@ -57,14 +57,14 @@ export default function VehiclesPage() {
     },
   });
 
-  const handleSubmit = useCallback((payload: CreateVehicleInputs) => {
+  const handleSubmit = useCallback((payload: CreateLocationInputs) => {
     createMutation.mutate({ payload });
   }, []);
 
   return (
     <DashLayout
-      title={t("vehicles.page.title")}
-      desc={t("vehicles.page.desc")}
+      title={t("locations.page.title")}
+      desc={t("locations.page.desc")}
       breadcrumbs={[
         {
           label: t("navigation.dashboard"),
@@ -72,14 +72,14 @@ export default function VehiclesPage() {
           active: false,
         },
         {
-          label: t("navigation.vehicles"),
-          url: paths.admin.vehicles.route(),
+          label: t("navigation.locations"),
+          url: paths.admin.locations.route(),
           active: true,
         },
       ]}
       actions={
         <div className="flex items-center gap-1">
-          <VehicleForm
+          <LocationForm
             apiErrors={errors}
             onSubmit={handleSubmit}
             isDone={createMutation.isSuccess}
@@ -87,13 +87,13 @@ export default function VehiclesPage() {
             triggerButton={
               <Button className="gap-1 " variant={"default"}>
                 <Plus className="size-4" />
-                {t("vehicles.actions.add")}
+                {t("locations.actions.add")}
               </Button>
             }
           />
           <Button className="gap-1 " variant={"secondary"}>
             <Download className="size-4" />
-            {t("vehicles.actions.export")}
+            {t("locations.actions.export")}
           </Button>
         </div>
       }
@@ -107,9 +107,9 @@ export default function VehiclesPage() {
         />
       </div>
 
-      <VehicleTable
-        vehicles={items}
-        isFetching={vehiclesQuery.isFetching}
+      <LocationTable
+        locations={items}
+        isFetching={locationsQuery.isFetching}
         table={table}
         pagination={pagination}
       />

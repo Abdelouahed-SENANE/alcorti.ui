@@ -218,5 +218,89 @@
         }
       }
     }
+  },
+  "locations": {
+    "page": {
+      "title": "Emplacements",
+      "desc": "Bienvenue sur la page des emplacements"
+    },
+    "columns": {
+      "name_ar": "Nom (Arabe)",
+      "name_en": "Nom (Anglais)",
+      "name_fr": "Nom (Français)",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "created_at": "Date de création",
+      "updated_at": "Date de mise à jour"
+    },
+    "autocomplete": {
+      "label": "Emplacement",
+      "placeholder": "Rechercher un emplacement..."
+    },
+    "form": {
+      "create": {
+        "title": "Ajouter un emplacement",
+        "desc": "Ajouter de nouvelles informations sur l'emplacement"
+      },
+      "update": {
+        "title": "Modifier l'emplacement",
+        "desc": "Modifier les informations de l'emplacement"
+      },
+      "fields": {
+        "name_ar": {
+          "label": "Nom (Arabe)",
+          "errors": {
+            "required": "Le nom arabe est requis"
+          }
+        },
+        "name_en": {
+          "label": "Nom (Anglais)",
+          "errors": {
+            "required": "Le nom anglais est requis"
+          }
+        },
+        "name_fr": {
+          "label": "Nom (Français)",
+          "errors": {
+            "required": "Le nom français est requis"
+          }
+        },
+        "lat": {
+          "label": "Latitude",
+          "errors": {
+            "required": "La latitude est requise"
+          }
+        },
+        "lng": {
+          "label": "Longitude",
+          "errors": {
+            "required": "La longitude est requise"
+          }
+        }
+      }
+    },
+    "actions": {
+      "add": "Ajouter un emplacement",
+      "export": "Exporter les emplacements",
+      "create": "Créer l'emplacement",
+      "edit": "Modifier l'emplacement",
+      "delete": "Supprimer l'emplacement"
+    },
+    "modal": {
+      "delete": {
+        "title": "Supprimer l'emplacement",
+        "desc": "Êtes-vous sûr de vouloir supprimer cet emplacement ? Cette action est irréversible.",
+        "submit": "Supprimer",
+        "cancel": "Annuler"
+      }
+    },
+    "messages": {
+      "empty": "Aucun emplacement trouvé",
+      "errors": {
+        "delete": {
+          "title": "Erreur lors de la suppression de l'emplacement"
+        }
+      }
+    }
   }
 }

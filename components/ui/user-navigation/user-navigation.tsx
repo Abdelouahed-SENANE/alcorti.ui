@@ -1,5 +1,4 @@
 "use client";
-import fallbackAvatar from "@/assets/avatar-fallback.png";
 import { Button } from "@/components/ui/button";
 import i18n from "@/config/i18n";
 import { paths } from "@/config/paths";
@@ -59,8 +58,10 @@ export const UserNavgation = () => {
         >
           <span className="sr-only">Open user menu</span>
           <Avatar className="size-9">
-            <AvatarImage src={fallbackAvatar.src} alt="Logo" />
-            <AvatarFallback>CN</AvatarFallback>
+            {/* <AvatarImage src={fallbackAvatar.src} alt="Logo" /> */}
+            <AvatarFallback className="uppercase bg-primary text-foreground-primary">
+              {user?.data?.first_name[0] + user.data?.last_name[0]!}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -70,9 +71,11 @@ export const UserNavgation = () => {
         className="min-w-60 bg-card rounded-none border p-0"
       >
         <DropdownMenuItem className="flex items-center bg-primary/5 px-6 py-3 focus:bg-transparent">
-          <Avatar className="size-9">
-            <AvatarImage src={fallbackAvatar.src} alt="Logo" />
-            <AvatarFallback>CN</AvatarFallback>
+          <Avatar className="size-8">
+            <AvatarImage src={user.data?.avatar} alt="Logo" />
+            <AvatarFallback className="uppercase bg-primary text-foreground-primary!">
+              {user?.data?.first_name[0] + user.data?.last_name[0]!}
+            </AvatarFallback>
           </Avatar>
           <div className="">
             <h6 className="font-medium text-sm">

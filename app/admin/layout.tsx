@@ -1,13 +1,9 @@
-import { EnsureRole, ProtectedRoute } from "@/lib/auth";
+import { AuthGuard } from "@/lib/auth";
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <ProtectedRoute>
-      <EnsureRole role="admin">{children}</EnsureRole>
-    </ProtectedRoute> 
-  );
+  return <AuthGuard role="admin">{children}</AuthGuard>;
 }

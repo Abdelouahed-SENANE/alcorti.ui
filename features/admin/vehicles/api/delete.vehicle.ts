@@ -25,7 +25,8 @@ export const useDeleteVehicle = ({
   return useMutation({
     mutationFn: deleteVehicle,
     onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: VEHICLE_KEYS.all, exact: false });
+      qc.invalidateQueries({ queryKey: VEHICLE_KEYS.lists(), exact: false });
+      qc.invalidateQueries({ queryKey: VEHICLE_KEYS.list_options(), exact: false });
       onSuccess?.(...args);
     },
     ...restConfig,

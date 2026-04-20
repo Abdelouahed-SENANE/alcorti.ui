@@ -1,5 +1,5 @@
 "use client";
-import { DashLayout } from "@/components/layouts/_dash-layout";
+import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { paths } from "@/config/paths";
 import { useUserDetails } from "@/features/admin/users/api/user.details";
 import { UserReview } from "@/features/admin/users/components/user.review";

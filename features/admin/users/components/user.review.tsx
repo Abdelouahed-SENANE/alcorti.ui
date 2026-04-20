@@ -71,19 +71,17 @@ export const UserReview = ({ user, isFetching }: UserReviewProps) => {
         if (isRejected) {
           setReason("");
           toast({
-            title: t("users.review.success.rejected", "User Rejected"),
+            title: t("users.review.success.rejected.title"),
             description: t(
-              "users.review.success.rejected_desc",
-              "User has been rejected successfully.",
+              "users.review.success.rejected.desc",
             ),
             type: "success",
           });
         } else {
           toast({
-            title: t("users.review.success.approved", "User Approved"),
+            title: t("users.review.success.approved.title"),
             description: t(
-              "users.review.success.approved_desc",
-              "User has been approved successfully.",
+              "users.review.success.approved.desc",
             ),
             type: "success",
           });

@@ -17,7 +17,7 @@ export const LoginForm = () => {
         const user = res.data;
         const role = user?.role?.toLowerCase();
         if (role === "client") {
-          router.replace(paths.home.route());
+          router.replace(paths.client.orders.route());
         } else if (role === "admin") {
           router.replace(paths.admin.dashboard.route());
         } else if (role === "shipper") {

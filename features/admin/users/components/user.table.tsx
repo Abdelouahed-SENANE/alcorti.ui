@@ -118,10 +118,10 @@ export const UserTable = ({
                 ? "bg-primary/20 text-primary border-none"
                 : role === "client"
                   ? "bg-orange-500/20 text-orange-500 border-none"
-                  : "bg-secondary/20 text-secondary border-none",
+                  : "bg-slate-400/20 text-primary border-none",
             )}
           >
-            {role}
+            {t(`users.fields.role.${role}`)}
           </Badge>
         ),
       },
@@ -139,7 +139,7 @@ export const UserTable = ({
                   : "bg-warning/10 text-warning",
             )}
           >
-            {status}
+            {t(`users.fields.status.${status}`)}
           </Badge>
         ),
       },

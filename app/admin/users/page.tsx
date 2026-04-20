@@ -1,5 +1,5 @@
 "use client";
-import { DashLayout } from "@/components/layouts/_dash-layout";
+import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/form";
 import { useQueryTable } from "@/components/ui/table";

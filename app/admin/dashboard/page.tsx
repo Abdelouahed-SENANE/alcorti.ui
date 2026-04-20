@@ -1,5 +1,5 @@
 "use client";
-import { DashLayout } from "@/components/layouts/_dash-layout";
+import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/config/paths";
 import { Download } from "lucide-react";

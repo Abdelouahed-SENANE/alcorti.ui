@@ -5,6 +5,17 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function resolveLocaleValue(
+  value: {
+    name_ar: string;
+    name_en: string;
+    name_fr: string;
+  },
+  locale: string,
+): string {
+  if (!value) return "-";
+  return locale === "ar" ? value.name_ar : locale === "fr" ? value.name_fr : value.name_en;
+}
 export function formatDate(dateString: string, locale: string): string {
   if (!dateString) return "-";
   return new Date(dateString).toLocaleDateString(locale, {

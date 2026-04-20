@@ -24,6 +24,19 @@ export const paths = {
         `/auth/register${redirectTo ? `?from=${encodeURIComponent(redirectTo)}` : ""}`,
     },
   },
+  client: {
+    root: "/client",
+    route: () => "/client",
+    orders: {
+      root: "/client/orders",
+      route: () => "/client/orders",
+      histories: {
+        root: "/client/orders/histories",
+        route: () => "/client/orders/histories",
+      },
+    },
+  },
+
   admin: {
     root: "/admin",
     dashboard: {
@@ -41,6 +54,10 @@ export const paths = {
     vehicles: {
       root: "vehicles",
       route: () => "/admin/vehicles",
+    },
+    locations: {
+      root: "locations",
+      route: () => "/admin/locations",
     },
   },
 };
