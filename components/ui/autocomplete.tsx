@@ -56,11 +56,11 @@ function AutocompleteInput({
           data-slot="autocomplete-input"
           data-size={size}
           aria-invalid={!!error}
-        className={cn(
+          className={cn(
             inputVariants({ size }),
             "peer placeholder:text-transparent  focus:placeholder:text-muted-foreground",
             className,
-            error && "border-destructive ring-3 ring-destructive"
+            error && "border-destructive ring-3 ring-destructive",
           )}
           placeholder={props.placeholder || " "}
           {...props}

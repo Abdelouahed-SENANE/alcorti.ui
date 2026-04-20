@@ -3,7 +3,15 @@
 import logoSm from "@/assets/fallback-logo.svg";
 import { paths } from "@/config/paths";
 import { cn } from "@/lib/utils";
-import { Car, Layout, MapPin, Users } from "lucide-react";
+import {
+  Car,
+  Layout,
+  LayoutGrid,
+  MapPin,
+  Package,
+  PackageCheck,
+  Users,
+} from "lucide-react";
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Sidebar, useSidebar } from "../../ui/sidebar";
@@ -16,6 +24,7 @@ type MenuItem = {
   url: string;
   icon?: React.ReactNode;
   excludePaths?: string[];
+  items?: MenuItem[];
 };
 
 type GroupMenu = {
@@ -71,6 +80,23 @@ const ADMIN_MENU = (t: (key: string) => string) =>
           url: paths.admin.locations.route(),
           icon: <MapPin className="size-4" />,
         },
+        {
+          label: t("navigation.shipments.title"),
+          url: paths.admin.shipments.route(),
+          icon: <Package className="size-4" />,
+          items: [
+            {
+              label: t("navigation.shipments.categories"),
+              url: paths.admin.shipments.categories.route(),
+              icon: <LayoutGrid className="size-4" />,
+            },
+            {
+              label: t("navigation.shipments.orders"),
+              url: paths.admin.shipments.orders.route(),
+              icon: <PackageCheck className="size-4" />,
+            },
+          ],
+        },
       ],
     },
   ] satisfies GroupMenu[];
@@ -106,6 +132,11 @@ export const DashboardSidebar = () => {
                     to={item.url}
                     icon={item.icon}
                     excludePaths={item.excludePaths}
+                    items={item.items?.map((sub) => ({
+                      title: sub.label,
+                      to: sub.url,
+                      icon: sub.icon,
+                    }))}
                   />
                 ))}
               </Sidebar.Item>

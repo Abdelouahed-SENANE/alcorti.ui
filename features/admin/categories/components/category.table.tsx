@@ -11,28 +11,28 @@ import { Edit, Trash } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  UpdateLocationInputs,
-  useUpdateLocation,
-} from "../api/update.location";
-import { Location } from "../location.type";
-import { LocationDeleteDialog } from "./location.delete-dialog";
-import { LocationForm } from "./location.form";
+  UpdateCategoryInputs,
+  useUpdateCategory,
+} from "../api/update.category";
+import { Category } from "../category.type";
+import { CategoryDeleteDialog } from "./category.delete-dialog";
+import { CategoryForm } from "./category.form";
 
-interface LocationTableProps {
-  locations: Location[];
-  table: ReturnType<typeof useQueryTable<Location>>;
+interface CategoryTableProps {
+  categories: Category[];
+  table: ReturnType<typeof useQueryTable<Category>>;
   pagination?: Pagination;
   isFetching?: boolean;
 }
 
-export const LocationTable = ({
-  locations,
+export const CategoryTable = ({
+  categories,
   table,
   pagination,
   isFetching,
-}: LocationTableProps) => {
+}: CategoryTableProps) => {
   const { t } = useTranslation();
-  const [location, setLocation] = useState<Location | undefined>(undefined);
+  const [category, setCategory] = useState<Category | undefined>(undefined);
   const { isOpen: isEdit, open: openEdit, close: closeEdit } = useDisclosure();
   const {
     isOpen: isDelete,
@@ -40,19 +40,19 @@ export const LocationTable = ({
     close: closeDelete,
   } = useDisclosure();
   const [errors, setErrors] = useState<
-    Partial<Record<keyof UpdateLocationInputs, string[]>>
+    Partial<Record<keyof UpdateCategoryInputs, string[]>>
   >({});
   const lang = i18n.language as Lang;
 
   const handleAction = useCallback(
-    (action: string, location: Location) => {
+    (action: string, category: Category) => {
       switch (action) {
         case "delete":
-          setLocation(location);
+          setCategory(category);
           openDelete();
           break;
         case "edit":
-          setLocation(location);
+          setCategory(category);
           openEdit();
           break;
         default:
@@ -64,51 +64,39 @@ export const LocationTable = ({
 
   const ACTIONS: QuickAction[] = [
     {
-      label: t("locations.actions.edit"),
+      label: t("categories.actions.edit"),
       value: "edit",
       icon: <Edit className="h-4 w-4 text-foreground" />,
     },
     {
-      label: t("locations.actions.delete"),
+      label: t("categories.actions.delete"),
       value: "delete",
       icon: <Trash className="h-4 w-4 text-foreground" />,
     },
   ];
 
-  const columns = useMemo<TableColumn<Location>[]>(
+  const columns = useMemo<TableColumn<Category>[]>(
     () => [
       {
-        title: t("locations.columns.name_fr"),
+        title: t("categories.columns.name_fr"),
         field: "name_fr",
         sortable: true,
         Cell: ({ entry: { name_fr } }) => <span>{name_fr}</span>,
       },
       {
-        title: t("locations.columns.name_en"),
-        field: "name_en",
-        sortable: true,
-        Cell: ({ entry: { name_en } }) => <span>{name_en}</span>,
-      },
-      {
-        title: t("locations.columns.name_ar"),
+        title: t("categories.columns.name_ar"),
         field: "name_ar",
         sortable: true,
         Cell: ({ entry: { name_ar } }) => <span>{name_ar}</span>,
       },
       {
-        title: t("locations.columns.lat"),
-        field: "lat",
-        sortable: true,
-        Cell: ({ entry: { lat } }) => <div dir="ltr" className="ltr:text-left rtl:text-right">{lat}</div>,
+        title: t("categories.columns.icon_name"),
+        field: "icon_name",
+        sortable: false,
+        Cell: ({ entry: { icon_name } }) => <span>{icon_name}</span>,
       },
       {
-        title: t("locations.columns.lng"),
-        field: "lng",
-        sortable: true,
-        Cell: ({ entry: { lng } }) => <div dir="ltr" className="ltr:text-left rtl:text-right">{lng}</div>,
-      },
-      {
-        title: t("locations.columns.created_at"),
+        title: t("categories.columns.created_at"),
         field: "created_at",
         sortable: true,
         Cell: ({ entry: { created_at } }) => (
@@ -116,7 +104,7 @@ export const LocationTable = ({
         ),
       },
       {
-        title: t("locations.columns.updated_at"),
+        title: t("categories.columns.updated_at"),
         field: "updated_at",
         Cell: ({ entry: { updated_at } }) => (
           <div>{formatDateTime(updated_at || "", lang) || "-"}</div>
@@ -127,7 +115,7 @@ export const LocationTable = ({
         field: "id",
         Cell: ({ entry }) => (
           <QuickActions
-            entity={"locations"}
+            entity={"categories"}
             id={entry.id}
             actions={ACTIONS}
             onAction={(action, id) => handleAction(action, entry)}
@@ -138,73 +126,74 @@ export const LocationTable = ({
     [t, lang, handleAction],
   );
 
-  const updateMutation = useUpdateLocation({
+  const updateMutation = useUpdateCategory({
     mutationConfig: {
       onSuccess: () => {
         closeEdit();
       },
-      onError: (error: ApiResponse<void>) => {
-        if (error.errors) {
-          setErrors(error.errors);
+      onError: (res: any) => {
+        const errors = res.response?.data?.errors;
+        if (errors) {
+          setErrors(errors);
         }
         toast({
-          title: error.message || t("global.errors.something_went_wrong"),
+          title: res.response?.data?.message || t("global.errors.something_went_wrong"),
           type: "error",
         });
 
-        if (!error.errors) {
+        if (!errors) {
           closeEdit();
         }
       },
     },
   });
 
-  const handleEditSubmit = (payload: UpdateLocationInputs) => {
-    if (!location?.id) return;
-    updateMutation.mutate({ id: location.id, payload });
+  const handleEditSubmit = (payload: UpdateCategoryInputs) => {
+    if (!category?.id) return;
+    updateMutation.mutate({ id: category.id, payload });
   };
 
   return (
     <>
-      <Table<Location>
-        data={locations}
+      <Table<Category>
+        data={categories}
         columns={columns}
         isLoading={isFetching}
         selectedRows={table.selectedRows}
         onSelectRow={(id) => table.toggleRow(id)}
-        onSelectAll={() => table.toggleAll(locations.map((r) => r.id!))}
+        onSelectAll={() => table.toggleAll(categories.map((r) => r.id!))}
         sort={table.sort}
         onSortChange={table.setSorting}
         order={table.order}
-        emptyMessage={t("locations.messages.empty")}
+        emptyMessage={t("categories.messages.empty")}
         pagination={{
           page: table.page,
           limit: table.limit,
           total: pagination?.total!,
-          rootUrl: paths.admin.locations.route(),
+          rootUrl: paths.admin.shipments.categories.route(),
         }}
       />
 
-      <LocationForm
+      <CategoryForm
         open={isEdit}
         onOpenChange={closeEdit}
         onClose={() => {
-          setLocation(undefined);
+          setCategory(undefined);
           closeEdit();
         }}
         onSubmit={handleEditSubmit}
         isDone={updateMutation.isSuccess}
-        defaultValues={location}
+        defaultValues={category}
         apiErrors={errors}
         isLoading={updateMutation.isPending}
       />
 
-      <LocationDeleteDialog
+      <CategoryDeleteDialog
         open={isDelete}
         onOpenChange={closeDelete}
-        location={location!}
+        category={category!}
         onDeleted={() => {
-          setLocation(undefined);
+          setCategory(undefined);
           closeDelete();
         }}
       />

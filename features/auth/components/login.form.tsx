@@ -17,7 +17,7 @@ export const LoginForm = () => {
         const user = res.data;
         const role = user?.role?.toLowerCase();
         if (role === "client") {
-          router.replace(paths.client.orders.route());
+          router.replace(paths.client.shipments.orders.route());
         } else if (role === "admin") {
           router.replace(paths.admin.dashboard.route());
         } else if (role === "shipper") {
@@ -27,6 +27,7 @@ export const LoginForm = () => {
         }
       },
       onError: (res: any) => {
+        console.log(res);
         toast({
           title: res.response.data.message,
           type: "error",

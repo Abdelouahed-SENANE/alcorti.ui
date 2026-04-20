@@ -27,14 +27,18 @@ export const paths = {
   client: {
     root: "/client",
     route: () => "/client",
-    orders: {
-      root: "/client/orders",
-      route: () => "/client/orders",
-      histories: {
-        root: "/client/orders/histories",
-        route: () => "/client/orders/histories",
+    shipments: {
+      root: "shipments",
+      route: () => "/client/shipments",
+      orders: {
+        root: "orders",
+        route: () => "/client/shipments/orders",
       },
-    },
+      old: {
+        root: "older",
+        route: () => "/client/shipments/older",
+      },
+    }
   },
 
   admin: {
@@ -58,6 +62,19 @@ export const paths = {
     locations: {
       root: "locations",
       route: () => "/admin/locations",
+    },
+
+    shipments: {
+      root: "shipments",
+      route: () => "/admin/shipments",
+      orders: {
+        root: "orders",
+        route: () => "/admin/shipments/orders",
+      },
+      categories: {
+        root: "categories",
+        route: () => "/admin/shipments/categories",
+      },
     },
   },
 };

@@ -10,6 +10,7 @@
   },
 
   "global": {
+    "no_icons": "No icons found",
     "upload": {
       "max_size": "Max size: {{size}} MB",
       "click_to_upload": "Click to upload",
@@ -51,8 +52,12 @@
     "settings": "Settings",
     "vehicles": "Vehicles",
     "locations": "Locations",
-    "orders": "My Orders",
-    "orders_history": "Orders Histories",
+    "shipments": {
+      "title": "Shipments",
+      "orders": "Orders",
+      "old": "Orders history",
+      "categories": "Categories"
+    },
     "logout": "Logout"
   },
 
@@ -492,6 +497,77 @@
       "errors": {
         "delete": {
           "title": "Error Deleting Location"
+        }
+      }
+    }
+  },
+  "categories": {
+    "page": {
+      "title": "Categories",
+      "desc": "Welcome to the categories page"
+    },
+    "columns": {
+      "name_ar": "Name (Arabic)",
+      "name_fr": "Name (French)",
+      "icon_name": "Icon",
+      "created_at": "Created At",
+      "updated_at": "Updated At"
+    },
+    "form": {
+      "create": {
+        "title": "Add Category",
+        "desc": "Add new category information"
+      },
+      "update": {
+        "title": "Update Category",
+        "desc": "Update category information"
+      },
+      "fields": {
+        "name_ar": {
+          "label": "Name (Arabic)",
+          "errors": {
+            "required": "Arabic name is required",
+            "min": "Arabic name is too short",
+            "max": "Arabic name is too long"
+          }
+        },
+        "name_fr": {
+          "label": "Name (French)",
+          "errors": {
+            "required": "French name is required",
+            "min": "French name is too short",
+            "max": "French name is too long"
+          }
+        },
+        "icon_name": {
+          "label": "Icon Name",
+          "errors": {
+            "required": "Icon name is required",
+            "min": "Icon name is too short"
+          }
+        }
+      }
+    },
+    "actions": {
+      "add": "Add Category",
+      "export": "Export Categories",
+      "create": "Create Category",
+      "edit": "Edit Category",
+      "delete": "Delete Category"
+    },
+    "modal": {
+      "delete": {
+        "title": "Delete Category",
+        "desc": "Are you sure you want to delete this category? This action cannot be undone.",
+        "submit": "Delete",
+        "cancel": "Cancel"
+      }
+    },
+    "messages": {
+      "empty": "No categories found",
+      "errors": {
+        "delete": {
+          "title": "Error Deleting Category"
         }
       }
     }

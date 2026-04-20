@@ -4,10 +4,10 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React, { forwardRef, HTMLAttributes } from "react";
+import { useTranslation } from "react-i18next";
 import { create } from "zustand";
 import { Button } from "../button";
 import { RouterLink } from "../link";
-import { useTranslation } from "react-i18next";
 
 type SidebarStore = {
   isCollapsed: boolean;
@@ -270,14 +270,14 @@ export const Link = React.forwardRef<HTMLDivElement, LinkProps>(
             toggle(e);
           }}
           className={cn(
-            "group/item flex items-center mb-1 relative py-1.5 px-2 w-full leading-5 text-sm border border-transparent rounded-xs cursor-pointer duration-200 text-sidebar-foreground/70 hover:text-sidebar-foreground",
+            "group/item flex items-center mb-1 relative py-1.5 px-2 w-full leading-5 text-sm border border-transparent rounded-md cursor-pointer duration-200 text-sidebar-foreground/70 hover:text-sidebar-foreground",
             isCollapsed
               ? "justify-center gap-0 group-hover/sidebar:gap-2"
               : "justify-start gap-2",
             "before:content-[''] rtl:before:-right-2.5 ltr:before:-left-2.5 before:absolute before:top-0 before:bottom-0 before:w-1.5 before:rounded-[5px] before:border-2 before:border-transparent before:bg-transparent",
             className,
             isActive &&
-              "before:border-primary before:bg-primary hover:text-primary text-primary bg-primary/10",
+              "before:border-primary before:bg-primary text-primary bg-primary/10",
             isOpen &&
               "bg-primary/5 text-primary before:border-primary before:bg-primary ",
           )}
@@ -307,11 +307,7 @@ export const Link = React.forwardRef<HTMLDivElement, LinkProps>(
                   : "inline-flex",
               )}
             >
-              {isOpen ? (
-                <ChevronDown size={14} className="opacity-70" />
-              ) : (
-                <ChevronRight size={14} className="opacity-70" />
-              )}
+              <ChevronDown size={14} className="opacity-70" />
             </span>
           )}
         </RouterLink>
@@ -328,16 +324,29 @@ export const Link = React.forwardRef<HTMLDivElement, LinkProps>(
             )}
           >
             <ul
-              className="mt-1 overflow-hidden transition-all duration-300 transform"
+              className="mt-1 overflow-hidden transition-all duration-300 transform ltr:ml-6 rtl:mr-6"
               style={{
                 transform: isOpen ? "translateY(0)" : "translateY(-4px)",
               }}
             >
-              {items.map((item) => {
+              {items.map((item, idx) => {
                 const subActive = pathname === item.to;
 
                 return (
-                  <li key={item.to} className="mb-0.5">
+                  <li
+                    key={item.to}
+                    className="relative ltr:border-l rtl:border-r border-input last:border-transparent pb-1"
+                  >
+                    {/* The Hook */}
+                    <div
+                      className={cn(
+                        "absolute ltr:-left-px rtl:-right-px top-0 w-4 h-5 border-input z-10",
+                        "ltr:border-l rtl:border-r border-b ltr:rounded-bl-lg rtl:rounded-br-lg",
+                        idx === items.length - 1 &&
+                          "h-5 ltr:border-l rtl:border-r",
+                      )}
+                    />
+
                     <RouterLink
                       to={item.to}
                       onClick={(e: React.MouseEvent) => {
@@ -347,14 +356,14 @@ export const Link = React.forwardRef<HTMLDivElement, LinkProps>(
                         }
                       }}
                       className={cn(
-                        "flex items-center text-sm font-semibold gap-2 py-1.5 rtl:pl-2 rtl:pr-8 ltr:pl-8 ltr:pr-2 text-sidebar-foreground/70 hover:text-sidebar-foreground rounded-sm transition-colors",
-                        "relative before:content-[''] before:absolute before:w-1.5 before:h-1.5 before:rounded-full",
-                        "before:border-2 before:border-primary/40 ",
-                        "ltr:before:left-4 rtl:before:right-4",
+                        "flex items-center text-xs font-medium gap-2 py-2 px-2 ltr:ml-4 rtl:mr-4  rounded-lg transition-all duration-200",
                         subActive &&
-                          "text-primary before:bg-primary before:border-primary",
+                          "text-primary bg-primary/10 font-bold scale-[1.02] z-50",
                       )}
                     >
+                      {item.icon && (
+                        <span className="size-4 shrink-0">{item.icon}</span>
+                      )}
                       <span>{item.title}</span>
                     </RouterLink>
                   </li>

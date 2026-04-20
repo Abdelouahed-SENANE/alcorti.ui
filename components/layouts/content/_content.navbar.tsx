@@ -15,12 +15,12 @@ export const ContentNavabr = () => {
 
   const navigation = [
     {
-      label: t("navigation.orders"),
-      to: paths.client.orders.route(),
+      label: t("navigation.shipments.orders"),
+      to: paths.client.shipments.orders.route(),
     },
     {
-      label: t("navigation.orders_history"),
-      to: paths.client.orders.histories.route(),
+      label: t("navigation.shipments.old"),
+      to: paths.client.shipments.old.route(),
     },
   ];
 

@@ -6,6 +6,10 @@
   "navigation": {
     "dashboard": "Tableau de bord",
     "users": "Utilisateurs",
+    "locations": "Emplacements",
+    "categories": "Catégories",
+    "shipments": "Expéditions",
+    "shipments_orders": "Commandes",
     "logout": "Déconnexion"
   },
 
@@ -299,6 +303,72 @@
       "errors": {
         "delete": {
           "title": "Erreur lors de la suppression de l'emplacement"
+        }
+      }
+    }
+  },
+  "categories": {
+    "page": {
+      "title": "Catégories",
+      "desc": "Bienvenue sur la page des catégories"
+    },
+    "columns": {
+      "name_ar": "Nom (Arabe)",
+      "name_fr": "Nom (Français)",
+      "icon_name": "Icône",
+      "created_at": "Date de création",
+      "updated_at": "Date de mise à jour"
+    },
+    "form": {
+      "create": {
+        "title": "Ajouter une catégorie",
+        "desc": "Ajouter de nouvelles informations sur la catégorie"
+      },
+      "update": {
+        "title": "Modifier la catégorie",
+        "desc": "Modifier les informations de la catégorie"
+      },
+      "fields": {
+        "name_ar": {
+          "label": "Nom (Arabe)",
+          "errors": {
+            "required": "Le nom arabe est requis"
+          }
+        },
+        "name_fr": {
+          "label": "Nom (Français)",
+          "errors": {
+            "required": "Le nom français est requis"
+          }
+        },
+        "icon_name": {
+          "label": "Nom de l'icône",
+          "errors": {
+            "required": "Le nom de l'icône est requis"
+          }
+        }
+      }
+    },
+    "actions": {
+      "add": "Ajouter une catégorie",
+      "export": "Exporter les catégories",
+      "create": "Créer la catégorie",
+      "edit": "Modifier la catégorie",
+      "delete": "Supprimer la catégorie"
+    },
+    "modal": {
+      "delete": {
+        "title": "Supprimer la catégorie",
+        "desc": "Êtes-vous sûr de vouloir supprimer cette catégorie ? Cette action est irréversible.",
+        "submit": "Supprimer",
+        "cancel": "Annuler"
+      }
+    },
+    "messages": {
+      "empty": "Aucune catégorie trouvée",
+      "errors": {
+        "delete": {
+          "title": "Erreur lors de la suppression de la catégorie"
         }
       }
     }
