@@ -7,6 +7,7 @@ import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { useCategoryOptions } from "../api/category.options";
 import { CategoryOption } from "../category.type";
+import { useAutocompleteCache } from "@/components/ui/autocomplete/autocomplete.cache";
 
 export interface CategorySelectorProps {
   label?: string;
@@ -22,9 +23,16 @@ export function CategorySelector({
   onSelect,
   className,
   isRequired,
+  defaultValue,
 }: CategorySelectorProps) {
   const { t } = useTranslation();
   const lang = i18n.language;
+  const {selectedItem , cacheItem} = useAutocompleteCache({
+    cacheKey: "categories",
+    value: defaultValue,
+    itemToValue: (v: any) => v.id || v.value,
+    itemToLabel: (v: any) => resolveLocaleValue(v, lang),
+  });
   const renderItem = React.useCallback(
     (category: CategoryOption) => (
       <div className="flex justify-start flex-col gap-0.5 truncate w-full  ltr:flex-row rtl:flex-row-reverse">
@@ -34,6 +42,7 @@ export function CategorySelector({
     [lang],
   );
 
+
   const itemToLabel = React.useCallback(
     (v: CategoryOption) => resolveLocaleValue(v, lang),
     [lang],
@@ -41,9 +50,10 @@ export function CategorySelector({
   const itemToValue = React.useCallback((v: CategoryOption) => v.id, []);
   const handleSelect = React.useCallback(
     (category: CategoryOption) => {
+      cacheItem(category);
       onSelect?.(category);
     },
-    [onSelect],
+    [onSelect, cacheItem],
   );
   return (
     <RemoteSelector
@@ -57,6 +67,7 @@ export function CategorySelector({
       itemToValue={itemToValue}
       className={className}
       debounceMs={600}
+      initialSelectedItem={selectedItem}
     />
   );
 }

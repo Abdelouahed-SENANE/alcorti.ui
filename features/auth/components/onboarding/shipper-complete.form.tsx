@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Form, ImageUpload, Input } from "@/components/ui/form";
 import { toast } from "@/components/ui/toast/use-toast";
-import { VehicleSelector } from "@/features/admin/vehicles/components/vehicle.selector";
 import {
   completeShipperInputSchema,
   useCompleteShipperProfile,
 } from "@/features/auth/api/shipper.complete";
+import { VehicleSelector } from "@/features/vehicles/components/vehicle.selector";
 import { ApiResponse, AuthUser } from "@/types/api";
 import { CheckCircle } from "lucide-react";
 import { useState } from "react";

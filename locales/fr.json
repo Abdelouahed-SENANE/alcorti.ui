@@ -372,5 +372,13 @@
         }
       }
     }
+  },
+  "shipments": {
+    "form": {
+      "summary": {
+        "confirmation_notice": "Veuillez revoir tous les détails ci-dessus. Une fois confirmé, votre demande sera visible par les transporteurs disponibles.",
+        "estimated_distance": "Distance Estimée"
+      }
+    }
   }
 }

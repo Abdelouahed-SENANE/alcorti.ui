@@ -25,7 +25,7 @@ export const ContentNavabr = () => {
   ];
 
   return (
-    <header className="h-14 border-b border-border w-full flex items-center bg-card/15  backdrop-blur-xl sticky inset-0 ">
+    <header className="h-14 border-b border-border w-full flex items-center bg-card/15  z-50 backdrop-blur-xl sticky inset-0 ">
       <nav className="flex items-center justify-between w-5xl mx-auto">
         <div role="logo-container" className="flex items-center gap-2">
           <Image className="size-8" src={logo} alt="App Logo" />

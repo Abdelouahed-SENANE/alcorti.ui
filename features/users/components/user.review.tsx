@@ -13,7 +13,6 @@ import { Category } from "../../attachments/attachments.type";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { DocumentViewerSkeleton } from "@/components/ui/document-viewer/document-viewer.skeleton";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { cn } from "@/lib/utils";
 import { Check, Image, Lock, Unlock, X } from "lucide-react";
@@ -23,10 +22,11 @@ import { useToggleAccountState } from "../api/account-state";
 import { useReviewUser } from "../api/user.review";
 import { AccountStateDialog } from "./account-state.dialog";
 import { UserReviewSkeleton } from "./user.review.skeleton";
+import { DocumentViewerSkeleton } from "@/components/viewers/document/document-viewer.skeleton";
 
 const DocumentViewer = dynamic(
   () =>
-    import("@/components/ui/document-viewer/document-viewer").then((m) => ({
+    import("@/components/viewers/document/document-viewer").then((m) => ({
       default: m.DocumentViewer,
     })),
   {

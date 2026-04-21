@@ -1,10 +1,9 @@
-
-
+import { ShipmentWizardForm } from "@/features/shipments/components/shipment.form";
 
 export default function OrdersPage() {
-    return (
-        <div>
-            <h1>Orders</h1>
-        </div>
-    );
+  return (
+    <div>
+      <ShipmentWizardForm />
+    </div>
+  );
 }

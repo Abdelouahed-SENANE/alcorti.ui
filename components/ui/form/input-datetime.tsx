@@ -12,8 +12,8 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { Calendar1 } from "lucide-react";
-import { FieldWrapper, FieldWrapperPassThroughProps } from "./field-wrapper";
 import { useTranslation } from "react-i18next";
+import { FieldWrapper, FieldWrapperPassThroughProps } from "./field-wrapper";
 
 interface InputDateTimeProps extends FieldWrapperPassThroughProps {
   value?: Date;
@@ -67,7 +67,11 @@ export function InputDateTime({
               !value && "text-foreground/50",
             )}
           >
-            {value ? format(value, "dd/MM/yyyy HH:mm") : <span className="text-card-foreground/50">{placeholder}</span>}
+            {value ? (
+              format(value, "dd/MM/yyyy HH:mm")
+            ) : (
+              <span className="text-card-foreground/50">{placeholder}</span>
+            )}
             <Calendar1 className="h-4 w-4 opacity-70" />
           </Button>
         </PopoverTrigger>

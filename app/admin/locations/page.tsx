@@ -8,11 +8,11 @@ import { paths } from "@/config/paths";
 import {
   CreateLocationInputs,
   useCreateLocation,
-} from "@/features/admin/locations/api/create.location";
-import { useLocations } from "@/features/admin/locations/api/location.list";
-import { LocationForm } from "@/features/admin/locations/components/location.form";
-import { LocationTable } from "@/features/admin/locations/components/location.table";
-import { Location } from "@/features/admin/locations/location.type";
+} from "@/features/locations/api/create.location";
+import { useLocations } from "@/features/locations/api/location.list";
+import { LocationForm } from "@/features/locations/components/location.form";
+import { LocationTable } from "@/features/locations/components/location.table";
+import { Location } from "@/features/locations/location.type";
 import { ApiResponse } from "@/types/api";
 import { Download, Plus } from "lucide-react";
 import { useCallback, useState } from "react";

@@ -5,15 +5,14 @@ import { SearchInput } from "@/components/ui/form";
 import { useQueryTable } from "@/components/ui/table";
 import { toast } from "@/components/ui/toast/use-toast";
 import { paths } from "@/config/paths";
-import { useCategories } from "@/features/admin/categories/api/category.list";
+import { useCategories } from "@/features/categories/api/category.list";
 import {
   CreateCategoryInputs,
   useCreateCategory,
-} from "@/features/admin/categories/api/create.category";
-import { Category } from "@/features/admin/categories/category.type";
-import { CategoryForm } from "@/features/admin/categories/components/category.form";
-import { CategorySelector } from "@/features/admin/categories/components/category.selector";
-import { CategoryTable } from "@/features/admin/categories/components/category.table";
+} from "@/features/categories/api/create.category";
+import { Category } from "@/features/categories/category.type";
+import { CategoryForm } from "@/features/categories/components/category.form";
+import { CategoryTable } from "@/features/categories/components/category.table";
 import { Download, Plus } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";

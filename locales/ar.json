@@ -9,6 +9,18 @@
     }
   },
   "global": {
+    "units": {
+      "centimeter": "سنتيمتر",
+      "meter": "متر",
+      "cm": "سم",
+      "m": "م"
+    },
+    "item": "عنصر",
+    "is_weight_known": "هل الوزن معروف؟",
+    "items_count": "{{count}} عنصر",
+    "next": "التالي",
+    "back": "السابق",
+    "km": "كم",
     "upload": {
       "max_size": "ميغا بايت كحد أقصى {{size}}",
       "click_to_upload": "انقر للرفع",
@@ -545,6 +557,10 @@
       "edit": "تعديل الفئة",
       "delete": "حذف الفئة"
     },
+    "autocomplete": {
+      "label": "الفئة",
+      "placeholder": "ابحث عن فئة..."
+    },
     "modal": {
       "delete": {
         "title": "حذف الفئة",
@@ -560,6 +576,129 @@
           "title": "خطأ في حذف الفئة"
         }
       }
+    }
+  },
+  "shipments": {
+    "form": {
+      "category": {
+        "label": "فئة الشحنة",
+        "errors": {
+          "required": "الفئة مطلوبة",
+          "min": "الفئة مطلوبة"
+        }
+      },
+      "description": {
+        "label": "وصف الشحنة",
+        "placeholder": "أدخل وصف الشحنة",
+        "errors": {
+          "required": "الوصف مطلوب"
+        }
+      },
+      "origin": {
+        "label": "مدينة الانطلاق",
+        "errors": {
+          "required": "نقطة الانطلاق مطلوبة"
+        }
+      },
+      "destination": {
+        "label": "مدينة الوصول",
+        "errors": {
+          "required": "الوجهة مطلوبة"
+        }
+      },
+      "available_from": {
+        "label": "تاريخ التوفر",
+        "placeholder": "اختر تاريخ التوفر",
+        "errors": {
+          "required": "تاريخ التوفر مطلوب"
+        }
+      },
+      "available_to": {
+        "label": "تاريخ الوصول",
+        "placeholder": "اختر أبعد تاريخ",
+        "errors": {
+          "required": "تاريخ الوصول مطلوب",
+          "after": "تاريخ الوصول يجب أن يكون بعد تاريخ الانطلاق"
+        }
+      },
+
+      "items": {
+        "label": "العناصر",
+        "add": "إضافة عنصر آخر",
+        "min": "يجب إضافة عنصر واحد على الأقل",
+        "summary_title": "عناصر الشحنة",
+        "description": {
+          "label": "وصف العنصر",
+          "placeholder": "أدخل وصف العنصر",
+          "errors": {
+            "required": "الوصف مطلوب"
+          }
+        },
+        "image": {
+          "label": "صورة (اختياري)",
+          "errors": {
+            "required": "الصورة مطلوبة"
+          }
+        },
+        "length": {
+          "label": "الطول ({{unit}})",
+          "errors": {
+            "required": "الطول مطلوب",
+            "min": "الأدنى 0.1"
+          }
+        },
+        "width": {
+          "label": "العرض ({{unit}})",
+          "errors": {
+            "required": "العرض مطلوب",
+            "min": "الأدنى 0.1"
+          }
+        },
+        "height": {
+          "label": "الارتفاع ({{unit}})",
+          "errors": {
+            "required": "الارتفاع مطلوب",
+            "min": "الأدنى 0.1"
+          }
+        },
+        "weight": {
+          "label": "الوزن (كلغ)",
+          "errors": {
+            "required": "الوزن مطلوب",
+            "min": "الأدنى 0.1"
+          }
+        },
+        "weight_summary": "الوزن {{weight}} كلغ",
+        "dims_summary": "الأبعاد {{length}}×{{width}}×{{height}} سم"
+      },
+
+
+      "summary": {
+        "confirmation_notice": "يرجى مراجعة كافة التفاصيل أعلاه. بمجرد التأكيد، سيكون طلبك مرئياً للناقلين المتاحين.",
+        "estimated_distance": "المسافة المقدرة",
+        "available_between": "متاح بين",
+        "route": "المسار",
+        "estimated_price": "السعر التقديري",
+        "mad": "درهم"
+      },
+      "steps": {
+        "general": {
+          "title": "المعلومات العامة",
+          "subtitle": "حدد تفاصيل الشحنة والمسار"
+        },
+        "items": {
+          "title": "العناصر",
+          "subtitle": "أضف العناصر المراد شحنها"
+        },
+        "summary": {
+          "title": "الملخص",
+          "subtitle": "مراجعة وتأكيد طلبك"
+        }
+      },
+      "success_title": "تم تقديم الطلب",
+      "success_message": "تم إنشاء طلب الشحن الخاص بك بنجاح.",
+      "submit": "تأكيد الشحنة",
+      "origin_destination_different": "لا يمكن أن تكون نقطة الانطلاق والوجهة متطابقتين"
     }
   }
 }

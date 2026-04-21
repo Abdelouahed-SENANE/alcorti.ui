@@ -14,7 +14,11 @@ export function resolveLocaleValue(
   locale: string,
 ): string {
   if (!value) return "-";
-  return locale === "ar" ? value.name_ar : locale === "fr" ? value.name_fr : value?.name_en || "-";
+  return locale === "ar"
+    ? value.name_ar
+    : locale === "fr"
+      ? value.name_fr
+      : value?.name_en || "-";
 }
 export function formatDate(dateString: string, locale: string): string {
   if (!dateString) return "-";
@@ -60,3 +64,4 @@ export function handleNumericKeyDown(e: any) {
     e.preventDefault();
   }
 }
+

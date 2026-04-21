@@ -15,6 +15,10 @@ import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { FieldWrapper, FieldWrapperPassThroughProps } from "./field-wrapper";
 
+import { ar, enUS, fr } from "date-fns/locale";
+
+const locales: Record<string, any> = { ar, fr, en: enUS };
+
 export interface InputDateProps extends FieldWrapperPassThroughProps {
   label?: string;
   onChange: (newDate: Date | undefined) => void;
@@ -22,6 +26,7 @@ export interface InputDateProps extends FieldWrapperPassThroughProps {
   placeholder?: string;
   className?: string;
 }
+
 export const DateInput = ({
   onChange,
   val,
@@ -32,6 +37,7 @@ export const DateInput = ({
 }: InputDateProps) => {
   const { i18n } = useTranslation();
   const lang = i18n.language;
+  const currentLocale = locales[lang] || fr;
   const dir = lang === "ar" ? "rtl" : "ltr";
 
   const normalize = (v: any): Date | undefined => {
@@ -46,7 +52,7 @@ export const DateInput = ({
 
   React.useEffect(() => {
     setDate(normalize(val));
-  }, [val?.getTime()]);
+  }, [val]);
 
   return (
     <FieldWrapper label={label} error={error} className={className}>
@@ -66,7 +72,7 @@ export const DateInput = ({
             )}
           >
             {date ? (
-              format(date, "dd/MM/yyyy")
+              format(date, "PPP", { locale: currentLocale })
             ) : (
               <span className="text-card-foreground/50">{placeholder}</span>
             )}
@@ -89,7 +95,7 @@ export const DateInput = ({
             }}
             required={false}
             dir={dir}
-            locale={lang === "ar" ? undefined : undefined} // react-day-picker handles locale if passed, otherwise it uses default
+            locale={currentLocale}
           />
         </PopoverContent>
       </Popover>

@@ -8,11 +8,11 @@ import { paths } from "@/config/paths";
 import {
   CreateVehicleInputs,
   useCreateVehicle,
-} from "@/features/admin/vehicles/api/create.vehicle";
-import { useVehicles } from "@/features/admin/vehicles/api/vehicle.list";
-import { VehicleForm } from "@/features/admin/vehicles/components/vehicle.form";
-import { VehicleTable } from "@/features/admin/vehicles/components/vehicle.table";
-import { Vehicle } from "@/features/admin/vehicles/vehicle.type";
+} from "@/features/vehicles/api/create.vehicle";
+import { useVehicles } from "@/features/vehicles/api/vehicle.list";
+import { VehicleForm } from "@/features/vehicles/components/vehicle.form";
+import { VehicleTable } from "@/features/vehicles/components/vehicle.table";
+import { Vehicle } from "@/features/vehicles/vehicle.type";
 import { ApiResponse } from "@/types/api";
 import { Download, Plus } from "lucide-react";
 import { useCallback, useState } from "react";

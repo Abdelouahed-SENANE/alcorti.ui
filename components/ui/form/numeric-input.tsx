@@ -13,6 +13,7 @@ export type NumericInputProps = Omit<
     registration?: Partial<UseFormRegisterReturn>;
     /** Allow decimal point, default true */
     allowDecimal?: boolean;
+    isRequired?: boolean;
   };
 
 /** Keys that are always allowed (navigation, editing, etc.) */
@@ -38,6 +39,7 @@ const NumericInput = React.forwardRef<HTMLInputElement, NumericInputProps>(
       registration,
       allowDecimal = true,
       onKeyDown,
+      isRequired,
       ...props
     },
     ref,
@@ -121,9 +123,10 @@ const NumericInput = React.forwardRef<HTMLInputElement, NumericInputProps>(
             {...registration}
             {...props}
           />
-          {/* <label className="z-2 text-foreground pointer-events-none rounded-full absolute left-3 inset-y-0 h-fit flex items-center select-none transition-all text-sm peer-focus:text-xs peer-placeholder-shown:text-sm px-1 peer-focus:px-1 peer-placeholder-shown:px-0 peer-focus:bg-card peer-placeholder-shown:bg-card duration-200 t m-0 peer-focus:m-0 peer-placeholder-shown:m-auto -translate-y-1/2 peer-focus:-translate-y-1/2 peer-placeholder-shown:translate-y-0">
+          <label className="z-2 text-foreground pointer-events-none rounded-full absolute l ltr:left-2 rtl:right-2 inset-y-0 h-fit flex items-center select-none transition-all text-sm peer-focus:text-xs peer-placeholder-shown:text-sm px-1 peer-focus:px-1 peer-placeholder-shown:px-0 peer-focus:bg-card peer-placeholder-shown:bg-card duration-200 t m-0 peer-focus:m-0 peer-placeholder-shown:m-auto -translate-y-1/2 peer-focus:-translate-y-1/2 peer-placeholder-shown:translate-y-0">
             {label}
-          </label> */}
+            {isRequired && <span className="mx-0.5 text-destructive">*</span>}
+          </label>
         </div>
       </FieldWrapper>
     );

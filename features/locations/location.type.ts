@@ -21,4 +21,6 @@ export type LocationOption = {
   name_ar: string;
   name_en: string;
   name_fr: string;
+  lat: number;
+  lng: number;
 };

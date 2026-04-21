@@ -1,8 +1,8 @@
 "use client";
 import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { paths } from "@/config/paths";
-import { useUserDetails } from "@/features/admin/users/api/user.details";
-import { UserReview } from "@/features/admin/users/components/user.review";
+import { useUserDetails } from "@/features/users/api/user.details";
+import { UserReview } from "@/features/users/components/user.review";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 

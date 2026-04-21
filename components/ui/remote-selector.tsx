@@ -8,7 +8,7 @@ import {
   AutocompleteItem,
   AutocompleteList,
   AutocompleteStatus,
-} from "@/components/ui/autocomplete";
+} from "@/components/ui/autocomplete/autocomplete";
 import { Spinner } from "@/components/ui/spinner";
 import { useDebouce } from "@/hooks/use-debounce";
 import { ApiResponse } from "@/types/api";
@@ -30,6 +30,11 @@ interface RemoteSelectorProps<T> {
   error?: string;
   className?: string;
   debounceMs?: number;
+  /**
+   * Full item object to display on mount — keeps the label visible
+   * even before the options query runs. Use this when editing existing records.
+   */
+  initialSelectedItem?: T | null;
 }
 
 export function RemoteSelector<T>({
@@ -43,9 +48,15 @@ export function RemoteSelector<T>({
   error,
   className,
   debounceMs = 300,
+  initialSelectedItem,
 }: RemoteSelectorProps<T>) {
   const { t } = useTranslation();
-  const [searchValue, setSearchValue] = React.useState("");
+
+  // Initialize searchValue from initialSelectedItem on mount
+  const [searchValue, setSearchValue] = React.useState(() =>
+    initialSelectedItem ? itemToLabel(initialSelectedItem) : "",
+  );
+
   const debounced = useDebouce(searchValue, debounceMs);
 
   const { data, isFetching, isError } = useOptionsQuery({
@@ -58,31 +69,53 @@ export function RemoteSelector<T>({
   });
 
   const results = data?.data ?? [];
-
   const resultsRef = React.useRef(results);
+
+  // Track whether the current searchValue is a committed selection
+  // vs user-typed search text
+  const isDisplayingSelectedRef = React.useRef(!!initialSelectedItem);
 
   React.useEffect(() => {
     resultsRef.current = results;
   }, [results]);
 
+  // Sync input when initialSelectedItem changes externally
+  // (e.g., form reset, switching between records, cache updates)
+  React.useEffect(() => {
+    if (initialSelectedItem) {
+      setSearchValue(itemToLabel(initialSelectedItem));
+      isDisplayingSelectedRef.current = true;
+    } else {
+      setSearchValue("");
+      isDisplayingSelectedRef.current = false;
+    }
+  }, [initialSelectedItem, itemToLabel]);
+
   const handleValueChange = React.useCallback(
     (val: string | T) => {
+      // Selection via click (val is the item object)
       if (typeof val !== "string") {
         setSearchValue(itemToLabel(val));
+        isDisplayingSelectedRef.current = true;
         onSelect?.(val);
         return;
       }
+
+      // User typing or clearing
       setSearchValue(val);
-      // Cleared
+      isDisplayingSelectedRef.current = false;
+
       if (val === "") {
         onSelect?.({} as T);
         return;
       }
 
+      // Match typed text against known results (keyboard Enter selection)
       const matched = resultsRef.current.find(
         (item) => itemToLabel(item) === val,
       );
       if (matched) {
+        isDisplayingSelectedRef.current = true;
         onSelect?.(matched);
       }
     },
@@ -108,7 +141,7 @@ export function RemoteSelector<T>({
         <AutocompleteInput
           label={label}
           error={error}
-          className="h-9"
+          className="h-10"
           showTrigger
           showClear
           isRequired={isRequired}

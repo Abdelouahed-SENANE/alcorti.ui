@@ -10,6 +10,18 @@
   },
 
   "global": {
+    "units": {
+      "cm": "cm",
+      "m": "m",
+      "centimeter": "Centimeter",
+      "meter": "Meter"
+    },
+    "item": "Item",
+    "is_weight_known" : "Weight known ?",
+    "items_count": "{{count}} items",
+    "km": "KM",
+    "next": "Next",
+    "back": "Back",
     "no_icons": "No icons found",
     "upload": {
       "max_size": "Max size: {{size}} MB",
@@ -555,6 +567,10 @@
       "edit": "Edit Category",
       "delete": "Delete Category"
     },
+    "autocomplete": {
+      "label": "Category",
+      "placeholder": "Search for a category..."
+    },
     "modal": {
       "delete": {
         "title": "Delete Category",
@@ -570,6 +586,120 @@
           "title": "Error Deleting Category"
         }
       }
+    }
+  },
+  "shipments": {
+    "form": {
+      "category": {
+        "label": "Shipment Category",
+        "required": "Category is required"
+      },
+      "description": {
+        "label": "Shipment Description",
+        "placeholder": "Enter shipment description",
+        "errors": {
+          "required": "Description is required"
+        }
+      },
+      "origin": {
+        "label": "Origin City",
+        "errors": {
+          "required": "Origin is required"
+        }
+      },
+      "destination": {
+        "label": "Destination City",
+        "errors": {
+          "required": "Destination is required"
+        }
+      },
+      "available_from": {
+        "label": "Available From",
+        "placeholder": "Select earliest date",
+        "errors": {
+          "required": "Available from is required"
+        }
+      },
+      "available_to": {
+        "label": "Available To",
+        "placeholder": "Select latest date",
+        "errors": {
+          "required": "Available to is required",
+          "after": "Available to must be after available from"
+        }
+      },
+      "items": {
+        "label": "Items",
+        "add": "Add Another Item",
+        "min": "At least one item is required",
+        "summary_title": "Shipment Items",
+        "description": {
+          "label": "Item Description",
+          "placeholder": "Enter item description",
+          "errors": {
+            "required": "Description is required"
+          }
+        },
+        "image": {
+          "label": "Photo (Optional)"
+        },
+        "length": {
+          "label": "Length ({{unit}})",
+          "errors": {
+            "required": "Length is required",
+            "min": "Min 0.1"
+          }
+        },
+        "width": {
+          "label": "Width ({{unit}})",
+          "errors": {
+            "required": "Width is required",
+            "min": "Min 0.1"
+          }
+        },
+        "height": {
+          "label": "Height ({{unit}})",
+          "errors": {
+            "required": "Height is required",
+            "min": "Min 0.1"
+          }
+        },
+        "weight": {
+          "label": "Weight (kg)",
+          "errors": {
+            "required": "Weight is required",
+            "min": "Min 0.1"
+          }
+        },
+        "weight_summary": "Weight {{weight}} kg",
+        "dims_summary": "Dims {{length}}×{{width}}×{{height}} cm"
+      },
+      "summary": {
+        "confirmation_notice": "Please review all details above. Once confirmed, your request will be visible to available shippers.",
+        "estimated_distance": "Estimated Distance ",
+        "available_between": "Available Between",
+        "route": "Route",
+        "estimated_price": "Estimated Price",
+        "mad": "MAD"
+      },
+      "steps": {
+        "general": {
+          "title": "General Info",
+          "subtitle": "Set shipment details and route"
+        },
+        "items": {
+          "title": "Items",
+          "subtitle": "Add pieces to be shipped"
+        },
+        "summary": {
+          "title": "Summary",
+          "subtitle": "Review and confirm your order"
+        }
+      },
+      "success_title": "Order Submitted",
+      "success_message": "Your shipment request has been successfully created.",
+      "submit": "Confirm Shipment",
+      "origin_destination_different": "Origin and destination cannot be the same"
     }
   }
 }

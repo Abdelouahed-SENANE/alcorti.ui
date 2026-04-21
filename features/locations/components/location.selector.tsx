@@ -1,13 +1,12 @@
 "use client";
-
+import { useAutocompleteCache } from "@/components/ui/autocomplete/autocomplete.cache";
 import { RemoteSelector } from "@/components/ui/remote-selector";
+import i18n from "@/config/i18n";
+import { resolveLocaleValue } from "@/lib/utils";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { useLocationOptions } from "../api/location.options";
 import { LocationOption } from "../location.type";
-import i18n from "@/config/i18n";
-import { resolve } from "path";
-import { resolveLocaleValue } from "@/lib/utils";
 
 export interface LocationSelectorProps {
   label?: string;
@@ -23,30 +22,49 @@ export function LocationSelector({
   onSelect,
   className,
   isRequired,
+  defaultValue,
+  label,
 }: LocationSelectorProps) {
   const { t } = useTranslation();
   const lang = i18n.language;
+
+  const itemToLabel = React.useCallback(
+    (v: LocationOption) => resolveLocaleValue(v, lang),
+    [lang],
+  );
+
+  const itemToValue = React.useCallback((v: LocationOption) => v.value, []);
+
+  // ⬇️ All caching handled by this hook
+  const { selectedItem, cacheItem } = useAutocompleteCache<LocationOption>({
+    cacheKey: "locations",
+    value: defaultValue,
+    itemToValue,
+    itemToLabel,
+    ttlMs: 30 * 60 * 1000,
+  });
+
   const renderItem = React.useCallback(
     (location: LocationOption) => (
-      <div className="flex justify-start flex-col gap-0.5 truncate w-full  ltr:flex-row rtl:flex-row-reverse">
+      <div className="flex justify-start flex-col gap-0.5 truncate w-full ltr:flex-row rtl:flex-row-reverse">
         {resolveLocaleValue(location, lang)}
       </div>
     ),
     [lang],
   );
 
-  const itemToLabel = React.useCallback((v: LocationOption) => resolveLocaleValue(v, lang), []);
-  const itemToValue = React.useCallback((v: LocationOption) => v.value, []);
   const handleSelect = React.useCallback(
     (location: LocationOption) => {
+      cacheItem(location); // ← saves to cache with 30-min TTL
       onSelect?.(location);
     },
-    [onSelect],
+    [onSelect, cacheItem],
   );
+
   return (
-    <RemoteSelector
+    <RemoteSelector<LocationOption>
       isRequired={isRequired}
-      label={t("locations.autocomplete.label")}
+      label={label}
       error={error}
       onSelect={handleSelect}
       useOptionsQuery={useLocationOptions}
@@ -55,6 +73,7 @@ export function LocationSelector({
       itemToValue={itemToValue}
       className={className}
       debounceMs={600}
+      initialSelectedItem={selectedItem}
     />
   );
 }
