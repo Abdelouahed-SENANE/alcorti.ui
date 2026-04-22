@@ -33,6 +33,10 @@ export const paths = {
       orders: {
         root: "orders",
         route: () => "/client/shipments/orders",
+        new: {
+          root: "new",
+          route: () => "/client/shipments/orders/new",
+        },
       },
       old: {
         root: "older",

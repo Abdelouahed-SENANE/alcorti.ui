@@ -68,7 +68,8 @@
       "title": "Shipments",
       "orders": "Orders",
       "old": "Orders history",
-      "categories": "Categories"
+      "categories": "Categories",
+      "new": "New Shipment"
     },
     "logout": "Logout"
   },

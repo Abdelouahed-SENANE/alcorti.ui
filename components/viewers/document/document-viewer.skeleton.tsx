@@ -1,7 +1,7 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import { cn } from "@/lib/utils";
-import { Skeleton } from "../skeleton";
 
 export const DocumentViewerSkeleton = ({ className }: { className?: string }) => {
   return (

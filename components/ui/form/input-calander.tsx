@@ -104,6 +104,7 @@ export const InputCalendar: React.FC<InputCalenderProps> = ({
         >
           <Calendar
             mode="single"
+            disabled={(date) => date < new Date()}
             selected={date}
             locale={currentLocale}
             captionLayout="dropdown"

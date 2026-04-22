@@ -25,12 +25,15 @@ export const useStepper = ({
     },
     [totalSteps],
   );
-
+  const reset = useCallback(() => {
+    setCurrentStep(initialStep);
+  }, [initialStep]);
   return {
     currentStep,
     next,
     back,
     goTo,
+    reset,
     isFirst: currentStep === 1,
     isLast: currentStep === totalSteps,
     progress: (currentStep / totalSteps) * 100,

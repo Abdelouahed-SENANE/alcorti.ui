@@ -7,13 +7,18 @@ import { paths } from "@/config/paths";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 export const ContentNavabr = () => {
   const { t } = useTranslation();
   const pathname = usePathname();
 
-  const navigation = [
+  const navigation = useMemo(()=>[
+    {
+      label: t("navigation.shipments.new"),
+      to: paths.client.shipments.orders.new.route(),
+    },
     {
       label: t("navigation.shipments.orders"),
       to: paths.client.shipments.orders.route(),
@@ -22,7 +27,7 @@ export const ContentNavabr = () => {
       label: t("navigation.shipments.old"),
       to: paths.client.shipments.old.route(),
     },
-  ];
+  ], [t]);
 
   return (
     <header className="h-14 border-b border-border w-full flex items-center bg-card/15  z-50 backdrop-blur-xl sticky inset-0 ">
@@ -49,8 +54,8 @@ export const ContentNavabr = () => {
             </li>
           ))}
           <li className="flex items-center gap-2">
-            <SwitchLanguage/>
-            <ThemeToggle/>
+            <SwitchLanguage />
+            <ThemeToggle />
             <UserNavgation />
           </li>
         </ul>

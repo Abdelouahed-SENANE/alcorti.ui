@@ -1,8 +1,8 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { DocumentViewerSkeleton } from "@/components/ui/document-viewer/document-viewer.skeleton";
 import { Skeleton } from "@/components/ui/skeleton/skeleton";
+import { DocumentViewerSkeleton } from "@/components/viewers/document/document-viewer.skeleton";
 import { cn } from "@/lib/utils";
 
 export const ProfileCardSkeleton = () => {

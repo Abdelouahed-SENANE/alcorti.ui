@@ -24,12 +24,8 @@ const createLocation = async ({
 }: {
   payload: CreateLocationInputs;
 }): Promise<ApiResponse<void>> => {
-  try {
-    const res = await api$.post("/admin/locations", payload);
-    return res.data;
-  } catch (error: any) {
-    throw error.response?.data || error;
-  }
+  const res = await api$.post<ApiResponse<void>>("/admin/locations", payload);
+  return res.data;
 };
 
 export const useCreateLocation = ({

@@ -36,7 +36,7 @@ export function Toaster() {
             duration={duration}
             {...props}
             className={cn(
-              "relative max-w-sm p-2 border-border rounded-xl text-card-foreground",
+              "relative max-w-sm p-2 border rounded-md text-card-foreground",
               "top-10 inset-inline-end-5",
               "transition-transform duration-300 ease-out",
               "opacity-0",
@@ -45,6 +45,8 @@ export function Toaster() {
               "data-[state=closed]:translate-y-full",
               "data-[state=closed]:opacity-0",
               alertStyles[type].bg,
+              alertStyles[type].border,
+              "",
             )}
           >
             <div className="flex w-full gap-1 relative ">

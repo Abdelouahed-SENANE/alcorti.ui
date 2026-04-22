@@ -1,42 +1,39 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form/form";
 import { Stepper } from "@/components/ui/stepper/stepper";
 import { useStepper } from "@/components/ui/stepper/use-stepper";
-import { toast } from "@/components/ui/toast/use-toast";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { ShipmentOrderInputs, shipmentOrderSchema } from "../shipment.type";
+import { ShipmentOrderInputs, shipmentOrderSchema } from "../api/create.order";
 import { GeneralStep } from "./steps/info.step";
 import { ItemsStep } from "./steps/items.step";
 import { SummaryStep } from "./steps/summary.step";
 
-import { Form } from "@/components/ui/form/form";
-
 type ShipmentFormProps = {
   defaultValues?: ShipmentOrderInputs;
+  onSubmit: (data: ShipmentOrderInputs) => void;
 };
 
-export const ShipmentWizardForm = ({ defaultValues }: ShipmentFormProps) => {
+export const ShipmentForm = ({
+  defaultValues,
+  onSubmit,
+}: ShipmentFormProps) => {
   const { t } = useTranslation();
   const stepper = useStepper({ totalSteps: 3 });
 
-  const onSubmit = (data: ShipmentOrderInputs) => {
+  const handeSubmit = (data: ShipmentOrderInputs) => {
     if (!stepper.isLast) return;
-
-    console.log("Final Shipment Data:", data);
-    toast({
-      title: t("shipments.form.success_title"),
-      description: t("shipments.form.success_message"),
-      type: "success",
-    });
+    onSubmit(data);
+    stepper.reset();
   };
 
   return (
     <Form<typeof shipmentOrderSchema, ShipmentOrderInputs>
       schema={shipmentOrderSchema}
-      onSubmit={onSubmit}
+      onSubmit={handeSubmit}
       options={{
         defaultValues: {
           category_id: defaultValues?.category_id,
