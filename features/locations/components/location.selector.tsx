@@ -15,6 +15,7 @@ export interface LocationSelectorProps {
   defaultValue?: string;
   className?: string;
   isRequired?: boolean;
+  placeholder?: string;
 }
 
 export function LocationSelector({
@@ -23,6 +24,7 @@ export function LocationSelector({
   className,
   isRequired,
   defaultValue,
+  placeholder,
   label,
 }: LocationSelectorProps) {
   const { t } = useTranslation();
@@ -35,7 +37,6 @@ export function LocationSelector({
 
   const itemToValue = React.useCallback((v: LocationOption) => v.value, []);
 
-  // ⬇️ All caching handled by this hook
   const { selectedItem, cacheItem } = useAutocompleteCache<LocationOption>({
     cacheKey: "locations",
     value: defaultValue,
@@ -65,6 +66,7 @@ export function LocationSelector({
     <RemoteSelector<LocationOption>
       isRequired={isRequired}
       label={label}
+      placeholder={placeholder}
       error={error}
       onSelect={handleSelect}
       useOptionsQuery={useLocationOptions}

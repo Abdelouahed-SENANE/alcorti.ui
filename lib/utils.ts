@@ -1,3 +1,4 @@
+import { BaseOption, Lang } from "@/types/api";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,7 +21,7 @@ export function resolveLocaleValue(
       ? value.name_fr
       : value?.name_en || "-";
 }
-export function formatDate(dateString: string, locale: string): string {
+export function formatDate(dateString: string | Date, locale: string): string {
   if (!dateString) return "-";
   return new Date(dateString).toLocaleDateString(locale, {
     year: "numeric",
@@ -65,3 +66,8 @@ export function handleNumericKeyDown(e: any) {
   }
 }
 
+export function LabelResolver(opt: BaseOption, lang: Lang): string {
+  if (!opt?.label) return "-";
+  if (typeof opt.label === "string") return opt.label;
+  return (opt.label as any)[lang] || "-";
+}

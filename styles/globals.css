@@ -6,7 +6,7 @@
 
 @theme inline {
   --font-display:
-    var(--font-roboto), "Roboto", ui-sans-serif, system-ui, sans-serif;
+    var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-arabic:
     var(--font-ibm-plex-arabic), "IBM Plex Sans Arabic", "Noto Sans Arabic",
     ui-sans-serif, sans-serif;
@@ -218,19 +218,19 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 10px;
+    background: var(--foreground);
+    border-radius: 8px;
     border: 2px solid var(--background);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-hover);
+    background: var(--border);
   }
 
   /* Firefox */
   * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) transparent;
+    scrollbar-width: 8px;
+    scrollbar-color: var(--input) transparent;
   }
 }
 

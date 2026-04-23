@@ -10,6 +10,12 @@
   },
 
   "global": {
+    "price": "Price",
+    "distance": "Distance",
+    "total_volume": "Total Volume",
+    "description": "Description",
+    "load_more": "Load more...",
+    "reset": "Reset",
     "units": {
       "cm": "cm",
       "m": "m",
@@ -17,7 +23,7 @@
       "meter": "Meter"
     },
     "item": "Item",
-    "is_weight_known" : "Weight known ?",
+    "is_weight_known": "Weight known ?",
     "items_count": "{{count}} items",
     "km": "KM",
     "next": "Next",
@@ -43,7 +49,8 @@
       "add": "Add",
       "edit": "Edit",
       "delete": "Delete",
-      "view": "View",
+      "view": "Details",
+      "view_offers": "Offers",
       "create": "Create",
       "export": "Export",
       "cancel": "Cancel",
@@ -590,6 +597,35 @@
     }
   },
   "shipments": {
+    "orders": {
+      "validation_error": "Validation error",
+      "title": "My Orders ",
+      "description": "Manage your orders and track their status",
+      "filter": "Filter Orders",
+      "filters": {
+        "origin": "Origin",
+        "destination": "Destination",
+        "status": "Status",
+        "from_date": "From Date",
+        "to_date": "To Date",
+        "origin_placeholder": "Select origin city",
+        "destination_placeholder": "Select destination city",
+        "status_placeholder": "Select status"
+      },
+      "status": {
+        "pending": "Pending",
+        "under_review": "Under Review",
+        "published": "Published",
+        "order_submitted": "Order Submitted",
+        "assigned": "Assigned",
+        "in_transit": "In Transit",
+        "delivered": "Delivered",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "contact_for_price": "Contact for price",
+      "first_item_dims": "First Item Dimensions"
+    },
     "form": {
       "category": {
         "label": "Shipment Category",

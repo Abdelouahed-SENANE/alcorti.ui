@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { SelectField, Switch, Textarea } from "@/components/ui/form";
 import { ImageUpload } from "@/components/ui/form/image-upload";
 import { NumericInput } from "@/components/ui/form/numeric-input";
+import { ShipmentOrderInputs } from "@/features/shipments/api/orders/create.order";
 import { Plus, Trash2 } from "lucide-react";
 import { useMemo } from "react";
 import { Control, Controller, useFieldArray, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ShipmentOrderInputs } from "../../shipment.type";
 
 interface ItemsStepProps {
   control: Control<ShipmentOrderInputs>;
@@ -197,6 +197,7 @@ export const ItemsStep = ({ control, errors, setValue }: ItemsStepProps) => {
             is_weight: false,
             unit: "cm",
             image: null,
+            deleted: false,
           })
         }
       >

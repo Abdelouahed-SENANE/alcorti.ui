@@ -2,8 +2,8 @@
 import * as React from "react";
 import { type FieldError } from "react-hook-form";
 
-import { InputError } from "./input-error";
 import { cn } from "@/lib/utils";
+import { InputError } from "./input-error";
 
 type FieldWrapperProps = {
   label?: string;
@@ -21,8 +21,10 @@ export const FieldWrapper = (props: FieldWrapperProps) => {
   const { error, children, className } = props;
   return (
     <div className="flex flex-col">
-      <div className={cn("mt-1", className)}>{children}</div>
-      <InputError errorMessage={typeof error == 'string' ? error : error?.message} />
+      <div className={cn(className)}>{children}</div>
+      <InputError
+        errorMessage={typeof error == "string" ? error : error?.message}
+      />
     </div>
   );
 };

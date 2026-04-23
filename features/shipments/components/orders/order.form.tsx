@@ -7,20 +7,23 @@ import { useStepper } from "@/components/ui/stepper/use-stepper";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { ShipmentOrderInputs, shipmentOrderSchema } from "../api/create.order";
+import {
+  ShipmentOrderInputs,
+  shipmentOrderSchema,
+} from "../../api/orders/create.order";
 import { GeneralStep } from "./steps/info.step";
 import { ItemsStep } from "./steps/items.step";
 import { SummaryStep } from "./steps/summary.step";
 
-type ShipmentFormProps = {
+type ShipmentOrderFormProps = {
   defaultValues?: ShipmentOrderInputs;
   onSubmit: (data: ShipmentOrderInputs) => void;
 };
 
-export const ShipmentForm = ({
+export const ShipmentOrderForm = ({
   defaultValues,
   onSubmit,
-}: ShipmentFormProps) => {
+}: ShipmentOrderFormProps) => {
   const { t } = useTranslation();
   const stepper = useStepper({ totalSteps: 3 });
 
@@ -52,6 +55,7 @@ export const ShipmentForm = ({
               is_weight: false,
               unit: "cm",
               image: null,
+              deleted: false,
             },
           ],
         },
@@ -90,10 +94,20 @@ export const ShipmentForm = ({
 
           const isValid = await trigger(fieldsToValidate as any);
           if (isValid) {
+            // Manual check for step-level refinements that might be skipped by partial trigger
+            if (stepper.currentStep === 1) {
+              const values = form.getValues();
+              if (values.origin_id === values.destination_id) {
+                form.setError("destination_id", {
+                  type: "custom",
+                  message: t("shipments.form.origin_destination_different"),
+                });
+                return;
+              }
+            }
             stepper.next();
           }
         };
-
         return (
           <div
             className="w-full max-w-4xl mx-auto space-y-6 p-4 md:p-8"

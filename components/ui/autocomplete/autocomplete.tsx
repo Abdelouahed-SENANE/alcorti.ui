@@ -58,7 +58,7 @@ function AutocompleteInput({
           aria-invalid={!!error}
           className={cn(
             inputVariants({ size }),
-            "peer placeholder:text-transparent  focus:placeholder:text-muted-foreground",
+            "peer placeholder:text-muted-foreground  focus:placeholder:text-muted-foreground",
             className,
             error && "border-destructive ring-3 ring-destructive",
           )}

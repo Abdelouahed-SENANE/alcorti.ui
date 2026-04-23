@@ -9,6 +9,13 @@
     }
   },
   "global": {
+    "count" : "العدد",
+    "distance" : "المسافة",
+    "price" : "السعر",
+    "total_volume" : "الحجم الكلي",
+    "description" : "الوصف",
+    "load_more": "المزيد...",
+    "reset": "إعادة تعيين",
     "units": {
       "centimeter": "سنتيمتر",
       "meter": "متر",
@@ -41,7 +48,8 @@
       "create": "إنشاء",
       "edit": "تعديل",
       "delete": "حذف",
-      "view": "عرض",
+      "view": " التفاصيل",
+      "view_offers": " العروض",
       "cancel": "إلغاء",
       "export": "تصدير"
     },
@@ -580,6 +588,36 @@
     }
   },
   "shipments": {
+
+    "orders": {
+      "validation_error": "خطأ في التحقق من صحة الطلب",
+      "title": "طلباتي",
+      "description": "إدارة طلباتك وتتبع حالتها",
+      "filter": "تصفية الطلبات",
+      "filters": {
+        "origin": "المدينة المنطلقة  ",
+        "destination": "المدينة المستقبلة",
+        "status": "الحالة",
+        "from_date": "من تاريخ",
+        "to_date": "إلى تاريخ",
+        "origin_placeholder": "اختر المدينة المنطلقة",
+        "destination_placeholder": "اختر المدينة المستقبلة",
+        "status_placeholder": "اختر الحالة"
+      },
+      "status": {
+        "pending": "قيد الانتظار",
+        "under_review": "قيد المراجعة",
+        "published": "تم النشر",
+        "order_submitted": "تم تقديم الطلب",
+        "assigned": "تم التعيين",
+        "in_transit": "قيد النقل",
+        "delivered": "تم التوصيل",
+        "completed": "تم الانتهاء",
+        "cancelled": "تم الإلغاء"
+      },
+      "contact_for_price": "اتصل بنا لمعرفة السعر",
+      "first_item_dims": "أبعاد العنصر الأول"
+    },
     "form": {
       "category": {
         "label": "فئة الشحنة",
@@ -662,6 +700,12 @@
             "min": "الأدنى 0.1"
           }
         },
+        "unit": {
+          "label": "الوحدة",
+          "errors": {
+            "required": "الوحدة مطلوبة"
+          }
+        },
         "weight": {
           "label": "الوزن (كلغ)",
           "errors": {
@@ -672,7 +716,6 @@
         "weight_summary": "الوزن {{weight}} كلغ",
         "dims_summary": "الأبعاد {{length}}×{{width}}×{{height}} سم"
       },
-
 
       "summary": {
         "confirmation_notice": "يرجى مراجعة كافة التفاصيل أعلاه. بمجرد التأكيد، سيكون طلبك مرئياً للناقلين المتاحين.",

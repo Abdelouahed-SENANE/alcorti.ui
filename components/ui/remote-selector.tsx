@@ -30,6 +30,7 @@ interface RemoteSelectorProps<T> {
   error?: string;
   className?: string;
   debounceMs?: number;
+  placeholder?: string;
   /**
    * Full item object to display on mount — keeps the label visible
    * even before the options query runs. Use this when editing existing records.
@@ -49,6 +50,7 @@ export function RemoteSelector<T>({
   className,
   debounceMs = 300,
   initialSelectedItem,
+  placeholder,
 }: RemoteSelectorProps<T>) {
   const { t } = useTranslation();
 
@@ -140,8 +142,7 @@ export function RemoteSelector<T>({
       >
         <AutocompleteInput
           label={label}
-          error={error}
-          className="h-10"
+          error={error}          className="h-10"
           showTrigger
           showClear
           isRequired={isRequired}

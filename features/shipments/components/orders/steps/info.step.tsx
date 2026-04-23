@@ -5,9 +5,9 @@ import { InputCalendar } from "@/components/ui/form/input-calander";
 import { CategorySelector } from "@/features/categories/components/category.selector";
 import { LocationSelector } from "@/features/locations/components/location.selector";
 import { LocationOption } from "@/features/locations/location.type";
+import { ShipmentOrderInputs } from "@/features/shipments/api/orders/create.order";
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ShipmentOrderInputs } from "../../shipment.type";
 
 interface GeneralInfoStepProps {
   control: Control<ShipmentOrderInputs>;
@@ -78,7 +78,7 @@ export const GeneralStep = ({ control, errors }: GeneralInfoStepProps) => {
           control={control}
           render={({ field }) => (
             <InputCalendar
-              error={t(errors.to_date?.message)}
+              error={t(errors.from_date?.message)}
               isRequired
               label={t("shipments.form.available_from.label")}
               value={field.value ? new Date(field.value) : undefined}

@@ -197,9 +197,13 @@ export type SelectFieldProps = FieldWrapperPassThroughProps & {
   value?: string;
   className?: string;
   onChange?: (value: string) => void;
+  isRequired?: boolean;
 };
 
-export const SelectField = React.forwardRef<HTMLInputElement, SelectFieldProps>(
+export const SelectField = React.forwardRef<
+  HTMLButtonElement,
+  SelectFieldProps
+>(
   (
     {
       label,
@@ -210,39 +214,50 @@ export const SelectField = React.forwardRef<HTMLInputElement, SelectFieldProps>(
       value,
       onChange,
       className,
+      isRequired,
       ...props
     },
     ref,
   ) => {
     return (
-      <FieldWrapper label={label} error={error}>
-        <Select
-          ref={ref}
-          onValueChange={onChange}
-          value={value}
-          {...registration}
-          {...props}
-        >
-          <SelectTrigger
-            className={cn(
-              "w-full bg-transparent! ltr:text-card-foreground",
-              error && "border-error/80 ring-3 ring-error/40",
+      <FieldWrapper error={error}>
+        <div className="relative w-full">
+          <Select
+            onValueChange={onChange}
+            value={value || ""}
+            {...registration}
+            {...props}
+          >
+            <SelectTrigger
+              ref={ref}
+              className={cn(
+                "peer w-full h-10! bg-transparent! ltr:text-card-foreground",
+                error && "border-error/80 ring-3 ring-error/40",
+              )}
+            >
+              <SelectValue placeholder={label ? " " : placeholder} />
+            </SelectTrigger>
+            {label && (
+              <label className="z-2 text-foreground bg-card pointer-events-none rounded-full absolute ltr:left-2 rtl:right-2 inset-y-0 h-fit flex items-center select-none transition-all text-sm font-medium peer-focus:text-xs peer-focus:bg-card peer-data-placeholder:text-sm px-1 peer-focus:px-1 peer-data-placeholder:px-0 duration-200 t m-0 peer-focus:m-0 peer-data-placeholder:m-auto -translate-y-1/2 peer-focus:-translate-y-1/2 peer-data-placeholder:translate-y-0">
+                {label}
+                {isRequired && (
+                  <span className="mx-0.5 text-destructive">*</span>
+                )}
+              </label>
             )}
-          >
-            <SelectValue placeholder={placeholder} />
-          </SelectTrigger>
-          <SelectContent
-            className={cn("w-(--radix-select-trigger-width) ", className)}
-          >
-            <SelectGroup>
-              {options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+            <SelectContent
+              className={cn("w-(--radix-select-trigger-width) ", className)}
+            >
+              <SelectGroup>
+                {options.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </FieldWrapper>
     );
   },

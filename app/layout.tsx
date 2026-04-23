@@ -2,15 +2,13 @@ import { cn } from "@/lib/utils";
 import favicon from "@/public/favicon.svg";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { Geist, IBM_Plex_Sans_Arabic, Roboto } from "next/font/google";
+import { Geist, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { Providers } from "./providers";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
-
-const roboto = Roboto({
-  variable: "--font-roboto",
+const geist = Geist({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
 });
 
 const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
@@ -38,7 +36,6 @@ export default function RootLayout({
         "font-display",
         "h-full",
         "antialiased",
-        roboto.variable,
         ibmPlexSansArabic.variable,
         "font-sans",
         geist.variable,

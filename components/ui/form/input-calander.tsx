@@ -1,6 +1,6 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, startOfDay } from "date-fns";
 import { ar, enUS, fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import * as React from "react";
@@ -104,7 +104,7 @@ export const InputCalendar: React.FC<InputCalenderProps> = ({
         >
           <Calendar
             mode="single"
-            disabled={(date) => date < new Date()}
+            disabled={(date) => date < startOfDay(new Date())}
             selected={date}
             locale={currentLocale}
             captionLayout="dropdown"

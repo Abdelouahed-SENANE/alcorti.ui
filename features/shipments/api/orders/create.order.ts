@@ -3,7 +3,7 @@ import { MutationConfig } from "@/config/react-query";
 import { ApiResponse } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { SHIPMENT_KEYS } from "../shipment.type";
+import { SHIPMENT_KEYS } from "../../shipment.type";
 
 export const shipmentItemSchema = z
   .object({
@@ -53,8 +53,10 @@ export const shipmentOrderSchema = z
       .string({ error: "shipments.form.category.errors.required" })
       .min(1, "shipments.form.category.errors.min"),
     description: z.string().max(2000).optional(),
-    from_date: z.string({ error: "shipments.form.from_date.errors.required" }), // ISO string
-    to_date: z.string({ error: "shipments.form.to_date.errors.required" }), // ISO string
+    from_date: z.string({
+      error: "shipments.form.available_from.errors.required",
+    }), // ISO string
+    to_date: z.string({ error: "shipments.form.available_to.errors.required" }), // ISO string
     origin_id: z.string({ error: "shipments.form.origin.errors.required" }),
     destination_id: z.string({
       error: "shipments.form.destination.errors.required",
@@ -63,9 +65,14 @@ export const shipmentOrderSchema = z
       .array(shipmentItemSchema)
       .min(1, "shipments.form.items.errors.min"),
   })
-  .refine((data) => data.origin_id !== data.destination_id, {
-    message: "shipments.form.origin_destination_different",
-    path: ["destination_id"],
+  .superRefine((data, ctx) => {
+    if (data.origin_id === data.destination_id) {
+      ctx.addIssue({
+        code: "custom",
+        message: "shipments.form.origin_destination_different",
+        path: ["destination_id"],
+      });
+    }
   });
 
 export type ShipmentItemInputs = z.infer<typeof shipmentItemSchema>;

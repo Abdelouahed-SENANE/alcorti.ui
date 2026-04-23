@@ -1,5 +1,8 @@
 import {
   DefaultOptions,
+  InfiniteData,
+  QueryKey,
+  UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
 } from "@tanstack/react-query";
@@ -17,6 +20,17 @@ export type ApiFnReturnType<FnType extends (...args: any) => Promise<any>> =
 
 export type QueryConfig<T extends (...args: any[]) => any> = Omit<
   UseQueryOptions<ApiFnReturnType<ReturnType<T>["queryFn"]>>,
+  "queryKey" | "queryFn"
+>;
+
+export type InfiniteQueryConfig<T extends (...args: any[]) => any> = Omit<
+  UseInfiniteQueryOptions<
+    ApiFnReturnType<ReturnType<T>["queryFn"]>,
+    Error,
+    InfiniteData<ApiFnReturnType<ReturnType<T>["queryFn"]>>,
+    QueryKey,
+    any
+  >,
   "queryKey" | "queryFn"
 >;
 

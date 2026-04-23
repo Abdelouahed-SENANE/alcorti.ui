@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/config/paths";
-import { SummaryStep } from "@/features/shipments/components/steps/summary.step";
 import { AuthGuard, useLogout } from "@/lib/auth";
 import Link from "next/link";
 

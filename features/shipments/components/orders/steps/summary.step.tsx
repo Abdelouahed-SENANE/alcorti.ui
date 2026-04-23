@@ -4,6 +4,7 @@ import { useAutocompleteCache } from "@/components/ui/autocomplete/autocomplete.
 import i18n from "@/config/i18n";
 import { CategoryOption } from "@/features/categories/category.type";
 import { LocationOption } from "@/features/locations/location.type";
+import { ShipmentOrderInputs } from "@/features/shipments/api/orders/create.order";
 import { formatDate, resolveLocaleValue } from "@/lib/utils";
 import { calculateDistance, calculatePrice } from "@/services";
 import {
@@ -18,8 +19,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Control, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { DistanceViewer } from "../../../../components/viewers/distance/distance-viewer";
-import { ShipmentOrderInputs } from "../../shipment.type";
+import { DistanceViewer } from "../../../../../components/viewers/distance/distance-viewer";
 
 interface SummaryStepProps {
   control: Control<ShipmentOrderInputs>;

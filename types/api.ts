@@ -47,6 +47,19 @@ type Sorting = {
   sort_order: "asc" | "desc";
 };
 
+export type Cursor = {
+  next_cursor: string | null;
+  prev_cursor: string | null;
+  per_page: number;
+  has_more: boolean;
+  path: string;
+};
+
+export type CursorPaginated<T> = {
+  items: T[];
+  cursor: Cursor;
+};
+
 export type BaseOption = {
   label: string | Translation;
   value: string;
