@@ -10,7 +10,10 @@
   },
 
   "global": {
+    "advanced_search": "Advanced Search",
+    "clear_all": "Clear all",
     "price": "Price",
+    "count": "Count",
     "distance": "Distance",
     "total_volume": "Total Volume",
     "description": "Description",
@@ -54,14 +57,17 @@
       "create": "Create",
       "export": "Export",
       "cancel": "Cancel",
-      "save": "Save"
+      "save": "Save",
+      "apply": "Apply",
+      "clear": "Clear"
     },
     "status": {
       "all": "All",
       "active": "Active",
       "inactive": "Inactive"
     },
-    "search": "Search..."
+    "search": "Search...",
+    "all": "All"
   },
 
   "navigation": {
@@ -598,11 +604,23 @@
   },
   "shipments": {
     "orders": {
+
+      "page": {
+        "title": "Orders",
+        "desc": "Manage your orders and track their status"
+      },
+      "timelines": {
+        "title": "Timelines"
+      },
+      "detail": {
+        "title": "Order Details"
+      },
       "validation_error": "Validation error",
       "title": "My Orders ",
       "description": "Manage your orders and track their status",
       "filter": "Filter Orders",
       "filters": {
+        "category": "Category",
         "origin": "Origin",
         "destination": "Destination",
         "status": "Status",
@@ -675,6 +693,14 @@
           "placeholder": "Enter item description",
           "errors": {
             "required": "Description is required"
+          }
+        },
+        "volume": {
+            "display": "Volume {{volume}} {{unit}}",
+          "label": "Volume",
+          "errors": {
+            "required": "Volume is required",
+            "min": "Min 0.1"
           }
         },
         "image": {

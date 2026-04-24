@@ -8,26 +8,26 @@ import {
 } from "@/components/ui/drawer/drawer";
 import React from "react";
 
-interface DetailsDrawerProps {
+interface OrderDrawerProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   children: React.ReactNode;
 }
 
-export const DetailsDrawer = ({
+export const OrderDrawer = ({
   isOpen,
   onOpenChange,
   title,
   children,
-}: DetailsDrawerProps) => {
+}: OrderDrawerProps) => {
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange} direction="right">
       <DrawerContent className="h-full max-w-xl rounded-none border-l overflow-hidden">
-        <DrawerHeader className="border-b px-6 py-4">
-          <DrawerTitle className="text-xl font-bold">{title}</DrawerTitle>
+        <DrawerHeader className="border-b  p-4">
+          <DrawerTitle className="text-xl font-semibold ltr:text-left rtl:text-right">{title}</DrawerTitle>
         </DrawerHeader>
-        <div className="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar ">
+        <div className="flex-1 overflow-y-auto p-4 custom-scrollbar ">
           {children}
         </div>
       </DrawerContent>

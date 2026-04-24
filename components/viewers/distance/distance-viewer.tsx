@@ -1,7 +1,6 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { calculateDistance } from "@/services";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Navigation } from "lucide-react";
@@ -9,6 +8,10 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+const RoadViewer = dynamic(
+  () => import("./road-viewer").then((mod) => mod.RoadViewer),
+  { ssr: false },
+);
 // Dynamically import Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
@@ -122,21 +125,19 @@ interface DistanceViewerProps {
   origin: { lat: number; lng: number; label: string };
   destination: { lat: number; lng: number; label: string };
 }
-
 export const DistanceViewer = ({
   origin,
   destination,
 }: DistanceViewerProps) => {
   const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
+  const [routeDistance, setRouteDistance] = useState<number | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted || !origin || !destination) {
-    return null;
-  }
+  if (!isMounted || !origin || !destination) return null;
 
   const originLat = Number(origin.lat);
   const originLng = Number(origin.lng);
@@ -152,7 +153,8 @@ export const DistanceViewer = ({
     return null;
   }
 
-  const distance = calculateDistance(originLat, originLng, destLat, destLng);
+  // Use real road distance if available
+  const distance = routeDistance ? (routeDistance / 1000).toFixed(2) : "--";
 
   const originIcon = createCustomMarker("oklch(0.43 0.04 41.99)");
   const destinationIcon = createCustomMarker("oklch(0.43 0.04 41.99)");
@@ -160,11 +162,6 @@ export const DistanceViewer = ({
   const center: [number, number] = [
     (originLat + destLat) / 2,
     (originLng + destLng) / 2,
-  ];
-
-  const positions: [number, number][] = [
-    [originLat, originLng],
-    [destLat, destLng],
   ];
 
   return (
@@ -226,6 +223,11 @@ export const DistanceViewer = ({
         .leaflet-popup-tip {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
+
+        /* Hide the default routing instructions container */
+        .leaflet-routing-container {
+          display: none !important;
+        }
       `}</style>
 
       <Card className="overflow-hidden p-0 border-none shadow-none bg-transparent">
@@ -238,7 +240,6 @@ export const DistanceViewer = ({
               zoomControl={false}
               style={{ height: "100%", width: "100%", background: "#aad3df" }}
             >
-              {/* Modern clean tile layer */}
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
                 url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
@@ -247,36 +248,26 @@ export const DistanceViewer = ({
                 detectRetina={true}
               />
 
-              {/* Origin marker (blue) */}
               <Marker position={[originLat, originLng]} icon={originIcon}>
                 <Popup>{origin.label}</Popup>
               </Marker>
 
-              {/* Destination marker (green) */}
               <Marker position={[destLat, destLng]} icon={destinationIcon}>
                 <Popup>{destination.label}</Popup>
               </Marker>
 
-              {/* Route line (Solid blue like the image) */}
-              <Polyline
-                positions={positions}
-                pathOptions={{
-                  color: "oklch(0.43 0.04 41.99)",
-                  weight: 3,
-                  opacity: 0.9,
-                  lineCap: "round",
-                  lineJoin: "round",
-                }}
+              {/* Route that follows roads */}
+              <RoadViewer
+                origin={{ lat: originLat, lng: originLng }}
+                destination={{ lat: destLat, lng: destLng }}
+                color="oklch(0.43 0.04 41.99)"
+                onRouteFound={(distance) => setRouteDistance(distance)}
               />
 
-              {/* Auto-fit to show both markers */}
-              <FitBounds points={positions} />
-
-              {/* Custom zoom controls */}
               <CustomZoomControls />
             </MapContainer>
 
-            {/* Distance pill — bottom left */}
+            {/* Distance pill */}
             <div className="absolute bottom-3 left-3 z-400">
               <div className="flex items-center gap-2 rounded-lg border border-border bg-card p-2 shadow-sm backdrop-blur-md">
                 <Navigation className="size-4 text-primary" />

@@ -6,7 +6,7 @@ import { CategoryOption } from "@/features/categories/category.type";
 import { LocationOption } from "@/features/locations/location.type";
 import { ShipmentOrderInputs } from "@/features/shipments/api/orders/create.order";
 import { formatDate, resolveLocaleValue } from "@/lib/utils";
-import { calculateDistance, calculatePrice } from "@/services";
+import { calculatePrice, calculateRoadDistance } from "@/services";
 import {
   Calendar,
   FileText,
@@ -55,12 +55,22 @@ export const SummaryStep = ({ control }: SummaryStepProps) => {
       itemToValue: (v: LocationOption) => v.value,
       itemToLabel: (v: LocationOption) => resolveLocaleValue(v, lang),
     });
-  const distance = calculateDistance(
-    originItem?.lat!,
-    originItem?.lng!,
-    destinationItem?.lat!,
-    destinationItem?.lng!,
-  );
+    const [distance, setDistance] = useState<number | null>(null);
+    const [duration, setDuration] = useState<number | null>(null);
+
+    useEffect(() => {
+      if (originItem && destinationItem) {
+        calculateRoadDistance(
+          { lat: originItem.lat, lng: originItem.lng },
+          { lat: destinationItem.lat, lng: destinationItem.lng }
+        ).then((result) => {
+          if (result) {
+            setDistance(result.distanceKm);
+            setDuration(result.durationMin);
+          }
+        });
+      }
+    }, [originItem, destinationItem]);
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2">
@@ -190,7 +200,7 @@ export const SummaryStep = ({ control }: SummaryStepProps) => {
         <div className="text-right relative z-10">
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-black text-primary tracking-tighter">
-              {calculatePrice(distance)}
+              {calculatePrice(distance || 0)}
             </span>
             <span className="text-[10px] font-black text-primary/80 uppercase tracking-widest">
               {t("shipments.form.summary.mad")}

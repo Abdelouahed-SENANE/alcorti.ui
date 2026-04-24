@@ -1,42 +1,48 @@
 "use client";
+
 import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { Button } from "@/components/ui/button";
-import { SearchInput } from "@/components/ui/form";
 import { useQueryTable } from "@/components/ui/table";
-import { toast } from "@/components/ui/toast/use-toast";
 import { paths } from "@/config/paths";
-// import {
-//   CreateLocationInputs,
-//   useCreateLocation,
-// } from "@/features/admin/orders/api/create.order";
-// import { useLocations } from "@/features/admin/orders/api/order.list";
-// import { LocationForm } from "@/features/admin/orders/components/order.form";
-// import { Location } from "@/features/admin/orders/order.type";
-import { ApiResponse } from "@/types/api";
-import { Download, Plus } from "lucide-react";
-import { useCallback, useState } from "react";
+import {
+  AdminOrderParams,
+  useAdminOrders,
+} from "@/features/shipments/api/orders/admin.orders";
+import { OrderFilters } from "@/features/shipments/components/orders/order.filters";
+import { OrderTable } from "@/features/shipments/components/orders/order.table";
+import { ShipmentOrderSummary } from "@/features/shipments/shipment.type";
+import { Download } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
-export default function LocationsPage() {
+export default function OrdersPage() {
   const { t } = useTranslation();
-//   const table = useQueryTable<Location>();
-//   const odersQuery = useLocations({
-//     params: {
-//       page: table.page,
-//       limit: table.limit,
-//       term: table.term,
-//       sort: table.sort,
-//       order: table.order,
-//     },
-//   });
+  const router = useRouter();
+  const pathname = usePathname();
 
-//   const items = odersQuery.data?.data?.items || [];
-//   const pagination = odersQuery.data?.data?.pagination;
+  const table = useQueryTable<ShipmentOrderSummary, AdminOrderParams>();
+
+  const ordersQuery = useAdminOrders({
+    params: {
+      page: table.page,
+      limit: table.limit,
+      sort: table.sort as any,
+      order: table.order,
+      ...table.filters,
+    },
+  });
+
+  const items = ordersQuery.data?.data?.items || [];
+  const pagination = ordersQuery.data?.data?.pagination;
+
+  const resetFilters = () => {
+    router.push(pathname);
+  };
 
   return (
     <DashLayout
-      title={t("orders.page.title")}
-      desc={t("orders.page.desc")}
+      title={t("shipments.orders.page.title")}
+      desc={t("shipments.orders.page.desc")}
       breadcrumbs={[
         {
           label: t("navigation.dashboard"),
@@ -51,33 +57,25 @@ export default function LocationsPage() {
       ]}
       actions={
         <div className="flex items-center gap-1">
-          {/* <LocationForm
-            apiErrors={errors}
-            onSubmit={handleSubmit}
-            isDone={createMutation.isSuccess}
-            isLoading={createMutation.isPending}
-            triggerButton={
-              <Button className="gap-1 " variant={"default"}>
-                <Plus className="size-4" />
-                {t("orders.actions.add")}
-              </Button>
-            }
-          /> */}
           <Button className="gap-1 " variant={"secondary"}>
             <Download className="size-4" />
-            {t("orders.actions.export")}
+            {t("shipments.orders.actions.export")}
           </Button>
         </div>
       }
     >
-      <div className="flex mb-2  gap-2 items-center">
-        {/* <SearchInput
-          value={table.term}
-          onChange={(val) => table.setTerm(val)}
-          delay={600}
-          placeholder={t("global.search")}
-        /> */}
-      </div>
+      <OrderFilters
+        initialFilters={table.filters}
+        onFilter={table.setFilters}
+        alwaysOpen={true}
+        className="mb-4"
+      />
+      <OrderTable
+        orders={items}
+        isFetching={ordersQuery.isFetching}
+        table={table}
+        pagination={pagination}
+      />
     </DashLayout>
   );
 }

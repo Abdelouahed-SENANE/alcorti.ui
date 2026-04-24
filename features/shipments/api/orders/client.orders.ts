@@ -9,7 +9,7 @@ import {
 
 import { OrderStatus, SHIPMENT_KEYS, ShipmentOrder } from "../../shipment.type";
 
-export type MyOrdersParams = {
+export type ClientOrdersParams = {
   cursor?: string | null;
   limit?: number;
   origin_id?: string;
@@ -23,7 +23,7 @@ export const getMyOrders = async ({
   cursor,
   limit = 10,
   ...filters
-}: MyOrdersParams = {}): Promise<
+}: ClientOrdersParams = {}): Promise<
   ApiResponse<CursorPaginated<ShipmentOrder>>
 > => {
   const response = await api$.get<ApiResponse<CursorPaginated<ShipmentOrder>>>(
@@ -40,7 +40,7 @@ export const getMyOrders = async ({
 };
 
 export const getMyOrdersQueryOptions = (
-  params: Omit<MyOrdersParams, "cursor"> = {},
+  params: Omit<ClientOrdersParams, "cursor"> = {},
 ) => ({
   queryKey: SHIPMENT_KEYS.list(params),
   queryFn: ({
@@ -51,12 +51,12 @@ export const getMyOrdersQueryOptions = (
     getMyOrders({ cursor: pageParam, ...params }),
 });
 
-type UseMyOrdersOptions = {
-  params?: Omit<MyOrdersParams, "cursor">;
+type UseClientOrdersOptions = {
+  params?: Omit<ClientOrdersParams, "cursor">;
   config?: Partial<InfiniteQueryConfig<typeof getMyOrdersQueryOptions>>;
 };
 
-export const useMyOrders = ({ params, config }: UseMyOrdersOptions = {}) => {
+export const useClientOrders = ({ params, config }: UseClientOrdersOptions = {}) => {
   return useInfiniteQuery<
     ApiResponse<CursorPaginated<ShipmentOrder>>,
     Error,

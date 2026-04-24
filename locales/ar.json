@@ -9,6 +9,8 @@
     }
   },
   "global": {
+    "advanced_search": "بحث متقدم",
+    "clear_all": "مسح الكل",
     "count" : "العدد",
     "distance" : "المسافة",
     "price" : "السعر",
@@ -51,9 +53,12 @@
       "view": " التفاصيل",
       "view_offers": " العروض",
       "cancel": "إلغاء",
-      "export": "تصدير"
+      "export": "تصدير",
+      "apply" : "تطبيق",
+      "clear" : "مسح"
     },
     "cancel": "إلغاء",
+    "all": "الكل",
     "status": {
       "all": "الكل",
       "active": "نشط",
@@ -590,11 +595,25 @@
   "shipments": {
 
     "orders": {
+      "actions": {
+        "export": "تصدير الطلبات"
+      },
+      "page": {
+        "title": "الطلبات",
+        "desc": "إدارة طلباتك وتتبع حالتها"
+      },
+      "timelines": {
+        "title": "تتبع الطلب"
+      },
+      "detail": {
+        "title": "تفاصيل الطلب"
+      },
       "validation_error": "خطأ في التحقق من صحة الطلب",
       "title": "طلباتي",
       "description": "إدارة طلباتك وتتبع حالتها",
       "filter": "تصفية الطلبات",
       "filters": {
+        "category": "الفئة",
         "origin": "المدينة المنطلقة  ",
         "destination": "المدينة المستقبلة",
         "status": "الحالة",
@@ -683,6 +702,14 @@
           "label": "الطول ({{unit}})",
           "errors": {
             "required": "الطول مطلوب",
+            "min": "الأدنى 0.1"
+          }
+        },
+        "volume": {
+          "display": "الحجم {{volume}} {{unit}}",
+          "label": "الحجم",
+          "errors": {
+            "required": "الحجم مطلوب",
             "min": "الأدنى 0.1"
           }
         },

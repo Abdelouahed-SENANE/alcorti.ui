@@ -19,7 +19,7 @@ export function resolveLocaleValue(
     ? value.name_ar
     : locale === "fr"
       ? value.name_fr
-      : value?.name_en || "-";
+      : value?.name_en || value.name_fr;
 }
 export function formatDate(dateString: string | Date, locale: string): string {
   if (!dateString) return "-";
@@ -71,3 +71,4 @@ export function LabelResolver(opt: BaseOption, lang: Lang): string {
   if (typeof opt.label === "string") return opt.label;
   return (opt.label as any)[lang] || "-";
 }
+

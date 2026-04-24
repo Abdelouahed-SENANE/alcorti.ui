@@ -130,6 +130,20 @@ export const useQueryTable = <
 
     filters, // <---- NEW
     setFilter, // <---- NEW
+    setFilters: (newFilters: Partial<F>) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      Object.entries(newFilters).forEach(([key, value]) => {
+        if (value === undefined || value === "" || value === null) {
+          params.delete(key);
+        } else {
+          params.set(key, String(value));
+        }
+      });
+
+      params.set("page", "1");
+      setSearchParams(params);
+    },
 
     selectedRows,
     toggleRow,

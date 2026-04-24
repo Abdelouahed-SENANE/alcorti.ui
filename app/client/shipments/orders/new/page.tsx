@@ -55,9 +55,6 @@ export default function NewShipmentOrderPage() {
   );
 
   return (
-    <div>
-      <h1>{t("shipments.form.title")}</h1>
-      <ShipmentOrderForm onSubmit={onSubmit} />
-    </div>
+    <ShipmentOrderForm onSubmit={onSubmit} />
   );
 }
