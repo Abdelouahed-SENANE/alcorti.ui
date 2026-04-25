@@ -604,7 +604,23 @@
   },
   "shipments": {
     "orders": {
-
+      "modals":{
+        "assign": {
+          "title": "Assign Order",
+          "description": "Select an approved shipper from the list below to assign this delivery task."
+        },
+        "publish": {
+          "title": "Publish Order",
+          "description": "Are you sure you want to publish this order? This will make it visible to shippers."
+        },
+        "reject": {
+          "title": "Reject Order",
+          "description": "Are you sure you want to reject this order? This action cannot be undone."
+        }
+      },
+      "actions":{
+        "assign": "Assign Order"
+      },
       "page": {
         "title": "Orders",
         "desc": "Manage your orders and track their status"

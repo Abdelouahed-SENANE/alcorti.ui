@@ -3,7 +3,7 @@ import { QueryConfig } from "@/config/react-query";
 import { ApiResponse } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
 
-import { SHIPMENT_KEYS, ShipmentOrder } from "../../shipment.type";
+import { ORDER_KEYS, ShipmentOrder } from "../../shipment.type";
 
 export const getOrderDetails = async ({
   id,
@@ -17,7 +17,7 @@ export const getOrderDetails = async ({
 };
 
 export const useOrderDetailsQueryOptions = (id: string) => ({
-  queryKey: SHIPMENT_KEYS.detail(id),
+  queryKey: ORDER_KEYS.detail(id),
   queryFn: () => getOrderDetails({ id }),
 });
 

@@ -7,11 +7,11 @@ import { DynamicIcon } from "@/components/ui/icons/dynamic-icon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { cn, formatDate } from "@/lib/utils";
-import { Eye, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { OrderStatus, ShipmentOrder } from "../../shipment.type";
+import { Eye, MapPin } from "lucide-react";
 
 export const OrderCardSkeleton = () => {
   return (
@@ -101,6 +101,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, className }) => {
   const { t, i18n } = useTranslation();
   const { isOpen, toggle } = useDisclosure();
   const [orderId, setOrderId] = React.useState<string | null>(null);
+
   const getLocalizedName = (obj: any) => {
     if (!obj) return "";
     const locale =
@@ -197,7 +198,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, className }) => {
           </div>
         </div>{" "}
         {/* Footer */}
-        <div className="flex items-center justify-end py-2 px-4 border-t border-border">
+        <div className="flex items-center justify-end py-2 px-4 border-t border-border gap-2">
           <Button
             onClick={() => {
               setOrderId(order.id);
@@ -208,10 +209,11 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, className }) => {
             <Eye className="size-4" />
             {t("global.actions.view")}
           </Button>
-          <Button className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-medium gap-1  h-8 rounded-lg shadow-md shadow-secondary/20 transition-all active:scale-95 ltr:ml-2 rtl:mr-2">
+          <Button className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-medium gap-1  h-8 rounded-lg shadow-md shadow-secondary/20 transition-all active:scale-95">
             {t("global.actions.view_offers")}
           </Button>
         </div>
+
       </CardContent>
       {orderId && (
         <OrderView id={orderId} isOpen={isOpen} onOpenChange={toggle} />

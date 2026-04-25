@@ -3,7 +3,7 @@ import { MutationConfig } from "@/config/react-query";
 import { ApiResponse } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { SHIPMENT_KEYS } from "../../shipment.type";
+import { ORDER_KEYS } from "../../shipment.type";
 
 export const shipmentItemSchema = z
   .object({
@@ -125,7 +125,7 @@ export const useCreateOrder = ({
   return useMutation({
     mutationFn: createShipment,
     onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: SHIPMENT_KEYS.lists(), exact: false });
+      qc.invalidateQueries({ queryKey: ORDER_KEYS.all, exact: false });
       onSuccess?.(...args);
     },
     ...restConfig,

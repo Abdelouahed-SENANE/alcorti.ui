@@ -3,7 +3,7 @@ import { QueryConfig } from "@/config/react-query";
 import { ApiResponse, Paginated } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ADMIN_SHIPMENT_KEYS,
+  ORDER_KEYS,
   ShipmentOrderFilters,
   ShipmentOrderSummary,
 } from "../../shipment.type";
@@ -50,7 +50,7 @@ export const getAdminOrders = async (
 export const getAdminOrdersQueryOptions = (params: AdminOrderParams) => {
   const normalized = normalizeAdminOrderParams(params);
   return {
-    queryKey: ADMIN_SHIPMENT_KEYS.list(normalized),
+    queryKey: ORDER_KEYS.lists(normalized),
     queryFn: () => getAdminOrders(normalized),
   };
 };

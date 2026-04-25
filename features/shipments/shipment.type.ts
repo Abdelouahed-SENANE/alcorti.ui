@@ -2,21 +2,15 @@ import { Entity } from "@/types/api";
 import { Category } from "../categories/category.type";
 import { Location } from "../locations/location.type";
 
-export const SHIPMENT_KEYS = {
-  all: ["shipments"],
-  lists: () => [...SHIPMENT_KEYS.all, "list"],
-  list: (params: any) => [...SHIPMENT_KEYS.lists(), params],
-  details: () => [...SHIPMENT_KEYS.all, "details"],
-  detail: (id: string) => [...SHIPMENT_KEYS.details(), id],
+export const ORDER_KEYS = {
+  all: ["orders"],
+  list: () => [...ORDER_KEYS.all, "list"],
+  lists: (params: any) => [...ORDER_KEYS.list() , params],
+  details: () => [...ORDER_KEYS.all, "details"],
+  detail: (id: string) => [...ORDER_KEYS.details(), id],
 };
 
-export const ADMIN_SHIPMENT_KEYS = {
-  all: ["admin", "shipments"],
-  lists: () => [...ADMIN_SHIPMENT_KEYS.all, "list"],
-  list: (params: any) => [...ADMIN_SHIPMENT_KEYS.lists(), params],
-  details: () => [...ADMIN_SHIPMENT_KEYS.all, "details"],
-  detail: (id: string) => [...ADMIN_SHIPMENT_KEYS.details(), id],
-};
+
 
 export type OrderStatus =
   | "pending"
@@ -28,6 +22,13 @@ export type OrderStatus =
   | "delivered"
   | "completed"
   | "cancelled";
+
+export type ShipmentOrderAbilities = {
+  can_publish: boolean;
+  can_assign: boolean;
+  can_reject: boolean;
+  can_deliver: boolean;
+};
 
 export type ShipmentOrderItem = {
   description: string;
@@ -53,6 +54,7 @@ export type ShipmentOrder = Entity<{
   total_volume: number;
   items: ShipmentOrderItem[];
   timelines: ShipmentOrderTimeline[];
+  abilities?: ShipmentOrderAbilities;
 }>;
 
 export type ShipmentOrderTimeline = Entity<{
@@ -72,7 +74,9 @@ export type ShipmentOrderSummary = Entity<{
   from_date: Date;
   to_date: Date;
   total_amount: number;
+  abilities?: ShipmentOrderAbilities;
 }>;
+
 
 export type ShipmentOrderFilters = {
   category_id?: string;

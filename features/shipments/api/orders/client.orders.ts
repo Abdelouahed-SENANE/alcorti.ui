@@ -7,7 +7,7 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 
-import { OrderStatus, SHIPMENT_KEYS, ShipmentOrder } from "../../shipment.type";
+import { ORDER_KEYS, OrderStatus, ShipmentOrder } from "../../shipment.type";
 
 export type ClientOrdersParams = {
   cursor?: string | null;
@@ -42,7 +42,7 @@ export const getMyOrders = async ({
 export const getMyOrdersQueryOptions = (
   params: Omit<ClientOrdersParams, "cursor"> = {},
 ) => ({
-  queryKey: SHIPMENT_KEYS.list(params),
+  queryKey: ORDER_KEYS.lists(params),
   queryFn: ({
     pageParam,
   }: {

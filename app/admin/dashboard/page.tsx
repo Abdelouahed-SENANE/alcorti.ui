@@ -2,6 +2,7 @@
 import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/config/paths";
+import { ShipperSelector } from "@/features/users/components/shipper.selector";
 import { Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -26,7 +27,7 @@ export default function DashboardPage() {
         </Button>
       }
     >
-      Dashboard
+      <ShipperSelector />
     </DashLayout>
   );
 }

@@ -1,10 +1,12 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { DynamicIcon } from "@/components/ui/icons/dynamic-icon";
 import { Spinner } from "@/components/ui/spinner";
 import { DistanceViewer } from "@/components/viewers/distance/distance-viewer";
 import i18n from "@/config/i18n";
+import { useDisclosure } from "@/hooks/use-disclosure";
 import {
   cn,
   formatDate,
@@ -14,15 +16,21 @@ import {
 import { calculatePrice, calculateRoadDistance, RouteResult } from "@/services";
 import {
   Calendar,
+  CheckCircle,
   MapPin,
   Navigation,
   Package,
   Route,
+  Send,
   Wallet,
+  X,
+  XCircle,
 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useUpdateOrderStatus } from "../../api/orders/update.order-status";
+import { ConfirmationDialog } from "@/components/ui/dialog/confirmation/confirmation-dialog";
 import { useOrderDetails } from "../../api/orders/details.order";
 import {
   OrderStatus,
@@ -30,6 +38,7 @@ import {
   ShipmentOrderTimeline,
 } from "../../shipment.type";
 import { OrderDrawer } from "../common/order.drawer";
+import { OrderAssignDialog } from "./assign-order.dialog";
 
 interface OrderViewProps {
   id: string;
@@ -42,6 +51,8 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
   const lang = i18n.language;
 
   const orderQuery = useOrderDetails({ id });
+  const updateStatusMutation = useUpdateOrderStatus();
+  const assignDialog = useDisclosure();
 
   const order = orderQuery.data?.data;
 
@@ -60,14 +71,7 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
     }
   }, [order]);
 
-  const getLocalizedName = (obj: any) => {
-    if (!obj) return "";
-    const locale =
-      i18n.language === "ar" ? "ar" : i18n.language === "fr" ? "fr" : "en";
-    return (
-      obj[`name_${locale}`] || obj.name_en || obj.name_ar || obj.name_fr || ""
-    );
-  };
+
   if (!order) {
     return (
       <div className="fixed inset-0 z-100 flex items-center justify-center dark:bg-black/60 bg-white/60 ">
@@ -85,13 +89,14 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
   const originName = resolveLocaleValue(order.origin, lang);
   const destinationName = resolveLocaleValue(order.destination, lang);
 
+
   return (
     <OrderDrawer
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title={t("shipments.orders.detail.title", "Order Details")}
     >
-      <div className="space-y-4 pb-8">
+      <div className="space-y-4">
         <div className="p-4 rounded-xl bg-secondary text-secondary-foreground  border border-primary/20 relative overflow-hidden group">
           <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="flex items-center justify-between relative z-10">
@@ -255,7 +260,105 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
         </div>
 
         {/* Final Price Estimation */}
+        {/* Actions Section */}
+        {order.abilities && (
+          <div className="flex flex-wrap items-center justify-end gap-1 pt-6 mt-6 border-t border-border/60">
+            {order.abilities.can_reject && (
+              <ConfirmationDialog
+                title={t("shipments.orders.modals.reject.title", "Reject Order")}
+                body={t("shipments.orders.modals.reject.description", "Are you sure you want to reject this order? This action cannot be undone.")}
+                icon="danger"
+                isDone={updateStatusMutation.isSuccess}
+                triggerButton={
+                  <Button
+                    className=" font-medium bg-destructive hover:bg-destructive/90  text-white  active:scale-95 flex items-center gap-1"
+                  >
+                    <X className="size-4" />
+                    {t("global.actions.reject", "Reject")}
+                  </Button>
+                }
+                confirmButton={
+                  <Button
+                    variant="destructive"
+                    className="font-bold"
+                    disabled={updateStatusMutation.isPending}
+                    onClick={() => updateStatusMutation.mutate({ id, payload: { status: "cancelled" } })}
+                  >
+                    {updateStatusMutation.isPending ? t("global.loading", "Loading...") : t("global.actions.confirm", "Confirm")}
+                  </Button>
+                }
+                cancelButton={(onCancel) => (
+                  <Button variant="outline" onClick={onCancel}>
+                    {t("global.actions.cancel", "Cancel")}
+                  </Button>
+                )}
+              />
+            )}
+
+            {order.abilities.can_publish && (
+              <ConfirmationDialog
+                title={t("shipments.orders.modals.publish.title", "Publish Order")}
+                body={t("shipments.orders.modals.publish.description", "Are you sure you want to publish this order? This will make it visible to shippers.")}
+                icon="info"
+                isDone={updateStatusMutation.isSuccess}
+                triggerButton={
+                  <Button
+                    className=" font-medium bg-success hover:bg-success/90 text-white active:scale-95 flex items-center  gap-1"
+                  >
+                    <Send className="size-4" />
+                    {t("global.actions.publish", "Publish")}
+                  </Button>
+                }
+                confirmButton={
+                  <Button
+                    variant="default"
+                    className="rounded-xl font-bold bg-primary hover:bg-primary/90"
+                    disabled={updateStatusMutation.isPending}
+                    onClick={() => updateStatusMutation.mutate({ id, payload: { status: "published" } })}
+                  >
+                    {updateStatusMutation.isPending ? t("global.loading", "Loading...") : t("global.actions.confirm", "Confirm")}
+                  </Button>
+                }
+                cancelButton={(onCancel) => (
+                  <Button variant="outline" className="rounded-xl" onClick={onCancel}>
+                    {t("global.actions.cancel", "Cancel")}
+                  </Button>
+                )}
+              />
+            )}
+
+            {order.abilities.can_assign && (
+              <Button
+                variant="default"
+                className=" font-medium bg-primary text-primary-foreground hover:primary/80 active:scale-95 flex items-center gap-1"
+                onClick={assignDialog.open}
+              >
+                <CheckCircle className="size-4" />
+                {t("global.actions.assign", "Assign")}
+              </Button>
+            )}
+
+            {/* {order.abilities.can_deliver && (
+              <Button
+                variant="default"
+                size="sm"
+                className="rounded-xl font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-200/50 transition-all active:scale-95 flex items-center gap-2"
+                onClick={() => handleUpdateStatus({ status: "delivered" })}
+                disabled={isUpdating}
+              >
+                <CheckCircle className="size-4" />
+                {t("global.actions.deliver", "Deliver")}
+              </Button>
+            )} */}
+          </div>
+        )}
       </div>
+
+      <OrderAssignDialog
+        orderId={id}
+        isOpen={assignDialog.isOpen}
+        onOpenChange={(val) => !val && assignDialog.close()}
+      />
     </OrderDrawer>
   );
 };

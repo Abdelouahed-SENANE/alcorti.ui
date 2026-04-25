@@ -17,6 +17,14 @@ export type User = Entity<{
   attachments?: Attachment[];
 }>;
 
+
+export type ShipperOption = {
+  id: string;
+  first_name: string;
+  last_name: string;
+
+};
+
 export const userKeys = {
   all: ["admin:users"] as const,
   collections: () => [...userKeys.all, "collections"] as const,
@@ -24,4 +32,6 @@ export const userKeys = {
     [...userKeys.collections(), params] as const,
   details: () => [...userKeys.all, "details"] as const,
   detail: (id: string) => [...userKeys.details(), id] as const,
+  shipper_options: (search?: string) =>
+    [...userKeys.all, "shippers_options", search] as const,
 };
