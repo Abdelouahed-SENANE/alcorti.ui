@@ -9,10 +9,11 @@ import { useCategoryOptions } from "@/features/categories/api/category.options";
 import { LocationSelector } from "@/features/locations/components/location.selector";
 import { LocationOption } from "@/features/locations/location.type";
 import { cn } from "@/lib/utils";
-import { Filter, RefreshCcw, Search, X } from "lucide-react";
+import { Filter, RefreshCcw, Search, SlidersHorizontal, X } from "lucide-react";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { OrderStatus } from "../../shipment.type";
+import { useAuthorization } from "@/lib/auth";
 
 interface OrderFiltersProps {
   onFilter: (params: any) => void;
@@ -41,6 +42,7 @@ export const OrderFilters = ({
       to_date: undefined,
     },
   );
+  const { hasRole } = useAuthorization();
 
   const [labels, setLabels] = React.useState<any>({});
 
@@ -64,16 +66,9 @@ export const OrderFilters = ({
   const statusOptions: { value: OrderStatus | "all"; label: string }[] = [
     { value: "all", label: t("global.status.all") },
     { value: "pending", label: t("shipments.orders.status.pending") },
-    { value: "under_review", label: t("shipments.orders.status.under_review") },
     { value: "published", label: t("shipments.orders.status.published") },
-    {
-      value: "order_submitted",
-      label: t("shipments.orders.status.order_submitted"),
-    },
     { value: "assigned", label: t("shipments.orders.status.assigned") },
-    { value: "in_transit", label: t("shipments.orders.status.in_transit") },
     { value: "delivered", label: t("shipments.orders.status.delivered") },
-    { value: "completed", label: t("shipments.orders.status.completed") },
     { value: "cancelled", label: t("shipments.orders.status.cancelled") },
   ];
 
@@ -172,7 +167,7 @@ export const OrderFilters = ({
               className="gap-2 h-9"
               size="sm"
             >
-              <Search className="size-4" />
+              <SlidersHorizontal className="size-4" />
               {t("global.advanced_search")}
               {activeFilters.length > 0 && (
                 <span className="flex items-center justify-center size-5 rounded-full bg-primary-foreground text-primary text-[10px] font-bold ml-1">
@@ -187,11 +182,11 @@ export const OrderFilters = ({
         <Card className="overflow-hidden p-0 border-border bg-card gap-0">
           <div
             className={cn(
-              "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_2fr_2fr_1.2fr_1.4fr_1.4fr] gap-3 p-4",
+              "flex items-center gap-2 p-4",
             )}
           >
             {/* Category */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 flex-1">
               <SelectField
                 label={t("shipments.orders.filters.category", "Category")}
                 options={categoryOptions}
@@ -206,7 +201,7 @@ export const OrderFilters = ({
             </div>
 
             {/* Origin */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 flex-2">
               <LocationSelector
                 label={t("shipments.orders.filters.origin", "Origin")}
                 defaultValue={filters.origin_id}
@@ -226,7 +221,7 @@ export const OrderFilters = ({
             </div>
 
             {/* Destination */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 flex-2">
               <LocationSelector
                 label={t("shipments.orders.filters.destination", "Destination")}
                 defaultValue={filters.destination_id}
@@ -246,19 +241,21 @@ export const OrderFilters = ({
             </div>
 
             {/* Status */}
-            <div className="space-y-1.5 text-xs">
-              <SelectField
-                label={t("shipments.orders.filters.status", "Status")}
-                options={statusOptions}
-                value={filters.status ?? "all"}
-                onChange={(val) =>
-                  setFilters((prev: any) => ({
-                    ...prev,
-                    status: val === "all" ? undefined : (val as OrderStatus),
-                  }))
-                }
-              />
-            </div>
+            {hasRole({ role: "client" }) || hasRole({ role: "admin" }) && (
+              <div className="space-y-1.5 flex-1">
+                <SelectField
+                  label={t("shipments.orders.filters.status", "Status")}
+                  options={statusOptions}
+                  value={filters.status ?? "all"}
+                  onChange={(val) =>
+                    setFilters((prev: any) => ({
+                      ...prev,
+                      status: val === "all" ? undefined : (val as OrderStatus),
+                    }))
+                  }
+                />
+              </div>
+            )}
 
             {/* From Date */}
             <div className="space-y-1.5">

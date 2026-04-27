@@ -20,6 +20,9 @@ export default function Home() {
           <Button className="w-fit" asChild>
             <Link href={paths.client.shipments.orders.route()}>Client</Link>
           </Button>
+          <Button className="w-fit" asChild>
+            <Link href={paths.shipper.shipments.orders.booking.route()}>Shipper</Link>
+          </Button>
         </div>
       </div>
     </AuthGuard>

@@ -42,7 +42,36 @@ export const paths = {
         root: "older",
         route: () => "/client/shipments/older",
       },
-    }
+    },
+  },
+
+  shipper: {
+    root: "/shipper",
+    route: () => "/shipper",
+    shipments: {
+      root: "shipments",
+      route: () => "/shipper/shipments",
+      orders: {
+        root: "orders",
+        route: () => "/shipper/shipments/orders",
+        booking: {
+          root: "booking",
+          route: () => "/shipper/shipments/orders/booking",
+        },
+      },
+      offers: {
+        root: "offers",
+        route: () => "/shipper/shipments/offers",
+        ongoing: {
+          root: "ongoing",
+          route: () => "/shipper/shipments/offers/ongoing",
+        },
+        past: {
+          root: "past",
+          route: () => "/shipper/shipments/offers/past",
+        },
+      },
+    },
   },
 
   admin: {

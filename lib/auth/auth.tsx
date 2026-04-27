@@ -96,7 +96,9 @@ export const AuthGuard = ({
     }
   }, [resolution, router]);
 
-  if (resolution.status === "loading") return null;
+  // AppShell already waits for the initial user fetch, so here isLoading is only
+  // triggered during brief background revalidation — keep children visible.
+  if (resolution.status === "loading") return <>{children}</>;
   if (resolution.status === "redirect") return null;
 
   if (resolution.status === "gate") {

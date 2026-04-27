@@ -9,13 +9,15 @@
     }
   },
   "global": {
+    "created_at": "تاريخ الانشاء",
+
     "advanced_search": "بحث متقدم",
     "clear_all": "مسح الكل",
-    "count" : "العدد",
-    "distance" : "المسافة",
-    "price" : "السعر",
-    "total_volume" : "الحجم الكلي",
-    "description" : "الوصف",
+    "count": "العدد",
+    "distance": "المسافة",
+    "price": "السعر",
+    "total_volume": "الحجم الكلي",
+    "description": "الوصف",
     "load_more": "المزيد...",
     "reset": "إعادة تعيين",
     "units": {
@@ -47,6 +49,7 @@
     },
     "loading": "جاري التحميل...",
     "actions": {
+      "confirm": "تاكيد",
       "create": "إنشاء",
       "edit": "تعديل",
       "delete": "حذف",
@@ -54,15 +57,22 @@
       "view_offers": " العروض",
       "cancel": "إلغاء",
       "export": "تصدير",
-      "apply" : "تطبيق",
-      "clear" : "مسح"
+      "apply": "تطبيق",
+      "clear": "مسح",
+      "accept": "قبول",
+      "shipper_contact": "معلومات المرسل"
     },
     "cancel": "إلغاء",
     "all": "الكل",
     "status": {
       "all": "الكل",
       "active": "نشط",
-      "inactive": "غير نشط"
+      "inactive": "غير نشط",
+      "pending": "قيد الانتظار",
+      "approved": "تم القبول",
+      "rejected": "تم الرفض",
+      "cancelled": "تم الإلغاء",
+      "accepted": "تم القبول"
     },
     "search": "بحث..."
   },
@@ -77,7 +87,10 @@
       "orders": "طلبات الشحن",
       "old": "الشحنات القديمة",
       "categories": "فئات الشحن",
-      "new": "شحنة جديدة"
+      "new": "شحنة جديدة",
+      "booking_orders": "طلبات للحجز",
+      "ongoing_offers": "العروض الجارية",
+      "past_offers": "العروض السابقة"
     },
     "logout": "تسجيل الخروج"
   },
@@ -593,9 +606,44 @@
     }
   },
   "shipments": {
-
+    "offers": {
+      "title": "عروض لهذا الطلب",
+      "list_title": "قائمة العروض",
+      "accepted_title": "العرض المقبول",
+      "pending_title": "العروض قيد الانتظار",
+      "cancelled_title": "العروض الملغاة",
+      "shipper_info": "معلومات المرسل",
+      "empty": {
+        "title": "لا يوجد عروض بعد",
+        "desc": "ستظهر العروض من الناقلين هنا بمجرد تقديمها."
+      }
+    },
     "orders": {
+      "actions": {
+        "assign": "تخصيص الطلب",
+        "publish": "نشر الطلب",
+        "reject": "رفض الطلب",
+        "submit_offer": "تقديم عرض",
+        "submitted_offer": "تم تقديم العرض",
+        "export": "تصدير الطلبات",
+        "limit_reached": "لا يمكن تقديم المزيد من العروض لأن هذا الطلب وصل إلى الحد الأقصى من العروض."
+      },
+      "columns": {
+        "description": "الوصف",
+        "category": "الفئة",
+        "origin": "المصدر",
+        "destination": "الوجهة",
+        "status": "الحالة",
+        "amount": "المبلغ",
+        "created_at": "تاريخ الإنشاء",
+        "actions": "الإجراءات"
+      },
+
       "modals": {
+        "submit_offer": {
+          "title": "تقديم عرض",
+          "description": "قدم عرضك لهذا الطلب"
+        },
         "assign": {
           "title": "تخصيص الطلب",
           "description": "اختر شركة النقل المعتمدة من القائمة أدناه لتخصيص مهمة التوصيل هذه."
@@ -609,13 +657,14 @@
           "description": "هل أنت متأكد من أنك تريد رفض هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء."
         }
       },
-      "actions": {
-        "assign": "تخصيص الطلب",
-        "export": "تصدير الطلبات"
-      },
+
       "page": {
         "title": "الطلبات",
-        "desc": "إدارة طلباتك وتتبع حالتها"
+        "desc": "إدارة طلباتك وتتبع حالتها",
+        "booking": {
+          "title": "عرض طلبات الحجز",
+          "desc": "الطلبات المتاحة لتقديم عروض عليها من قبل شركات النقل"
+        }
       },
       "timelines": {
         "title": "تتبع الطلب"

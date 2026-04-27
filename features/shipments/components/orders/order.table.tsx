@@ -121,7 +121,7 @@ export const OrderTable = ({
         ),
       },
       {
-        title: t("global.actions.title", "Actions"),
+        title: t("shipments.orders.columns.actions", "Actions"),
         field: "id",
         Cell: ({ entry }) => (
           <QuickActions

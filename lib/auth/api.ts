@@ -101,6 +101,6 @@ export const getUserQueryOptions = (config?: AxiosRequestConfig) => {
   return queryOptions({
     queryKey: userQueryKey,
     queryFn: () => getMe(config),
-    staleTime: 0, // Always re-fetch on mount so SSR null never blocks client auth
+    staleTime: 1000 * 60, // Cache for 1 min – AppShell fetches first, guards reuse instantly
   });
 };

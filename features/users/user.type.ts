@@ -1,5 +1,6 @@
 import { Entity } from "@/types/api";
 import { Attachment } from "../attachments/attachments.type";
+import { Vehicle } from "../vehicles/vehicle.type";
 import { UserParams } from "./api/user.list";
 
 export type User = Entity<{
@@ -17,12 +18,21 @@ export type User = Entity<{
   attachments?: Attachment[];
 }>;
 
+export type Profile = Entity<{
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  avatar?: string;
+  vehicle?: Vehicle;
+}>;
+
+
 
 export type ShipperOption = {
   id: string;
   first_name: string;
   last_name: string;
-
 };
 
 export const userKeys = {

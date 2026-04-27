@@ -10,6 +10,7 @@
   },
 
   "global": {
+    "created_at": "Created at",
     "advanced_search": "Advanced Search",
     "clear_all": "Clear all",
     "price": "Price",
@@ -47,8 +48,10 @@
       "per_page": "Per page",
       "page": "Page"
     },
+    "shipper_contact": "Shipper contact",
     "loading": "Loading...",
     "actions": {
+      "confirm": "Confirm",
       "add": "Add",
       "edit": "Edit",
       "delete": "Delete",
@@ -59,12 +62,17 @@
       "cancel": "Cancel",
       "save": "Save",
       "apply": "Apply",
-      "clear": "Clear"
+      "clear": "Clear",
+      "accept": "Accept"
     },
     "status": {
       "all": "All",
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled"
     },
     "search": "Search...",
     "all": "All"
@@ -82,7 +90,10 @@
       "orders": "Orders",
       "old": "Orders history",
       "categories": "Categories",
-      "new": "New Shipment"
+      "new": "New Shipment",
+      "booking_orders": "Booking Orders",
+      "ongoing_offers": "Ongoing Offers",
+      "past_offers": "Past Offers"
     },
     "logout": "Logout"
   },
@@ -603,27 +614,58 @@
     }
   },
   "shipments": {
+    "offers": {
+      "title": "Available Offers for this order",
+      "list_title": "List of offers",
+      "accepted_title": "Accepted Offer",
+      "pending_title": "Pending Offers",
+      "cancelled_title": "Cancelled Offers",
+      "shipper_info": "Shipper Information",
+      "empty": {
+        "title": "No offers yet",
+        "desc": "Offers from shippers will appear here once they are submitted."
+      }
+    },
     "orders": {
-      "modals":{
-        "assign": {
-          "title": "Assign Order",
-          "description": "Select an approved shipper from the list below to assign this delivery task."
-        },
+      "actions": {
+        "assign": "Assign Order",
+        "publish": "Publish Order",
+        "reject": "Reject Order",
+        "submit_offer": "Submit Offer",
+        "submitted_offer": "Offer Already Submitted",
+        "limit_reached": "Can't Submit More Offers because this order already has the maximum number of offers."
+      },
+      "modals": {
         "publish": {
           "title": "Publish Order",
           "description": "Are you sure you want to publish this order? This will make it visible to shippers."
+        },
+        "submit_offer": {
+          "title": "Submit Offer",
+          "description": "Fill in the details below to submit your offer. Once submitted, the shipper will review it and may contact you if they accept."
         },
         "reject": {
           "title": "Reject Order",
           "description": "Are you sure you want to reject this order? This action cannot be undone."
         }
       },
-      "actions":{
-        "assign": "Assign Order"
+      "columns": {
+        "description": "Description",
+        "category": "Category",
+        "origin": "Origin",
+        "destination": "Destination",
+        "status": "Status",
+        "amount": "Amount",
+        "actions": "Actions",
+        "created_at": "Created At"
       },
       "page": {
         "title": "Orders",
-        "desc": "Manage your orders and track their status"
+        "desc": "Manage your orders and track their status",
+        "booking": {
+          "title": "Booking Orders",
+          "desc": "Booking orders for shippers"
+        }
       },
       "timelines": {
         "title": "Timelines"
@@ -712,7 +754,7 @@
           }
         },
         "volume": {
-            "display": "Volume {{volume}} {{unit}}",
+          "display": "Volume {{volume}} {{unit}}",
           "label": "Volume",
           "errors": {
             "required": "Volume is required",

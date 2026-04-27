@@ -4,6 +4,7 @@ import { RouterLink } from "@/components/ui/link";
 import { ThemeToggle } from "@/components/ui/theme";
 import { UserNavgation } from "@/components/ui/user-navigation";
 import { paths } from "@/config/paths";
+import { useAuthorization } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -13,21 +14,42 @@ import { useTranslation } from "react-i18next";
 export const ContentNavabr = () => {
   const { t } = useTranslation();
   const pathname = usePathname();
-
-  const navigation = useMemo(()=>[
-    {
-      label: t("navigation.shipments.new"),
-      to: paths.client.shipments.orders.new.route(),
-    },
-    {
-      label: t("navigation.shipments.orders"),
-      to: paths.client.shipments.orders.route(),
-    },
-    {
-      label: t("navigation.shipments.old"),
-      to: paths.client.shipments.old.route(),
-    },
-  ], [t]);
+  const { hasRole } = useAuthorization();
+  const navigation = useMemo(
+    () => [
+      {
+        label: t("navigation.shipments.new"),
+        to: paths.client.shipments.orders.new.route(),
+        hideIf: () => hasRole({ role: "shipper" }),
+      },
+      {
+        label: t("navigation.shipments.orders"),
+        to: paths.client.shipments.orders.route(),
+        hideIf: () => hasRole({ role: "shipper" }),
+      },
+      {
+        label: t("navigation.shipments.old"),
+        to: paths.client.shipments.old.route(),
+        hideIf: () => hasRole({ role: "shipper" }),
+      },
+      {
+        label: t("navigation.shipments.booking_orders"),
+        to: paths.shipper.shipments.orders.booking.route(),
+        hideIf: () => hasRole({ role: "client" }),
+      },
+      {
+        label: t("navigation.shipments.ongoing_offers"),
+        to: paths.shipper.shipments.offers.ongoing.route(),
+        hideIf: () => hasRole({ role: "client" }),
+      },
+      {
+        label: t("navigation.shipments.past_offers"),
+        to: paths.shipper.shipments.offers.past.route(),
+        hideIf: () => hasRole({ role: "client" }),
+      },
+    ],
+    [t],
+  );
 
   return (
     <header className="h-14 border-b border-border w-full flex items-center bg-card/15  z-50 backdrop-blur-xl sticky inset-0 ">
@@ -39,20 +61,24 @@ export const ContentNavabr = () => {
           </h3>
         </div>
         <ul className="flex text-sm items-center gap-2">
-          {navigation.map((item, index) => (
-            <li key={index}>
-              <RouterLink
-                to={item.to}
-                className={cn(
-                  "text-sm font-semibold px-4 py-1.5 rounded-sm",
-                  pathname === item.to &&
-                    "bg-primary text-primary-foreground font-bold",
-                )}
-              >
-                {item.label}
-              </RouterLink>
-            </li>
-          ))}
+          {navigation.map((item, index) => {
+            const shouldHide = item.hideIf?.();
+            if (shouldHide) return null;
+            return (
+              <li key={index}>
+                <RouterLink
+                  to={item.to}
+                  className={cn(
+                    "text-sm font-semibold px-4 py-1.5 rounded-sm",
+                    pathname === item.to &&
+                      "bg-primary text-primary-foreground font-bold",
+                  )}
+                >
+                  {item.label}
+                </RouterLink>
+              </li>
+            );
+          })}
           <li className="flex items-center gap-2">
             <SwitchLanguage />
             <ThemeToggle />

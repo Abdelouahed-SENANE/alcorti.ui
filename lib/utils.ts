@@ -38,6 +38,7 @@ export function formatDateTime(dateString: string, locale: string): string {
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
 }
 
@@ -46,6 +47,7 @@ export function formatTime(dateString: string, locale: string): string {
   return new Date(dateString).toLocaleTimeString(locale, {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
 }
 

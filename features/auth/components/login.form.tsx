@@ -21,13 +21,12 @@ export const LoginForm = () => {
         } else if (role === "admin") {
           router.replace(paths.admin.dashboard.route());
         } else if (role === "shipper") {
-          router.replace(paths.home.route());
+          router.replace(paths.shipper.shipments.orders.available.route());
         } else {
           router.replace(paths.home.root);
         }
       },
       onError: (res: any) => {
-        console.log(res);
         toast({
           title: res.response.data.message,
           type: "error",

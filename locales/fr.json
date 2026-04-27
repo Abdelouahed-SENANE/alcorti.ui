@@ -25,6 +25,9 @@
       "active": "Actif",
       "inactive": "Inactif"
     },
+    "actions": {
+      "shipper_contact": "Contacter l'expéditeur"
+    },
     "search": "Rechercher..."
   },
 
@@ -374,6 +377,18 @@
     }
   },
   "shipments": {
+    "offers": {
+      "title": "Offres pour cette commande",
+      "list_title": "Liste des offres",
+      "accepted_title": "Offre acceptée",
+      "pending_title": "Offres en attente",
+      "cancelled_title": "Offres annulées",
+      "shipper_info": "Informations sur l'expéditeur",
+      "empty": {
+        "title": "Aucune offre pour le moment",
+        "desc": "Les offres des expéditeurs apparaîtront ici une fois qu'elles seront soumises."
+      }
+    },
     "form": {
       "summary": {
         "confirmation_notice": "Veuillez revoir tous les détails ci-dessus. Une fois confirmé, votre demande sera visible par les transporteurs disponibles.",

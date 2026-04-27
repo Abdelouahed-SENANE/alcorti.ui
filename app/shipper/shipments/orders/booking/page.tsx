@@ -2,15 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useBookingOrders } from "@/features/shipments/api/orders/avalaible.orders";
+import { ClientOrdersParams } from "@/features/shipments/api/orders/client.orders";
 import {
-  ClientOrdersParams,
-  useClientOrders,
-} from "@/features/shipments/api/orders/client.orders";
-import { OrderCard, OrderCardSkeleton } from "@/features/shipments/components/orders/order.card";
+  OrderCard,
+  OrderCardSkeleton,
+} from "@/features/shipments/components/orders/order.card";
 import { OrderFilters } from "@/features/shipments/components/orders/order.filters";
 import { ShipmentOrder } from "@/features/shipments/shipment.type";
-import { Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -19,23 +18,23 @@ export default function OrdersPage() {
   const [params, setParams] = React.useState<
     Omit<ClientOrdersParams, "cursor">
   >({});
-  const router = useRouter();
 
-  const { data, isLoading, fetchNextPage, isFetching, hasNextPage, isFetchingNextPage } =
-    useClientOrders({
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useBookingOrders({
       params,
     });
+
   return (
-    <div className="container relative mx-auto py-6 space-y-6 animate-in fade-in duration-500">
+    <div className="container relative mx-auto py-6 space-y-6 ">
       <OrderFilters
         onFilter={setParams}
         titleSection={
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-              {t("shipments.orders.title")}
+              {t("shipments.orders.page.booking.title")}
             </h1>
             <p className="text-foreground/60 ">
-              {t("shipments.orders.description")}
+              {t("shipments.orders.page.booking.desc")}
             </p>
           </div>
         }
@@ -68,18 +67,11 @@ export default function OrdersPage() {
             </div>
             <div className="space-y-1">
               <h3 className="text-xl font-bold">
-                {t("shipments:orders.messages.empty")}
+                {t("shipments.orders.messages.empty")}
               </h3>
               <p className="text-muted-foreground max-w-sm">
-                Try adjusting your filters to find what you're looking for.
+                {t("shipments.orders.messages.empty_description")}
               </p>
-              <Button
-                onClick={() => router.push("/client/shipments/orders/new")}
-                className=" rounded-full"
-                size="icon"
-              >
-                <Plus />
-              </Button>
             </div>
           </Card>
         )}
