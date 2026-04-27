@@ -52,7 +52,6 @@ export type ShipmentOfferSubmitted = Entity<{
     full_name: string;
     avatar: string;
   };
-
 }>;
 
 export type ShipmentOrderItem = {
@@ -75,6 +74,7 @@ export type ShipmentOrder = Entity<{
   distance: number;
   from_date: Date;
   to_date: Date;
+  client_id: string;
   total_amount: number;
   total_volume: number;
   items: ShipmentOrderItem[];

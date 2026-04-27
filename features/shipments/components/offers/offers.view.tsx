@@ -4,12 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Drawer,
   DrawerContent,
   DrawerHeader,
@@ -17,13 +11,12 @@ import {
 } from "@/components/ui/drawer/drawer";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast/use-toast";
-import { ProfileCard } from "@/features/users/components/profile.card";
+import { ContactCard } from "@/features/users/components/contact.card";
 import { Check, PhoneCall, User, X } from "lucide-react";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOrderOffers } from "../../api/offers/list.offers";
 import { useOfferDecision } from "../../api/offers/offer.decision";
-import { ShipmentOffer } from "../../shipment.type";
+import { ShipmentOffer, ShipmentOfferSubmitted } from "../../shipment.type";
 
 interface OrderOffersViewProps {
   orderId: string;
@@ -50,13 +43,10 @@ export const OrderOffersView = ({
     (offer) => offer.status === "accepted",
   );
   const pendingOffers = sortedOffers.filter(
-    (offer) =>
-      offer.status !== "accepted" &&
-      offer.status !== "cancelled" &&
-      offer.status !== "rejected",
+    (offer) => offer.status !== "accepted" && offer.status !== "cancelled",
   );
   const cancelledOffers = sortedOffers.filter(
-    (offer) => offer.status === "cancelled" || offer.status === "rejected",
+    (offer) => offer.status === "cancelled",
   );
 
   const hasAcceptedOffer = offers.some((offer) => offer.status === "accepted");
@@ -166,7 +156,7 @@ const OfferItem = ({
   orderId,
   hasAcceptedOffer,
 }: {
-  offer: ShipmentOffer;
+  offer: ShipmentOfferSubmitted;
   orderId: string;
   hasAcceptedOffer: boolean;
 }) => {
@@ -199,8 +189,7 @@ const OfferItem = ({
   };
 
   const isAccepted = offer.status === "accepted";
-  const isCancelled =
-    offer.status === "cancelled" || offer.status === "rejected";
+  const isCancelled = offer.status === "cancelled";
   const isPending = offer.status === "pending";
 
   let cardClasses =
@@ -225,13 +214,13 @@ const OfferItem = ({
               className={`size-8 rounded-full flex items-center justify-center  ${"bg-secondary"}`}
             >
               <AvatarImage
-                src={offer?.shipper?.avatar}
+                src={offer.shipper.avatar}
                 className="size-full object-cover"
               />
               <AvatarFallback
                 className={isAccepted ? "bg-secondary text-primary" : ""}
               >
-                {offer?.shipper?.full_name?.charAt(0)}
+                {offer.shipper.full_name?.charAt(0)}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col min-w-0">
@@ -253,9 +242,12 @@ const OfferItem = ({
           {!isCancelled && (
             <div className="flex items-center justify-end gap-1.5 shrink-0 ltr:pl-2 rtl:pr-2">
               {isAccepted && (
-                <ProfileCard
+                <ContactCard
                   userId={offer?.shipper?.id!}
-                  title={t("shipments.offers.shipper_info", "Shipper Information")}
+                  title={t(
+                    "shipments.offers.shipper_info",
+                    "Shipper Information",
+                  )}
                   trigger={
                     <Button
                       className={`text-xs font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90`}
@@ -298,7 +290,6 @@ const OfferItem = ({
           )}
         </div>
       </div>
-
     </>
   );
 };

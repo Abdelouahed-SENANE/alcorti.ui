@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DynamicIcon } from "@/components/ui/icons/dynamic-icon";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ContactCard } from "@/features/users/components/contact.card";
 import { useDisclosure } from "@/hooks/use-disclosure";
-import { useAuthorization } from "@/lib/auth";
 import { cn, formatDate, formatDateTime } from "@/lib/utils";
-import { Calendar1, Eye, HandCoins, MapPin } from "lucide-react";
+import { Calendar1, Contact, Eye, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -99,7 +99,6 @@ export const OfferCard: React.FC<OfferCardProps> = ({
   const { t, i18n } = useTranslation();
   const { isOpen: isOrder, toggle: toggleOrder } = useDisclosure();
   const [orderId, setOrderId] = React.useState<string | null>(null);
-  const { hasRole } = useAuthorization();
 
   const getLocalizedName = (obj: any) => {
     if (!obj) return "";
@@ -197,8 +196,8 @@ export const OfferCard: React.FC<OfferCardProps> = ({
               {t("shipments.form.summary.available_between")} :{" "}
             </span>
             <p className="text-sm font-bold text-foreground/80">
-              {formatDate(offer?.order?.from_date!, i18n.language)}{" "}
-              - {formatDate(offer?.order?.to_date!, i18n.language)}
+              {formatDate(offer?.order?.from_date!, i18n.language)} -{" "}
+              {formatDate(offer?.order?.to_date!, i18n.language)}
             </p>
           </div>
 
@@ -232,6 +231,21 @@ export const OfferCard: React.FC<OfferCardProps> = ({
             <Eye className="size-4" />
             {t("global.actions.view")}
           </Button>
+          {offer.status === "accepted" && (
+            <ContactCard
+              userId={offer.order?.client_id!}
+              trigger={
+                <Button
+                  variant={"plain"}
+                  className="text-secondary-foreground bg-secondary gap-1 "
+                >
+                  <Contact className="size-4" />
+                  {t("users.actions.client_contact")}
+                </Button>
+              }
+              title={t("users.profiles.client.title")}
+            />
+          )}
         </div>
       </CardContent>
       {orderId && (

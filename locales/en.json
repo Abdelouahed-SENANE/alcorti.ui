@@ -187,6 +187,7 @@
         "pending": "Pending",
         "approved": "Approved",
         "rejected": "Rejected",
+
         "errors": {
           "required": "User status is required"
         }
@@ -203,7 +204,9 @@
       "approve": "Confirm",
       "reject": "Refuse",
       "activate": "Reactivate",
-      "deactivate": "Deactivate"
+      "deactivate": "Deactivate",
+      "client_contact" : "Client Contact",
+      "shipper_contact" : "Shipper Contact"
     },
     "dialogs": {
       "activate": {

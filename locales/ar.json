@@ -59,8 +59,7 @@
       "export": "تصدير",
       "apply": "تطبيق",
       "clear": "مسح",
-      "accept": "قبول",
-      "shipper_contact": "معلومات المرسل"
+      "accept": "قبول"
     },
     "cancel": "إلغاء",
     "all": "الكل",
@@ -166,7 +165,7 @@
       },
       "role": {
         "label": "الدور",
-        "shipper": "المرسل",
+        "shipper": "الشاحن",
         "client": "العميل",
         "admin": "المدير",
         "errors": {
@@ -194,7 +193,9 @@
       "approve": "قبول",
       "reject": "رفض",
       "activate": "إعادة تفعيل",
-      "deactivate": "إلغاء تفعيل"
+      "deactivate": "إلغاء تفعيل",
+      "client_contact": "معلومات اتصال العميل",
+      "shipper_contact": "معلومات اتصال الشاحن"
     },
     "dialogs": {
       "activate": {
@@ -612,10 +613,10 @@
       "accepted_title": "العرض المقبول",
       "pending_title": "العروض قيد الانتظار",
       "cancelled_title": "العروض الملغاة",
-      "shipper_info": "معلومات المرسل",
+      "shipper_info": "معلومات الشاحن",
       "empty": {
         "title": "لا يوجد عروض بعد",
-        "desc": "ستظهر العروض من الناقلين هنا بمجرد تقديمها."
+        "desc": "ستظهر العروض من الشاحن هنا بمجرد تقديمها."
       }
     },
     "orders": {

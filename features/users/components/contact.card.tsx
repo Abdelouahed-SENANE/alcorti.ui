@@ -10,26 +10,27 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Mail, Phone } from "lucide-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUserProfile } from "../api/user.profile";
+import { useUserContact } from "../api/user.contact";
 
-interface ProfileCardProps {
+interface ConatctCardProps {
   userId: string;
-  isShipper?: boolean;
   trigger?: React.ReactNode;
   title?: string;
 }
 
-export const ProfileCard = ({ userId, trigger, title }: ProfileCardProps) => {
+export const ContactCard = ({ userId, trigger, title }: ConatctCardProps) => {
   const { t } = useTranslation();
-  const { data, isLoading } = useUserProfile({ id: userId });
+  const { data, isLoading } = useUserContact({ id: userId });
   const profile = data?.data;
 
-  const displayUser = profile ? {
-    full_name: `${profile.first_name} ${profile.last_name}`,
-    avatar: profile.avatar,
-    email: profile.email,
-    phone: profile.phone,
-  } : null;
+  const displayUser = profile
+    ? {
+        full_name: `${profile.first_name} ${profile.last_name}`,
+        avatar: profile.avatar,
+        email: profile.email,
+        phone: profile.phone,
+      }
+    : null;
 
   const InnerContent = () => {
     if (isLoading || !displayUser) {
@@ -54,7 +55,9 @@ export const ProfileCard = ({ userId, trigger, title }: ProfileCardProps) => {
           </AvatarFallback>
         </Avatar>
         <div className="text-center space-y-2">
-          <h3 className="text-xl font-bold text-foreground">{displayUser.full_name}</h3>
+          <h3 className="text-xl font-bold text-foreground">
+            {displayUser.full_name}
+          </h3>
 
           <div className="flex flex-col items-center gap-1.5 mt-2">
             {displayUser.email && (
