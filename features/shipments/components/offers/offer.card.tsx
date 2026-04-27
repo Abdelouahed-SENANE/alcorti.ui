@@ -13,9 +13,8 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { OfferStatus, ShipmentOffer } from "../../shipment.type";
-import { OrderOffersView } from "../offers/offers.view";
 
-export const OrderCardSkeleton = () => {
+export const OfferCardSkeleton = () => {
   return (
     <Card className="group overflow-hidden border-border/60 py-0 rounded-2xl bg-card h-full flex flex-col">
       <CardContent className="p-0 flex-1 flex flex-col">
@@ -83,13 +82,13 @@ interface OfferCardProps {
 export const backgroundColors: Record<OfferStatus, string> = {
   pending: "bg-amber-500 text-amber-600 ",
   accepted: "bg-green-500 text-green-600 ",
-  cancelled: "bg-slate-500 text-slate-600 ",
+  cancelled: "bg-neutral-500 text-neutral-600 ",
 };
 
 export const statusColors: Record<OfferStatus, string> = {
   pending: "bg-amber-500/10 text-amber-600 ",
   accepted: "bg-green-500/10 text-green-600 ",
-  cancelled: "bg-slate-500/10 text-slate-600 ",
+  cancelled: "bg-neutral-500/10 text-neutral-600 ",
 };
 
 export const OfferCard: React.FC<OfferCardProps> = ({
@@ -99,7 +98,6 @@ export const OfferCard: React.FC<OfferCardProps> = ({
 }) => {
   const { t, i18n } = useTranslation();
   const { isOpen: isOrder, toggle: toggleOrder } = useDisclosure();
-  const { isOpen: isOffers, toggle: toggleOffers } = useDisclosure();
   const [orderId, setOrderId] = React.useState<string | null>(null);
   const { hasRole } = useAuthorization();
 
@@ -113,7 +111,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({
   };
 
   if (isLoading || !offer) {
-    return <OrderCardSkeleton />;
+    return <OfferCardSkeleton />;
   }
   return (
     <Card
@@ -156,7 +154,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({
         <div className="p-4 flex-1">
           <div className="flex items-center ">
             <Badge className={statusColors[offer.status]}>
-              {t(`shipments.orders.status.${offer.status}`)}
+              {t(`global.status.${offer.status}`)}
             </Badge>
           </div>
           <p className="text-sm font-medium my-2 text-foreground/80 line-clamp-2 min-h-4 max-h-10">
@@ -234,18 +232,6 @@ export const OfferCard: React.FC<OfferCardProps> = ({
             <Eye className="size-4" />
             {t("global.actions.view")}
           </Button>
-          {hasRole({ role: "client" }) && offer?.order?.status !== "pending" && (
-            <Button
-              onClick={() => {
-                setOrderId(offer?.order?.id!);
-                toggleOffers();
-              }}
-              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-medium gap-1  h-8 rounded-lg shadow-md shadow-secondary/20 transition-all active:scale-95"
-            >
-              <HandCoins className="size-4" />
-              {t("global.actions.view_offers")}
-            </Button>
-          )}
         </div>
       </CardContent>
       {orderId && (

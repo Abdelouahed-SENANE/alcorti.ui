@@ -23,7 +23,11 @@
     "status": {
       "all": "Tous",
       "active": "Actif",
-      "inactive": "Inactif"
+      "inactive": "Inactif",
+      "pending": "En attente",
+      "accepted": "Accepté",
+      "rejected": "Refusé",
+      "cancelled": "Annulé"
     },
     "actions": {
       "shipper_contact": "Contacter l'expéditeur"

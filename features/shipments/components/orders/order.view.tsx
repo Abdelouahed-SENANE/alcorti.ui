@@ -248,7 +248,7 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
             </div>
 
             {/* Timelines Section */}
-            {(hasRole({ role: "client" }) || order.timelines) && (
+            {(hasRole({ role: "client" }) && order.timelines) && (
               <div className="">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-lg font-bold text-foreground">

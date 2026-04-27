@@ -7,7 +7,7 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 
-import { ORDER_KEYS, OrderStatus, ShipmentOrder } from "../../shipment.type";
+import { ORDER_KEYS, ShipmentOrder } from "../../shipment.type";
 
 export type BookingOrdersParams = {
   cursor?: string | null;
@@ -26,7 +26,7 @@ export const getBookingOrders = async ({
   ApiResponse<CursorPaginated<ShipmentOrder>>
 > => {
   const response = await api$.get<ApiResponse<CursorPaginated<ShipmentOrder>>>(
-    "shipments/orders/available",
+    "shipments/orders/booking",
     {
       params: {
         cursor,

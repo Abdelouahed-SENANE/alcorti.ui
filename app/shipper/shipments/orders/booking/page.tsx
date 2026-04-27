@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useBookingOrders } from "@/features/shipments/api/orders/avalaible.orders";
+import { useBookingOrders } from "@/features/shipments/api/orders/booking.orders";
 import { ClientOrdersParams } from "@/features/shipments/api/orders/client.orders";
 import {
-  OrderCard,
   OrderCardSkeleton,
+  ShipperOrderCard,
 } from "@/features/shipments/components/orders/order.card";
 import { OrderFilters } from "@/features/shipments/components/orders/order.filters";
 import { ShipmentOrder } from "@/features/shipments/shipment.type";
@@ -55,7 +55,7 @@ export default function OrdersPage() {
             key={i}
           >
             {page.data?.items.map((order: ShipmentOrder) => (
-              <OrderCard key={order.id} order={order} />
+              <ShipperOrderCard key={order.id} order={order} />
             ))}
           </div>
         ))}

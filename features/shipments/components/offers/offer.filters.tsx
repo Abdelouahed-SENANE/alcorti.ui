@@ -9,73 +9,57 @@ import { useCategoryOptions } from "@/features/categories/api/category.options";
 import { LocationSelector } from "@/features/locations/components/location.selector";
 import { LocationOption } from "@/features/locations/location.type";
 import { cn } from "@/lib/utils";
-import { Filter, RefreshCcw, Search, SlidersHorizontal, X } from "lucide-react";
+import { Filter, RefreshCcw, SlidersHorizontal, X } from "lucide-react";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { OrderStatus } from "../../shipment.type";
-import { useAuthorization } from "@/lib/auth";
+import { OfferStatus } from "../../shipment.type";
 
-interface OrderFiltersProps {
-  onFilter: (params: any) => void;
-  initialFilters?: any;
+export type OfferFiltersState = {
+  category_id?: string;
+  origin_id?: string;
+  destination_id?: string;
+  from_date?: string;
+  to_date?: string;
+};
+
+interface OfferFiltersProps {
+  onFilter: (params: OfferFiltersState) => void;
   titleSection?: React.ReactNode;
-  alwaysOpen?: boolean;
   className?: string;
 }
 
-export const OrderFilters = ({
+export const OfferFilters = ({
   onFilter,
-  initialFilters,
   titleSection,
-  alwaysOpen = false,
   className,
-}: OrderFiltersProps) => {
+}: OfferFiltersProps) => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(false);
-  const [filters, setFilters] = React.useState<any>(
-    initialFilters || {
-      category_id: undefined,
-      origin_id: undefined,
-      destination_id: undefined,
-      status: undefined,
-      from_date: undefined,
-      to_date: undefined,
-    },
+  const [filters, setFilters] = React.useState<OfferFiltersState>({
+    category_id: undefined,
+    origin_id: undefined,
+    destination_id: undefined,
+    from_date: undefined,
+    to_date: undefined,
+  });
+  const [appliedFilters, setAppliedFilters] = React.useState<OfferFiltersState>(
+    filters,
   );
-  const [appliedFilters, setAppliedFilters] = React.useState<any>(
-    initialFilters || filters,
-  );
-  const { hasRole } = useAuthorization();
-
-  const [labels, setLabels] = React.useState<any>({});
-
-  React.useEffect(() => {
-    if (initialFilters) {
-      setFilters(initialFilters);
-      setAppliedFilters(initialFilters);
-    }
-  }, [initialFilters]);
 
   const { data: categoryOptionsRes } = useCategoryOptions();
   const categoryOptions = React.useMemo(() => {
     const isAr = i18n.language === "ar";
     const options =
       categoryOptionsRes?.data?.map((opt) => ({
-        label: isAr ? opt.name_ar : opt.name_fr, // Prefer ar if RTL, else fr
+        label: isAr ? opt.name_ar : opt.name_fr,
         value: opt.id,
       })) || [];
     return [{ value: "all", label: t("global.all") }, ...options];
   }, [categoryOptionsRes, t, i18n.language]);
 
-  const statusOptions: { value: OrderStatus | "all"; label: string }[] = [
-    { value: "all", label: t("global.status.all") },
-    { value: "pending", label: t("shipments.orders.status.pending") },
-    { value: "published", label: t("shipments.orders.status.published") },
-    { value: "assigned", label: t("shipments.orders.status.assigned") },
-    { value: "delivered", label: t("shipments.orders.status.delivered") },
-    { value: "cancelled", label: t("shipments.orders.status.cancelled") },
-  ];
+  const [labels, setLabels] = React.useState<Record<string, string>>({});
 
+  // Apply all filters (called when "Apply" is clicked inside the advanced panel)
   const handleFilter = () => {
     setAppliedFilters(filters);
     onFilter(filters);
@@ -85,7 +69,7 @@ export const OrderFilters = ({
     const newFilters = { ...filters, [key]: undefined };
     setFilters(newFilters);
     setAppliedFilters(newFilters);
-    setLabels((prev: any) => {
+    setLabels((prev) => {
       const next = { ...prev };
       delete next[key];
       return next;
@@ -94,11 +78,10 @@ export const OrderFilters = ({
   };
 
   const clearFilters = () => {
-    const cleared = {
+    const cleared: OfferFiltersState = {
       category_id: undefined,
       origin_id: undefined,
       destination_id: undefined,
-      status: undefined,
       from_date: undefined,
       to_date: undefined,
     };
@@ -132,14 +115,6 @@ export const OrderFilters = ({
         value: labels.destination_id || appliedFilters.destination_id,
       });
     }
-    if (appliedFilters.status && appliedFilters.status !== "all") {
-      const status = statusOptions.find((o) => o.value === appliedFilters.status);
-      active.push({
-        key: "status",
-        label: t("shipments.orders.filters.status", "Status"),
-        value: status?.label || appliedFilters.status,
-      });
-    }
     if (appliedFilters.from_date) {
       active.push({
         key: "from_date",
@@ -155,43 +130,38 @@ export const OrderFilters = ({
       });
     }
     return active;
-  }, [appliedFilters, labels, categoryOptions, statusOptions, t]);
+  }, [appliedFilters, labels, categoryOptions, t]);
 
   return (
-    <div className={cn("space-y-3 ", className)}>
-      {(!alwaysOpen || titleSection) && (
-        <div
-          className={cn(
-            "flex w-full items-center gap-2",
-            titleSection ? "justify-between" : "justify-start",
-          )}
+    <div className={cn("space-y-3", className)}>
+      {/* Header: Title + Advanced Search toggle */}
+      <div
+        className={cn(
+          "flex w-full items-center gap-2",
+          titleSection ? "justify-between" : "justify-start",
+        )}
+      >
+        {titleSection && titleSection}
+        <Button
+          onClick={() => setIsOpen(!isOpen)}
+          variant="default"
+          className="gap-2 h-9"
+          size="sm"
         >
-          {titleSection && titleSection}
-          {!alwaysOpen && (
-            <Button
-              onClick={() => setIsOpen(!isOpen)}
-              variant="default"
-              className="gap-2 h-9"
-              size="sm"
-            >
-              <SlidersHorizontal className="size-4" />
-              {t("global.advanced_search")}
-              {activeFilters.length > 0 && (
-                <span className="flex items-center justify-center size-5 rounded-full bg-primary-foreground text-primary text-[10px] font-bold ml-1">
-                  {activeFilters.length}
-                </span>
-              )}
-            </Button>
+          <SlidersHorizontal className="size-4" />
+          {t("global.advanced_search")}
+          {activeFilters.length > 0 && (
+            <span className="flex items-center justify-center size-5 rounded-full bg-primary-foreground text-primary text-[10px] font-bold ml-1">
+              {activeFilters.length}
+            </span>
           )}
-        </div>
-      )}
-      {(alwaysOpen || isOpen) && (
+        </Button>
+      </div>
+
+      {/* Advanced Filters Panel */}
+      {isOpen && (
         <Card className="overflow-hidden p-0 border-border bg-card gap-0">
-          <div
-            className={cn(
-              "flex items-center gap-2 p-4",
-            )}
-          >
+          <div className="flex items-center gap-2 p-4">
             {/* Category */}
             <div className="space-y-1.5 flex-1">
               <SelectField
@@ -199,7 +169,7 @@ export const OrderFilters = ({
                 options={categoryOptions}
                 value={filters.category_id ?? "all"}
                 onChange={(val) =>
-                  setFilters((prev: any) => ({
+                  setFilters((prev) => ({
                     ...prev,
                     category_id: val === "all" ? undefined : val,
                   }))
@@ -208,18 +178,18 @@ export const OrderFilters = ({
             </div>
 
             {/* Origin */}
-            <div className="space-y-1.5 flex-2">
+            <div className="space-y-1.5 flex-1">
               <LocationSelector
                 label={t("shipments.orders.filters.origin", "Origin")}
                 defaultValue={filters.origin_id}
                 onSelect={(loc: LocationOption) => {
                   const isAr = i18n.language === "ar";
                   const label = isAr ? loc.name_ar : loc.name_fr;
-                  setFilters((prev: any) => ({
+                  setFilters((prev) => ({
                     ...prev,
                     origin_id: loc.value,
                   }));
-                  setLabels((prev: any) => ({
+                  setLabels((prev) => ({
                     ...prev,
                     origin_id: label,
                   }));
@@ -228,41 +198,24 @@ export const OrderFilters = ({
             </div>
 
             {/* Destination */}
-            <div className="space-y-1.5 flex-2">
+            <div className="space-y-1.5 flex-1">
               <LocationSelector
                 label={t("shipments.orders.filters.destination", "Destination")}
                 defaultValue={filters.destination_id}
                 onSelect={(loc: LocationOption) => {
                   const isAr = i18n.language === "ar";
                   const label = isAr ? loc.name_ar : loc.name_fr;
-                  setFilters((prev: any) => ({
+                  setFilters((prev) => ({
                     ...prev,
                     destination_id: loc.value,
                   }));
-                  setLabels((prev: any) => ({
+                  setLabels((prev) => ({
                     ...prev,
                     destination_id: label,
                   }));
                 }}
               />
             </div>
-
-            {/* Status */}
-            {hasRole({ role: "client" }) || hasRole({ role: "admin" }) && (
-              <div className="space-y-1.5 flex-1">
-                <SelectField
-                  label={t("shipments.orders.filters.status", "Status")}
-                  options={statusOptions}
-                  value={filters.status ?? "all"}
-                  onChange={(val) =>
-                    setFilters((prev: any) => ({
-                      ...prev,
-                      status: val === "all" ? undefined : (val as OrderStatus),
-                    }))
-                  }
-                />
-              </div>
-            )}
 
             {/* From Date */}
             <div className="space-y-1.5">
@@ -272,7 +225,7 @@ export const OrderFilters = ({
                   filters.from_date ? new Date(filters.from_date) : undefined
                 }
                 onChange={(date) =>
-                  setFilters((prev: any) => ({
+                  setFilters((prev) => ({
                     ...prev,
                     from_date: date?.toISOString(),
                   }))
@@ -284,9 +237,11 @@ export const OrderFilters = ({
             <div className="space-y-1.5">
               <InputCalendar
                 label={t("shipments.orders.filters.to_date", "To Date")}
-                value={filters.to_date ? new Date(filters.to_date) : undefined}
+                value={
+                  filters.to_date ? new Date(filters.to_date) : undefined
+                }
                 onChange={(date) =>
-                  setFilters((prev: any) => ({
+                  setFilters((prev) => ({
                     ...prev,
                     to_date: date?.toISOString(),
                   }))
@@ -295,6 +250,7 @@ export const OrderFilters = ({
             </div>
           </div>
 
+          {/* Active filter badges */}
           {activeFilters.length > 0 && (
             <div className="flex flex-wrap gap-2 ltr:items-center rtl:items-start px-4 pb-3">
               {activeFilters.map((af) => (
@@ -316,13 +272,14 @@ export const OrderFilters = ({
             </div>
           )}
 
+          {/* Actions */}
           <div className="flex items-center justify-between gap-2 px-4 py-3 border-t border-border/50 bg-muted/5">
             {activeFilters.length > 1 ? (
               <Button
                 variant="destructive"
                 size="sm"
                 onClick={clearFilters}
-                className="text-xs h-7 gap-1 text-destructive bg-destructive/10 hover:bg-destructive/20 hover:text-destructive px-3 py-1 "
+                className="text-xs h-7 gap-1 text-destructive bg-destructive/10 hover:bg-destructive/20 hover:text-destructive px-3 py-1"
               >
                 <X className="size-4" />
                 {t("global.clear_all", "Clear all")}

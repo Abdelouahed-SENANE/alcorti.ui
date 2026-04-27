@@ -6,7 +6,7 @@ import {
   ClientOrdersParams,
   useClientOrders,
 } from "@/features/shipments/api/orders/client.orders";
-import { OrderCard, OrderCardSkeleton } from "@/features/shipments/components/orders/order.card";
+import { ClientOrderCard, OrderCardSkeleton } from "@/features/shipments/components/orders/order.card";
 import { OrderFilters } from "@/features/shipments/components/orders/order.filters";
 import { ShipmentOrder } from "@/features/shipments/shipment.type";
 import { Plus } from "lucide-react";
@@ -26,7 +26,7 @@ export default function OrdersPage() {
       params,
     });
   return (
-    <div className="container relative mx-auto py-6 space-y-6 animate-in fade-in duration-500">
+    <div className="container relative mx-auto py-6 space-y-6 ">
       <OrderFilters
         onFilter={setParams}
         titleSection={
@@ -56,7 +56,7 @@ export default function OrdersPage() {
             key={i}
           >
             {page.data?.items.map((order: ShipmentOrder) => (
-              <OrderCard key={order.id} order={order} />
+              <ClientOrderCard key={order.id} order={order} />
             ))}
           </div>
         ))}

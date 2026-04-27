@@ -21,7 +21,7 @@ export type ClientOrdersParams = {
 
 export const getMyOrders = async ({
   cursor,
-  limit = 10,
+  limit = 9,
   ...filters
 }: ClientOrdersParams = {}): Promise<
   ApiResponse<CursorPaginated<ShipmentOrder>>

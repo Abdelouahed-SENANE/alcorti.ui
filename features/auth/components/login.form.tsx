@@ -21,7 +21,7 @@ export const LoginForm = () => {
         } else if (role === "admin") {
           router.replace(paths.admin.dashboard.route());
         } else if (role === "shipper") {
-          router.replace(paths.shipper.shipments.orders.available.route());
+          router.replace(paths.shipper.shipments.orders.booking.route());
         } else {
           router.replace(paths.home.root);
         }

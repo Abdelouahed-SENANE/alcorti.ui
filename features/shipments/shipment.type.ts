@@ -1,5 +1,4 @@
 import { Entity } from "@/types/api";
-import { User } from "../users/user.type";
 import { Category } from "../categories/category.type";
 import { Location } from "../locations/location.type";
 
@@ -12,6 +11,14 @@ export const ORDER_KEYS = {
   order_offers: (id: string) => [...ORDER_KEYS.detail(id), "order-offers"],
 };
 
+export const OFFERS_KEYS = {
+  all: ["offers"],
+  list: () => [...OFFERS_KEYS.all, "list"],
+  lists: (params: any) => [...OFFERS_KEYS.list(), params],
+  details: () => [...OFFERS_KEYS.all, "details"],
+  detail: (id: string) => [...OFFERS_KEYS.details(), id],
+};
+
 export type OrderStatus =
   | "pending"
   | "published"
@@ -21,11 +28,7 @@ export type OrderStatus =
   | "rejected"
   | "cancelled";
 
-  export type OfferStatus =
-  | "pending"
-  | "accepted"
-  | "cancelled";
-
+export type OfferStatus = "pending" | "accepted" | "cancelled";
 
 export type ShipmentOrderAbilities = {
   can_publish: boolean;
@@ -39,14 +42,17 @@ export type ShipmentOrderAbilities = {
 
 export type ShipmentOffer = Entity<{
   status: OfferStatus;
-  shipper?: {
+  order?: ShipmentOrder;
+}>;
+
+export type ShipmentOfferSubmitted = Entity<{
+  status: OfferStatus;
+  shipper: {
     id: string;
     full_name: string;
     avatar: string;
   };
-  order?: ShipmentOrder;
-  created_at: string;
-  updated_at: string;
+
 }>;
 
 export type ShipmentOrderItem = {
@@ -72,6 +78,7 @@ export type ShipmentOrder = Entity<{
   total_amount: number;
   total_volume: number;
   items: ShipmentOrderItem[];
+  my_offer?: ShipmentOffer;
   timelines?: ShipmentOrderTimeline[];
   abilities?: ShipmentOrderAbilities;
 }>;

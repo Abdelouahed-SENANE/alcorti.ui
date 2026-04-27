@@ -71,6 +71,7 @@
       "inactive": "Inactive",
       "pending": "Pending",
       "approved": "Approved",
+      "accepted": "Accepted",
       "rejected": "Rejected",
       "cancelled": "Cancelled"
     },
@@ -665,6 +666,14 @@
         "booking": {
           "title": "Booking Orders",
           "desc": "Booking orders for shippers"
+        },
+        "ongoing_offers": {
+          "title": "Ongoing Offers",
+          "desc": "Ongoing offers for shippers"
+        },
+        "past_offers": {
+          "title": "Past Offers",
+          "desc": "Past offers for shippers"
         }
       },
       "timelines": {
