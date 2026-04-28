@@ -6,6 +6,14 @@ export const paths = {
   profile: {
     root: "/profile",
     route: () => "/profile",
+    onboarding: {
+      root: "/profile/onboarding",
+      route: () => "/profile/onboarding",
+    },
+    banned: {
+      root: "/profile/banned",
+      route: () => "/profile/banned",
+    },
   },
   settings: {
     root: "/settings",

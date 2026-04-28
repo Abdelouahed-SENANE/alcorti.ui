@@ -9,6 +9,8 @@ import {
   register,
   userQueryKey,
 } from "./api";
+import { paths } from "@/config/paths";
+import { useRouter } from "next/navigation";
 
 export const useUser = () => useQuery(getUserQueryOptions());
 
@@ -54,6 +56,7 @@ export const useLogout = ({
   mutationConfig?: MutationConfig<typeof logout>;
 } = {}) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
   return useMutation({
@@ -61,6 +64,7 @@ export const useLogout = ({
     onSuccess: (...args) => {
       queryClient.setQueryData(userQueryKey, null);
       queryClient.clear();
+      router.replace(paths.auth.login.root);
       onSuccess?.(...args);
     },
     ...restConfig,

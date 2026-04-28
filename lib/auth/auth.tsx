@@ -42,91 +42,52 @@ export interface AuthGuardProps {
 export const AuthGuard = ({
   children,
   role,
-  requireCompleted = false,
 }: AuthGuardProps) => {
   const { data: user, isLoading, isError } = useUser();
   const pathname = usePathname();
   const router = useRouter();
 
-  const resolution = React.useMemo(() => {
-    if (isLoading) return { status: "loading" as const };
-    if (!user || isError) {
-      return {
-        status: "redirect" as const,
-        to: paths.auth.login.route(pathname),
-      };
-    }
-
-    if (user.is_active === false) {
-      return { status: "banned" as const };
-    }
-
-    if (role) {
-      const allowedRoles = Array.isArray(role)
-        ? role.map((r) => r.toLowerCase())
-        : [role.toLowerCase()];
-
-      if (!allowedRoles.includes(user.role?.toLowerCase() || "")) {
-        return { status: "redirect" as const, to: paths.home.route() };
-      }
-    }
-    if (requireCompleted) {
-      const userRole = user.role?.toLowerCase();
-      const isClientOrShipper = userRole === "client" || userRole === "shipper";
-
-      if (isClientOrShipper) {
-        if (!user.is_completed) {
-          return { status: "gate" as const };
-        }
-        if (user.status === "pending") {
-          return { status: "pending" as const };
-        }
-        if (user.status === "rejected") {
-          return { status: "rejected" as const };
-        }
-      }
-    }
-
-    return { status: "allow" as const };
-  }, [user, isLoading, isError, role, requireCompleted]);
-
   useEffect(() => {
-    if (resolution.status === "redirect") {
-      router.replace(resolution.to);
+    if (isLoading) return;
+
+    if (!user || isError) {
+      router.replace(paths.auth.login.route(pathname));
+      return;
     }
-  }, [resolution, router]);
 
-  // AppShell already waits for the initial user fetch, so here isLoading is only
-  // triggered during brief background revalidation — keep children visible.
-  if (resolution.status === "loading") return <>{children}</>;
-  if (resolution.status === "redirect") return null;
+    const isApproved =
+      user.is_completed && user.status?.toLowerCase() === "approved";
 
-  if (resolution.status === "gate") {
-    const {
-      CompletionGate,
-    } = require("@/features/auth/components/onboarding/completion.gate");
-    return <CompletionGate />;
-  }
+    const normalizedPathname = pathname.replace(/\/$/, "") || "/";
+    const onboardingPath = paths.profile.onboarding.root.replace(/\/$/, "");
+    const bannedPath = paths.profile.banned.root.replace(/\/$/, "");
 
-  if (resolution.status === "pending") {
-    const {
-      PendingApprovalGate,
-    } = require("@/features/auth/components/onboarding/pending.gate");
-    return <PendingApprovalGate />;
-  }
+    if (user.is_active === false && normalizedPathname !== bannedPath) {
+      router.replace(paths.profile.banned.root);
+    } else if (!isApproved && normalizedPathname !== onboardingPath) {
+      router.replace(paths.profile.onboarding.root);
+    }
+  }, [user, isLoading, isError, pathname, router]);
 
-  if (resolution.status === "rejected" && user) {
-    const {
-      RejectedProfileGate,
-    } = require("@/features/auth/components/onboarding/rejected.gate");
-    return <RejectedProfileGate reason={user.rejection_reason} />;
-  }
+  if (isLoading || !user || isError) return null;
 
-  if (resolution.status === "banned") {
-    const {
-      BannedGate,
-    } = require("@/features/auth/components/onboarding/banned.gate");
-    return <BannedGate />;
+  const normalizedPathname = pathname.replace(/\/$/, "") || "/";
+  const onboardingPath = paths.profile.onboarding.root.replace(/\/$/, "");
+  const bannedPath = paths.profile.banned.root.replace(/\/$/, "");
+
+  if (user.is_active === false && normalizedPathname !== bannedPath)
+    return null;
+  const isApproved =
+    user.is_completed && user.status?.toLowerCase() === "approved";
+  if (!isApproved && normalizedPathname !== onboardingPath) return null;
+
+  // Role check
+  if (role) {
+    const userRole = user.role?.toLowerCase();
+    const allowedRoles = Array.isArray(role) ? role : [role];
+    if (!allowedRoles.map((r) => r.toLowerCase()).includes(userRole || "")) {
+      return null;
+    }
   }
 
   return <>{children}</>;

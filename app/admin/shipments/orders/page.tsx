@@ -2,6 +2,7 @@
 
 import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { useQueryTable } from "@/components/ui/table";
 import { paths } from "@/config/paths";
 import {
@@ -35,9 +36,6 @@ export default function OrdersPage() {
   const items = ordersQuery.data?.data?.items || [];
   const pagination = ordersQuery.data?.data?.pagination;
 
-  const resetFilters = () => {
-    router.push(pathname);
-  };
 
   return (
     <DashLayout

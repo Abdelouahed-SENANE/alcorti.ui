@@ -15,11 +15,25 @@ export const LoginForm = () => {
     mutationConfig: {
       onSuccess: (res) => {
         const user = res.data;
-        const role = user?.role?.toLowerCase();
-        if (role === "client") {
-          router.replace(paths.client.shipments.orders.route());
-        } else if (role === "admin") {
+        if (!user) return;
+
+        const role = user.role?.toLowerCase();
+
+        if (user.is_active === false) {
+          router.replace(paths.profile.banned.route());
+          return;
+        }
+
+        const isClientOrShipper = role === "client" || role === "shipper";
+        if (isClientOrShipper && (!user.is_completed || user.status !== "approved")) {
+          router.replace(paths.profile.onboarding.route());
+          return;
+        }
+
+        if (role === "admin") {
           router.replace(paths.admin.dashboard.route());
+        } else if (role === "client") {
+          router.replace(paths.client.shipments.orders.route());
         } else if (role === "shipper") {
           router.replace(paths.shipper.shipments.orders.booking.route());
         } else {
