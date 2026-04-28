@@ -108,17 +108,6 @@ export const statusColors: Record<OrderStatus, string> = {
   expired: "bg-stone-500/10 text-stone-600 ",
 };
 
-export const offerBackgroundColors: Record<string, string> = {
-  pending: "bg-amber-500 text-amber-600 ",
-  accepted: "bg-green-500 text-green-600 ",
-  cancelled: "bg-neutral-500 text-neutral-600 ",
-};
-
-export const offerStatusColors: Record<string, string> = {
-  pending: "bg-amber-500/10 text-amber-600 ",
-  accepted: "bg-green-500/10 text-green-600 ",
-  cancelled: "bg-neutral-500/10 text-neutral-600 ",
-};
 
 export const ClientOrderCard: React.FC<BaseOrderCardProps> = ({
   order,
@@ -271,6 +260,20 @@ export const ClientOrderCard: React.FC<BaseOrderCardProps> = ({
   );
 };
 
+export const offerBackgroundColors: Record<string, string> = {
+  not_submited: "bg-blue-500 text-blue-600 ",
+  pending: "bg-amber-500 text-amber-600 ",
+  accepted: "bg-green-500 text-green-600 ",
+  cancelled: "bg-neutral-500 text-neutral-600 ",
+};
+
+export const offerStatusColors: Record<string, string> = {
+  not_submited: "bg-blue-500/10 text-blue-600 ",
+  pending: "bg-amber-500/10 text-amber-600 ",
+  accepted: "bg-green-500/10 text-green-600 ",
+  cancelled: "bg-neutral-500/10 text-neutral-600 ",
+};
+
 export const ShipperOrderCard: React.FC<BaseOrderCardProps> = ({
   order,
   className,
@@ -283,11 +286,11 @@ export const ShipperOrderCard: React.FC<BaseOrderCardProps> = ({
 
   const bgClass = shipperOffer
     ? offerBackgroundColors[shipperOffer.status]
-    : "bg-blue-500 text-blue-600";
+    : offerBackgroundColors["not_submited"];
 
-  const statusClass = offerStatusColors[shipperOffer.status]
+  const statusClass = shipperOffer ? offerStatusColors[shipperOffer.status] : offerStatusColors["not_submited"]
 
-  const statusText = t(`global.status.${shipperOffer?.status}`)
+  const statusText = shipperOffer ? t(`global.status.${shipperOffer?.status}`): t("global.status.submit_offer")
 
 
   return (

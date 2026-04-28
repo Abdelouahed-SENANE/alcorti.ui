@@ -25,6 +25,5 @@ export const useUserContact= ({ id, queryConfig }: UseUserContactOptions) => {
   return useQuery({
     ...getUserContactQueryOptions(id),
     ...queryConfig,
-    enabled: !!id,
   });
 };

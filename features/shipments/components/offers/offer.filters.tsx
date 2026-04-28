@@ -11,6 +11,7 @@ import { LocationOption } from "@/features/locations/location.type";
 import { cn } from "@/lib/utils";
 import { Filter, RefreshCcw, SlidersHorizontal, X } from "lucide-react";
 import * as React from "react";
+import { format, parseISO } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { OfferStatus } from "../../shipment.type";
 
@@ -119,14 +120,14 @@ export const OfferFilters = ({
       active.push({
         key: "from_date",
         label: t("shipments.orders.filters.from_date", "From"),
-        value: new Date(appliedFilters.from_date).toLocaleDateString(),
+        value: parseISO(appliedFilters.from_date).toLocaleDateString(),
       });
     }
     if (appliedFilters.to_date) {
       active.push({
         key: "to_date",
         label: t("shipments.orders.filters.to_date", "To"),
-        value: new Date(appliedFilters.to_date).toLocaleDateString(),
+        value: parseISO(appliedFilters.to_date).toLocaleDateString(),
       });
     }
     return active;
@@ -227,7 +228,7 @@ export const OfferFilters = ({
                 onChange={(date) =>
                   setFilters((prev) => ({
                     ...prev,
-                    from_date: date?.toISOString(),
+                    from_date: date ? format(date, "yyyy-MM-dd") : undefined,
                   }))
                 }
               />
@@ -243,7 +244,7 @@ export const OfferFilters = ({
                 onChange={(date) =>
                   setFilters((prev) => ({
                     ...prev,
-                    to_date: date?.toISOString(),
+                    to_date: date ? format(date, "yyyy-MM-dd") : undefined,
                   }))
                 }
               />

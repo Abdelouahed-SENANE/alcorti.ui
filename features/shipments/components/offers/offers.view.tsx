@@ -10,13 +10,12 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer/drawer";
 import { Spinner } from "@/components/ui/spinner";
-import { toast } from "@/components/ui/toast/use-toast";
 import { ContactCard } from "@/features/users/components/contact.card";
 import { Check, PhoneCall, User, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useOrderOffers } from "../../api/offers/list.offers";
-import { useOfferDecision } from "../../api/offers/offer.decision";
-import { ShipmentOffer, ShipmentOfferSubmitted } from "../../shipment.type";
+import { ShipmentOfferSubmitted } from "../../shipment.type";
+import { OfferDecisionConfirmation } from "./offer-decission.confirmation";
 
 interface OrderOffersViewProps {
   orderId: string;
@@ -161,32 +160,6 @@ const OfferItem = ({
   hasAcceptedOffer: boolean;
 }) => {
   const { t } = useTranslation();
-  const decisionMutation = useOfferDecision({
-    orderId,
-    mutationConfig: {
-      onSuccess: (res) => {
-        toast({
-          title: t("global.success", "Success"),
-          description:
-            res.message || t("messages.success", "Action successful"),
-          type: "success",
-        });
-      },
-      onError: (err: any) => {
-        toast({
-          title: t("global.error", "Error"),
-          description:
-            err.response?.data?.message ||
-            t("messages.error", "An error occurred"),
-          type: "error",
-        });
-      },
-    },
-  });
-
-  const handleDecision = (status: "accepted" | "cancelled") => {
-    decisionMutation.mutate({ id: offer.id, status });
-  };
 
   const isAccepted = offer.status === "accepted";
   const isCancelled = offer.status === "cancelled";
@@ -253,38 +226,42 @@ const OfferItem = ({
                       className={`text-xs font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90`}
                     >
                       <PhoneCall className="size-3 ltr:mr-1 rtl:ml-1" />
-                      {t("global.actions.shipper_contact", "Contact Shipper")}
+                      {t("users.actions.contact_shipper")}
                     </Button>
                   }
                 />
               )}
-              <Button
-                variant={isAccepted ? "destructive" : "outline"}
-                size="sm"
-                className="h-8 gap-1.5 px-3 text-xs"
-                onClick={() => handleDecision("cancelled")}
-                disabled={decisionMutation.isPending}
-              >
-                <X className="size-3.5" />{" "}
-                {t("global.actions.cancel", "Cancel")}
-              </Button>
+
+              <OfferDecisionConfirmation
+                id={offer.id}
+                status="cancelled"
+                trigger={
+                  <Button
+                    variant={isAccepted ? "destructive" : "outline"}
+                    size="sm"
+                    className="h-8 gap-1.5 px-3 text-xs"
+                  >
+                    <X className="size-3.5" />{" "}
+                    {t("global.actions.cancel", "Cancel")}
+                  </Button>
+                }
+              />
 
               {isPending && !hasAcceptedOffer && (
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="h-8 bg-success hover:bg-success/90 text-white gap-1.5 px-3 text-xs"
-                  onClick={() => handleDecision("accepted")}
-                  disabled={decisionMutation.isPending}
-                >
-                  {decisionMutation.isPending &&
-                  decisionMutation.variables?.status === "accepted" ? (
-                    <Spinner className="size-3.5 text-white" />
-                  ) : (
-                    <Check className="size-3.5" />
-                  )}
-                  {t("global.actions.accept", "Accept")}
-                </Button>
+                <OfferDecisionConfirmation
+                  id={offer.id}
+                  status="accepted"
+                  trigger={
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="h-8 bg-success hover:bg-success/90 text-white gap-1.5 px-3 text-xs"
+                    >
+                      <Check className="size-3.5" />
+                      {t("global.actions.accept", "Accept")}
+                    </Button>
+                  }
+                />
               )}
             </div>
           )}

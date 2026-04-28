@@ -21,7 +21,7 @@ export type ConfirmationDialogProps = {
   body?: string;
   children?: React.ReactNode;
   cancelButton?: (onCancel: () => void) => React.ReactElement;
-  icon?: "danger" | "info";
+  icon?: "danger" | "info" ;
   isDone?: boolean;
 };
 

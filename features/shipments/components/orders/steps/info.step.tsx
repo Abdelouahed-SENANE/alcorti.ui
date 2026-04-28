@@ -6,6 +6,7 @@ import { CategorySelector } from "@/features/categories/components/category.sele
 import { LocationSelector } from "@/features/locations/components/location.selector";
 import { LocationOption } from "@/features/locations/location.type";
 import { ShipmentOrderInputs } from "@/features/shipments/api/orders/create.order";
+import { format } from "date-fns";
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -83,7 +84,7 @@ export const GeneralStep = ({ control, errors }: GeneralInfoStepProps) => {
               label={t("shipments.form.available_from.label")}
               value={field.value ? new Date(field.value) : undefined}
               onChange={(date: Date | undefined) =>
-                field.onChange(date?.toISOString())
+                field.onChange(date ? format(date, "yyyy-MM-dd") : undefined)
               }
             />
           )}
@@ -98,7 +99,7 @@ export const GeneralStep = ({ control, errors }: GeneralInfoStepProps) => {
               label={t("shipments.form.available_to.label")}
               value={field.value ? new Date(field.value) : undefined}
               onChange={(date: Date | undefined) =>
-                field.onChange(date?.toISOString())
+                field.onChange(date ? format(date, "yyyy-MM-dd") : undefined)
               }
               error={t(errors.to_date?.message)}
             />

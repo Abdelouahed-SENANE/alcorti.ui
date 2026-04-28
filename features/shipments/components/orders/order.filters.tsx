@@ -11,6 +11,7 @@ import { LocationOption } from "@/features/locations/location.type";
 import { cn } from "@/lib/utils";
 import { Filter, RefreshCcw, Search, SlidersHorizontal, X } from "lucide-react";
 import * as React from "react";
+import { format, parseISO } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { OrderStatus } from "../../shipment.type";
 import { useAuthorization } from "@/lib/auth";
@@ -144,14 +145,14 @@ export const OrderFilters = ({
       active.push({
         key: "from_date",
         label: t("shipments.orders.filters.from_date", "From"),
-        value: new Date(appliedFilters.from_date).toLocaleDateString(),
+        value: parseISO(appliedFilters.from_date).toLocaleDateString(),
       });
     }
     if (appliedFilters.to_date) {
       active.push({
         key: "to_date",
         label: t("shipments.orders.filters.to_date", "To"),
-        value: new Date(appliedFilters.to_date).toLocaleDateString(),
+        value: parseISO(appliedFilters.to_date).toLocaleDateString(),
       });
     }
     return active;
@@ -265,7 +266,7 @@ export const OrderFilters = ({
             )}
 
             {/* From Date */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 flex-1">
               <InputCalendar
                 label={t("shipments.orders.filters.from_date", "From Date")}
                 value={
@@ -274,21 +275,21 @@ export const OrderFilters = ({
                 onChange={(date) =>
                   setFilters((prev: any) => ({
                     ...prev,
-                    from_date: date?.toISOString(),
+                    from_date: date ? format(date, "yyyy-MM-dd") : undefined,
                   }))
                 }
               />
             </div>
 
             {/* To Date */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 flex-1">
               <InputCalendar
                 label={t("shipments.orders.filters.to_date", "To Date")}
                 value={filters.to_date ? new Date(filters.to_date) : undefined}
                 onChange={(date) =>
                   setFilters((prev: any) => ({
                     ...prev,
-                    to_date: date?.toISOString(),
+                    to_date: date ? format(date, "yyyy-MM-dd") : undefined,
                   }))
                 }
               />

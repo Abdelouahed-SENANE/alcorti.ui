@@ -73,7 +73,8 @@
       "approved": "Approved",
       "accepted": "Accepted",
       "rejected": "Rejected",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "submit_offer" : "Submit your offer"
     },
     "search": "Search...",
     "all": "All"
@@ -106,6 +107,11 @@
   },
 
   "users": {
+    "contact" : {
+      "client" : "Client contact",
+      "shipper" : "Shipper contact"
+
+    },
     "page": {
       "title": "Users",
       "desc": "Welcome to the users page",

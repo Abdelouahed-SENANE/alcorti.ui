@@ -2,7 +2,7 @@ import { api$ } from "@/config/axios";
 import { MutationConfig } from "@/config/react-query";
 import { ApiResponse } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ORDER_KEYS, ShipmentOffer } from "../../shipment.type";
+import { OFFERS_KEYS, ORDER_KEYS, ShipmentOffer } from "../../shipment.type";
 
 export type OfferDecisionInputs = {
   status: "accepted" | "cancelled";
@@ -21,12 +21,12 @@ export const offerDecision = async ({
 };
 
 type UseOfferDecisionOptions = {
-  orderId: string;
+  offerId: string;
   mutationConfig?: MutationConfig<typeof offerDecision>;
 };
 
 export const useOfferDecision = ({
-  orderId,
+  offerId,
   mutationConfig,
 }: UseOfferDecisionOptions) => {
   const queryClient = useQueryClient();
@@ -39,11 +39,11 @@ export const useOfferDecision = ({
         exact: false,
       });
       queryClient.invalidateQueries({
-        queryKey: ORDER_KEYS.order_offers(orderId),
+        queryKey: ORDER_KEYS.details(),
         exact: false,
       });
       queryClient.invalidateQueries({
-        queryKey: ORDER_KEYS.detail(orderId),
+        queryKey: OFFERS_KEYS.list(),
         exact: false,
       });
       onSuccess?.(...args);

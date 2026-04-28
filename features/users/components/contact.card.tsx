@@ -20,7 +20,14 @@ interface ConatctCardProps {
 
 export const ContactCard = ({ userId, trigger, title }: ConatctCardProps) => {
   const { t } = useTranslation();
-  const { data, isLoading } = useUserContact({ id: userId });
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const { data, isLoading } = useUserContact({
+    id: userId!,
+    queryConfig: {
+      enabled: !!userId && (!trigger || isOpen),
+    },
+  });
   const profile = data?.data;
 
   const displayUser = profile
@@ -84,7 +91,7 @@ export const ContactCard = ({ userId, trigger, title }: ConatctCardProps) => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

@@ -8,11 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ContactCard } from "@/features/users/components/contact.card";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { cn, formatDate, formatDateTime } from "@/lib/utils";
-import { Calendar1, Contact, Eye, MapPin } from "lucide-react";
+import { Calendar1, Contact, Eye, MapPin, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { OfferStatus, ShipmentOffer } from "../../shipment.type";
+import { OfferDecisionConfirmation } from "./offer-decission.confirmation";
 
 export const OfferCardSkeleton = () => {
   return (
@@ -240,10 +241,22 @@ export const OfferCard: React.FC<OfferCardProps> = ({
                   className="text-secondary-foreground bg-secondary gap-1 "
                 >
                   <Contact className="size-4" />
-                  {t("users.actions.client_contact")}
+                  {t("users.actions.contact_client")}
                 </Button>
               }
-              title={t("users.profiles.client.title")}
+              title={t("users.contact.client")}
+            />
+          )}
+          {offer.status === "accepted" && (
+            <OfferDecisionConfirmation
+              id={offer.id!}
+              status="cancelled"
+              trigger={
+                <Button variant={"destructive"} className="">
+                  <X className="size-4" />
+                  {t("global.actions.cancel")}
+                </Button>
+              }
             />
           )}
         </div>

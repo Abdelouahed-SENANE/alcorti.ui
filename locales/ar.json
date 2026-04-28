@@ -71,7 +71,8 @@
       "approved": "تم القبول",
       "rejected": "تم الرفض",
       "cancelled": "تم الإلغاء",
-      "accepted": "تم القبول"
+      "accepted": "تم القبول",
+      "submit_offer": "لم يتم تقديم عرض"
     },
     "search": "بحث..."
   },
@@ -95,6 +96,10 @@
   },
 
   "users": {
+    "contact": {
+      "client": "معلومات اتصال العميل",
+      "shipper": "معلومات اتصال الشاحن"
+    },
     "page": {
       "title": "المستخدمين",
       "desc": "مرحبا بك في صفحة المستخدمين",
@@ -194,8 +199,8 @@
       "reject": "رفض",
       "activate": "إعادة تفعيل",
       "deactivate": "إلغاء تفعيل",
-      "client_contact": "معلومات اتصال العميل",
-      "shipper_contact": "معلومات اتصال الشاحن"
+      "contact_client": "اتصل بالعميل",
+      "contact_shipper": "اتصل بالشاحن"
     },
     "dialogs": {
       "activate": {
