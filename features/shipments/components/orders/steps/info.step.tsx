@@ -80,6 +80,7 @@ export const GeneralStep = ({ control, errors }: GeneralInfoStepProps) => {
           render={({ field }) => (
             <InputCalendar
               error={t(errors.from_date?.message)}
+              disablePastDays={true}
               isRequired
               label={t("shipments.form.available_from.label")}
               value={field.value ? new Date(field.value) : undefined}
@@ -96,6 +97,7 @@ export const GeneralStep = ({ control, errors }: GeneralInfoStepProps) => {
           render={({ field }) => (
             <InputCalendar
               isRequired
+              disablePastDays={true}
               label={t("shipments.form.available_to.label")}
               value={field.value ? new Date(field.value) : undefined}
               onChange={(date: Date | undefined) =>

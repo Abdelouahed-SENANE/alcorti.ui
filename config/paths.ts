@@ -91,9 +91,9 @@ export const paths = {
     users: {
       root: "users",
       route: () => "/admin/users",
-      review: {
-        root: "[id]/review",
-        route: (id: string) => `/admin/users/${id}/review`,
+      verify: {
+        root: "[id]/verify",
+        route: (id: string) => `/admin/users/${id}/verify`,
       },
     },
     vehicles: {

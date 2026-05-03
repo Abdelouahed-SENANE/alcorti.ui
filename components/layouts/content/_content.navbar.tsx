@@ -10,6 +10,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { NotificationDropdown } from "@/features/notifications/components/notification.dropdown";
 
 export const ContentNavabr = () => {
   const { t } = useTranslation();
@@ -48,7 +49,7 @@ export const ContentNavabr = () => {
         hideIf: () => hasRole({ role: "client" }),
       },
     ],
-    [t],
+    [t, hasRole],
   );
 
   return (
@@ -80,6 +81,7 @@ export const ContentNavabr = () => {
             );
           })}
           <li className="flex items-center gap-2">
+            <NotificationDropdown />
             <SwitchLanguage />
             <ThemeToggle />
             <UserNavgation />

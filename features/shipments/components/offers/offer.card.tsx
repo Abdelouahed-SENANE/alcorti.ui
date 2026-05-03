@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DynamicIcon } from "@/components/ui/icons/dynamic-icon";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ContactCard } from "@/features/users/components/contact.card";
+// import { ContactCard } from "@/features/users/components/contact.card";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { cn, formatDate, formatDateTime } from "@/lib/utils";
 import { Calendar1, Contact, Eye, MapPin, X } from "lucide-react";
@@ -232,7 +232,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({
             <Eye className="size-4" />
             {t("global.actions.view")}
           </Button>
-          {offer.status === "accepted" && (
+          {/* {offer.status === "accepted" && (
             <ContactCard
               userId={offer.order?.client_id!}
               trigger={
@@ -246,7 +246,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({
               }
               title={t("users.contact.client")}
             />
-          )}
+          )} */}
           {offer.status === "accepted" && (
             <OfferDecisionConfirmation
               id={offer.id!}

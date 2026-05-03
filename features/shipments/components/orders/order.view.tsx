@@ -13,6 +13,7 @@ import { DynamicIcon } from "@/components/ui/icons/dynamic-icon";
 import { Spinner } from "@/components/ui/spinner";
 import { DistanceViewer } from "@/components/viewers/distance/distance-viewer";
 import i18n from "@/config/i18n";
+import { ContactCard } from "@/features/users/components/contact.card";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { useAuthorization } from "@/lib/auth";
 import {
@@ -133,6 +134,22 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
                 </div>
               </div>
             </div>
+            {/* Contact Information */}
+            {order.shipper && (
+              <ContactCard
+                user={order.shipper}
+                title={t(
+                  "shipments.offers.shipper_info",
+                  "Shipper Information",
+                )}
+              />
+            )}
+            {order.client && (
+              <ContactCard
+                user={order.client}
+                title={t("users.contact.client", "Client Information")}
+              />
+            )}
             {/* Header Info */}
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-4">
@@ -147,7 +164,12 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
                     </Badge>
                   )}
                 </div>
-                <Badge className={cn("font-bold text-xs",statusColors[order.status])}>
+                <Badge
+                  className={cn(
+                    "font-bold text-xs",
+                    statusColors[order.status],
+                  )}
+                >
                   {t(`shipments.orders.status.${order.status}`)}
                 </Badge>
               </div>
@@ -248,7 +270,7 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
             </div>
 
             {/* Timelines Section */}
-            {(hasRole({ role: "client" }) && order.timelines) && (
+            {hasRole({ role: "client" }) && order.timelines && (
               <div className="">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-lg font-bold text-foreground">
@@ -268,9 +290,6 @@ export const OrderView = ({ id, isOpen, onOpenChange }: OrderViewProps) => {
                 </div>
               </div>
             )}
-
-            {/* Final Price Estimation */}
-            {/* Actions Section */}
             <OrderActions order={order} onAssignOpen={assignDialog.open} />
           </div>
 
@@ -344,8 +363,6 @@ const TimelineItem = ({
   isLast: boolean;
 }) => {
   const { t } = useTranslation();
-
-  
 
   return (
     <div className="relative flex gap-x-4 p-2">

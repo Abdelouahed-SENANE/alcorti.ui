@@ -52,11 +52,11 @@ export function RadioCards({
               type="button"
               onClick={() => handleSelect(option.value)}
               className={cn(
-                "relative flex disabled:opacity-60 disabled:cursor-not-allowed  w-full cursor-pointer select-none gap-3 rounded-md border p-4 text-left transition-all",
+                "relative flex disabled:opacity-60 disabled:cursor-not-allowed  w-full cursor-pointer select-none gap-3 rounded-md border p-2 text-left transition-all",
                 "bg-background/20 border-input/50",
                 "hover:bg-background/30",
                 isSelected &&
-                  "border-primary shadow-[0_0_0_1px_rgba(99,102,241,0.4)] bg-primary/5",
+                  "border-primary bg-primary/5",
               )}
             >
               <div>
@@ -73,7 +73,7 @@ export function RadioCards({
 
               <span
                 className={cn(
-                  "absolute ltr:right-3 rtl:left-3 top-3 flex h-4 w-4 items-center justify-center rounded-full border border-input",
+                  "absolute ltr:right-2 rtl:left-2 top-2 flex h-4 w-4 items-center justify-center rounded-full border border-input",
                   isSelected && "border-primary bg-primary",
                 )}
               >

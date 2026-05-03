@@ -3,16 +3,20 @@ import { DashLayout } from "@/components/layouts/dashboard/_dash.layout";
 import { paths } from "@/config/paths";
 import { useUserDetails } from "@/features/users/api/user.details";
 import { UserReview } from "@/features/users/components/user.review";
-import { useParams } from "next/navigation";
+import { notFound, useParams, redirect } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
-export default function ReviewUserPage() {
+export default function VerifyUserPage() {
   const { t } = useTranslation();
   const params = useParams();
   const id = params.id as string;
   const { data, isFetching } = useUserDetails({ id });
 
   const user = data?.data!;
+
+  if (user && user.status === "approved") {
+    redirect(paths.admin.users.route());
+  }
 
   return (
     <DashLayout
@@ -31,7 +35,7 @@ export default function ReviewUserPage() {
         },
         {
           label: user ? `${user.first_name} ${user.last_name}` : undefined,
-          url: paths.admin.users.review.route(id),
+          url: paths.admin.users.verify.route(id),
           active: true,
         },
       ]}

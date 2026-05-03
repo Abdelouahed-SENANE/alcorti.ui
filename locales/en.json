@@ -74,7 +74,7 @@
       "accepted": "Accepted",
       "rejected": "Rejected",
       "cancelled": "Cancelled",
-      "submit_offer" : "Submit your offer"
+      "submit_offer": "Submit your offer"
     },
     "search": "Search...",
     "all": "All"
@@ -100,6 +100,48 @@
     "logout": "Logout"
   },
 
+  "notifications": {
+    "title": "Notifications",
+    "all_title": "All Notifications",
+    "mark_all_read": "Mark all as read",
+    "view_all": "View all notifications",
+    "empty": "No notifications yet",
+    "type": {
+      "order_created": {
+        "title": "New Order",
+        "body": "{{name}} placed an order"
+      },
+      "order_published": {
+        "title": "Order published",
+        "body": "Your order has been published"
+      },
+      "offer_submitted": {
+        "title": "New Offer",
+        "body": "{{name}} placed an offer on your order"
+      },
+      "offer_accepted_by_client": {
+        "title": "Offer Accepted",
+        "body": "{{name}} accepted your offer"
+      },
+      "offer_accepted_by_admin": {
+        "title": "Order assigned",
+        "body": "Alcorti assigned to you an order"
+      },
+      "order_assigned": {
+        "title": "Order assigned",
+        "body": "Your order has been assigned"
+      },
+      "order_status_updated": {
+        "title": "Order Status Updated",
+        "body": "{{name}} updated the status of your order"
+      },
+      "profile_completed": {
+        "title": "Profile completed",
+        "body": "{{name}} has {{role}} has completed their profile"
+      }
+    }
+  },
+
   "dashboard": {
     "title": "Dashboard",
     "desc": "Welcome to the dashboard",
@@ -107,10 +149,9 @@
   },
 
   "users": {
-    "contact" : {
-      "client" : "Client contact",
-      "shipper" : "Shipper contact"
-
+    "contact": {
+      "client": "Client contact",
+      "shipper": "Shipper contact"
     },
     "page": {
       "title": "Users",
@@ -193,7 +234,6 @@
         "pending": "Pending",
         "approved": "Approved",
         "rejected": "Rejected",
-
         "errors": {
           "required": "User status is required"
         }
@@ -211,8 +251,8 @@
       "reject": "Refuse",
       "activate": "Reactivate",
       "deactivate": "Deactivate",
-      "client_contact" : "Client Contact",
-      "shipper_contact" : "Shipper Contact"
+      "client_contact": "Client Contact",
+      "shipper_contact": "Shipper Contact"
     },
     "dialogs": {
       "activate": {
@@ -268,6 +308,7 @@
     },
     "register": {
       "already_have_account": "Already have an account?",
+      "err_validation": "Validation issues found",
       "title": "Sign Up",
       "description": "Join Alcorti and manage your business efficiently."
     },
@@ -275,7 +316,8 @@
       "title": "Sign In",
       "description": "Sign in to your account",
       "submit": "Sign In",
-      "forgot_password": "Forgot your password?"
+      "forgot_password": "Forgot your password?",
+      "no_account": "Don't have an account?"
     },
     "titles": {
       "forgot-password": "Forgot Password",

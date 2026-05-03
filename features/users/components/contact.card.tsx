@@ -1,106 +1,60 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Mail, Phone } from "lucide-react";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { useUserContact } from "../api/user.contact";
+import { ContactInfo } from "../user.type";
 
-interface ConatctCardProps {
-  userId: string;
-  trigger?: React.ReactNode;
+interface ContactCardProps {
+  user: ContactInfo;
   title?: string;
 }
 
-export const ContactCard = ({ userId, trigger, title }: ConatctCardProps) => {
-  const { t } = useTranslation();
-  const [isOpen, setIsOpen] = React.useState(false);
+export const ContactCard = ({ user, title }: ContactCardProps) => {
+  if (!user) return null;
 
-  const { data, isLoading } = useUserContact({
-    id: userId!,
-    queryConfig: {
-      enabled: !!userId && (!trigger || isOpen),
-    },
-  });
-  const profile = data?.data;
-
-  const displayUser = profile
-    ? {
-        full_name: `${profile.first_name} ${profile.last_name}`,
-        avatar: profile.avatar,
-        email: profile.email,
-        phone: profile.phone,
-      }
-    : null;
-
-  const InnerContent = () => {
-    if (isLoading || !displayUser) {
-      return (
-        <div className="flex flex-col items-center gap-4 py-6">
-          <Skeleton className="size-24 rounded-full" />
-          <div className="space-y-2 flex flex-col items-center">
-            <Skeleton className="h-6 w-32" />
-            <Skeleton className="h-4 w-48 mt-2" />
-            <Skeleton className="h-4 w-32" />
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div className="flex flex-col items-center gap-4 py-6">
-        <Avatar className="size-24 ring-4 ring-primary/10 ring-offset-2">
-          <AvatarImage src={displayUser.avatar} className="object-cover" />
-          <AvatarFallback className="text-3xl bg-primary/10 text-primary">
-            {displayUser.full_name?.charAt(0)}
-          </AvatarFallback>
-        </Avatar>
-        <div className="text-center space-y-2">
-          <h3 className="text-xl font-bold text-foreground">
-            {displayUser.full_name}
-          </h3>
-
-          <div className="flex flex-col items-center gap-1.5 mt-2">
-            {displayUser.email && (
-              <div className="flex items-center text-base font-medium ltr:justify-center rtl:justify-start gap-2 text-card-foreground/60 ">
-                <Mail className="size-5" />
-                <span dir="ltr">{displayUser.email}</span>
-              </div>
-            )}
-
-            {displayUser.phone && (
-              <div className="flex items-center text-base font-medium ltr:justify-center rtl:justify-start gap-2 text-card-foreground/60 ">
-                <Phone className="size-5" />
-                <span dir="ltr">{displayUser.phone}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  if (!trigger) {
-    return <InnerContent />;
-  }
+  const full_name = `${user.first_name} ${user.last_name}`;
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>
-            {title || t("users.profile.title", "User Profile")}
-          </DialogTitle>
-        </DialogHeader>
-        <InnerContent />
-      </DialogContent>
-    </Dialog>
+    <Card className="bg-card w-full shadow-none border border-border gap-0 p-4">
+      <CardHeader className="p-0 m-0">
+        {title && (
+          <h4 className="text-sm font-semibold capitalize tracking-wider text-foreground/50 w-full ltr:text-left rtl:text-right">
+            {title}
+          </h4>
+        )}
+      </CardHeader>
+      <CardContent className="p-0 flex items-center gap-2">
+        <Avatar className="size-10 ring-2 ring-primary/10 ring-offset-1 shrink-0">
+          <AvatarImage src={user.avatar} className="object-cover" />
+          <AvatarFallback className="text-md bg-primary/10 text-primary">
+            {full_name.charAt(0)}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+          <h3 className="text-base font-semibold text-foreground ltr:text-left rtl:text-right truncate">
+            {full_name}
+          </h3>
+
+          <div className="flex flex-wrap items-center justify-start gap-x-2 gap-y-1.5">
+            {user.email && (
+              <div className="flex items-center text-sm font-medium gap-1.5 text-card-foreground/60 ltr:flex-row rtl:flex-row-reverse">
+                <Mail className="size-3.5 shrink-0" />
+                <span dir="ltr" className="truncate">
+                  {user.email}
+                </span>
+              </div>
+            )}
+
+            {user.phone && (
+              <div className="flex items-center text-sm font-medium gap-1.5 text-card-foreground/60 ltr:flex-row rtl:flex-row-reverse">
+                <Phone className="size-3.5 shrink-0" />
+                <span dir="ltr" className="truncate">
+                  {user.phone}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };

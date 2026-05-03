@@ -18,7 +18,7 @@ export type User = Entity<{
   attachments?: Attachment[];
 }>;
 
-export type Profile = Entity<{
+export type ContactInfo = Entity<{
   first_name: string;
   last_name: string;
   email: string;

@@ -1,6 +1,7 @@
 import { Entity } from "@/types/api";
 import { Category } from "../categories/category.type";
 import { Location } from "../locations/location.type";
+import { ContactInfo } from "../users/user.type";
 
 export const ORDER_KEYS = {
   all: ["orders"],
@@ -78,6 +79,8 @@ export type ShipmentOrder = Entity<{
   total_amount: number;
   total_volume: number;
   items: ShipmentOrderItem[];
+  client?: ContactInfo;
+  shipper?: ContactInfo;
   my_offer?: ShipmentOffer;
   timelines?: ShipmentOrderTimeline[];
   abilities?: ShipmentOrderAbilities;

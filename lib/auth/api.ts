@@ -2,6 +2,7 @@ import { api$ } from "@/config/axios";
 import { ApiResponse, AuthUser } from "@/types/api";
 import { queryOptions } from "@tanstack/react-query";
 import { AxiosError, AxiosRequestConfig } from "axios";
+import { error } from "console";
 import { z } from "zod";
 
 export const loginSchema = z.object({
@@ -55,8 +56,10 @@ export const registerSchema = z.object({
     .string()
     .min(8, "users.fields.password.errors.min")
     .min(1, "users.fields.password.errors.required"),
-  type: z.enum(["shipper", "client"]).refine((val) => !!val, {
-    message: "users.fields.type.errors.required",
+  type: z.enum(["shipper", "client"] , {
+    error: "users.fields.role.errors.required"
+  }).refine((val) => !!val, {
+    message: "users.fields.role.errors.required",
   }),
 });
 

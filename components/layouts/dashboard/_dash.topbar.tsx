@@ -19,6 +19,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ThemeToggle } from "@/components/ui/theme";
 import { UserNavgation } from "@/components/ui/user-navigation";
+import { NotificationDropdown } from "@/features/notifications/components/notification.dropdown";
 
 type TopbarProps = {
   className?: string;
@@ -92,14 +93,9 @@ export const DashboardTopbar = ({ className, breadcrumbs = [] }: TopbarProps) =>
           <li>
             <ThemeToggle />
           </li>
-          {/* <li>
-            <Button
-              variant={"plain"}
-              className="bg-transparent flex items-center justify-center text-card-foreground/60 hover:text-card-foreground hover:bg-none rounded-full hover:bg-input/40 size-9"
-            >
-              <Bell className="size-4.5" />
-            </Button>
-          </li> */}
+          <li>
+            <NotificationDropdown />
+          </li>
           <li>
             <UserNavgation />
           </li>

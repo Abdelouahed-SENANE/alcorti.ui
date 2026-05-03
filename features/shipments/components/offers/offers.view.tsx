@@ -214,24 +214,6 @@ const OfferItem = ({
 
           {!isCancelled && (
             <div className="flex items-center justify-end gap-1.5 shrink-0 ltr:pl-2 rtl:pr-2">
-              {isAccepted && (
-                <ContactCard
-                  userId={offer?.shipper?.id!}
-                  title={t(
-                    "shipments.offers.shipper_info",
-                    "Shipper Information",
-                  )}
-                  trigger={
-                    <Button
-                      className={`text-xs font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90`}
-                    >
-                      <PhoneCall className="size-3 ltr:mr-1 rtl:ml-1" />
-                      {t("users.actions.contact_shipper")}
-                    </Button>
-                  }
-                />
-              )}
-
               <OfferDecisionConfirmation
                 id={offer.id}
                 status="cancelled"

@@ -33,6 +33,8 @@ export type InputCalenderProps = {
   label?: string;
   error?: string;
   isRequired?: boolean;
+  disablePastDays?: boolean;
+
 };
 
 export const InputCalendar: React.FC<InputCalenderProps> = ({
@@ -41,6 +43,7 @@ export const InputCalendar: React.FC<InputCalenderProps> = ({
   label,
   error,
   isRequired,
+  disablePastDays = false,
 }) => {
   const { i18n } = useTranslation();
   const currentLocale = locales[i18n.language] || fr;
@@ -104,7 +107,7 @@ export const InputCalendar: React.FC<InputCalenderProps> = ({
         >
           <Calendar
             mode="single"
-            disabled={(date) => date < startOfDay(new Date())}
+            disabled={disablePastDays ? ((date: Date) => date < startOfDay(new Date())) : undefined}
             selected={date}
             locale={currentLocale}
             captionLayout="dropdown"
